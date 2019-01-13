@@ -1,4 +1,4 @@
-package com.example.guest.domino;
+/*package com.example.guest.domino;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -80,3 +80,4 @@ public class GameSocket extends AsyncTask<WatchData , Integer, Integer>{
 
 
 }
+*/
