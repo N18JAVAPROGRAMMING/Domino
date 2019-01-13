@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -19,6 +21,8 @@ public class AuthFragment extends Fragment
     onCallBackListener listener;
 
     Button next;
+    TextView login;
+    EditText password;
 
     public interface onCallBackListener{
         void onCallBack(String login);
@@ -26,6 +30,7 @@ public class AuthFragment extends Fragment
 
     public void setListener(onCallBackListener listener){
         this.listener=listener;
+
     }
 
     public AuthFragment() {
@@ -46,6 +51,8 @@ public class AuthFragment extends Fragment
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_auth, container, false);
         next=v.findViewById(R.id.a_next);
+        login=v.findViewById(R.id.a_login);
+        password=v.findViewById(R.id.a_password);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,34 +9,63 @@ import android.widget.Button;
 
 public class InActivity extends AppCompatActivity {
 
-    AuthFragment authFragment;
-    Button addAccount;
+
+    Button actionButton;
+    int condition=0;
+    public static final int REGISTARTION_CONDITION=0;
+    public static final int AUTHORIZATION_CONDITION=1;
+    // 0 -авторизация
+    // 1 - регистрация
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in);
+         condition=AUTHORIZATION_CONDITION;
 
-        authFragment =AuthFragment.newInstance(this);
+
+        final AuthFragment authFragment =AuthFragment.newInstance(this);
         getSupportFragmentManager().popBackStack();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        authFragment.setListener(new AuthFragment.onCallBackListener() {
+            @Override
+            public void onCallBack(String login) {
+
+            }
+        });
+
+         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment,authFragment).commit();
 
+        final RegFragment regFragment =  RegFragment.newInstance(InActivity.this);
 
-        addAccount=findViewById(R.id.add_account);
-        addAccount.setOnClickListener(new View.OnClickListener() {   //изменение кнопки на back to auth
+        //getSupportFragmentManager().popBackStack();
+
+
+       actionButton=findViewById(R.id.add_account);
+        actionButton.setOnClickListener(new View.OnClickListener() {   //изменение кнопки на back to auth
             @Override
             public void onClick(View v) {
                 // нужно добавить передачу логина через CallBack
-                RegFragment regFragment =  RegFragment.newInstance(InActivity.this);
-
-                //getSupportFragmentManager().popBackStack();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                 fragmentTransaction.replace(R.id.fragment,regFragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                switch(condition){
+                    case REGISTARTION_CONDITION:
+                        fragmentTransaction.replace(R.id.fragment,authFragment).commit();
+                        actionButton.setText("+ CREATE NEW ACCOUNT");
+                        condition=AUTHORIZATION_CONDITION;
+                        break;
+                    case AUTHORIZATION_CONDITION:
+                        fragmentTransaction.replace(R.id.fragment,regFragment).commit();
+                        fragmentTransaction.addToBackStack(null);
+                        actionButton.setText("LOG_IN");
+                        condition=REGISTARTION_CONDITION;
+                        break;
 
+
+                }
             }
+
         });
     }
 
