@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment,userFragment).commit();
 
                         return true;
+
                     case R.id.navigation_dashboard:
                         getSupportFragmentManager().beginTransaction()
                                 .remove(userFragment).commit();
