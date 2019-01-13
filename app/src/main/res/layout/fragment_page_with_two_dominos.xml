@@ -3,52 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageWithTwoDominos"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PageWithTwoDominos">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:ignore="UselessParent">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:padding="30dp">
-            <Button android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
-                android:layout_weight = "1"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/button2"
+            tools:ignore="ButtonStyle,NestedWeights" />
 
-            <Button android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <Button android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="3"
-            android:layout_marginTop="10dp"
-            android:padding="16dp">
+            tools:ignore="ButtonStyle"
+            android:id="@+id/button2"
+            app:layout_constraintLeft_toRightOf="@+id/button1"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-            <Button android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_weight = "1"/>
-
-            <Button android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"/>
-
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

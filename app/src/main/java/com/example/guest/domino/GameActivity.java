@@ -63,7 +63,9 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int i) {
-            return new PageWithTwoDominos();
+            PageWithTwoDominos page = PageWithTwoDominos.newInstance();
+            page.setNumbers(i * 2, i * 2 + 1);
+            return page;
         }
 
         @Override
