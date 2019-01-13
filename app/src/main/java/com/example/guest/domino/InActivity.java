@@ -71,7 +71,7 @@ public class InActivity extends AppCompatActivity {
 
 
     public void nextActivity(){
-        Intent intent=  new Intent(this,GameActivity.class);
+        Intent intent=  new Intent(this,MainActivity.class);
         startActivity(intent);
 
 
