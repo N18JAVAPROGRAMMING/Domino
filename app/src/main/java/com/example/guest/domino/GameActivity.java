@@ -10,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +20,7 @@ public class GameActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
-    private static final int NUM_PAGES = 5;
-    private ViewPager viewPager;
-    private PagerAdapter viewPagerAdapter;
-
-    private ArrayList<Domino> dominoes = new ArrayList<>();
+    private Fragment fragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,13 +29,14 @@ public class GameActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                   // getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragment).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    getSupportFragmentManager().beginTransaction().hide(fragment).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    getSupportFragmentManager().beginTransaction().hide(fragment).commit();
                     return true;
             }
             return false;
@@ -50,47 +48,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        fragment = TableFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        for(int i = 0; i < 10; i++){
-            dominoes.add(Domino.generateDomino());
-        }
-
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-
-
-
-    }
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter{
-
-        public ScreenSlidePagerAdapter(FragmentManager fm){
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            PageWithTwoDominos page = PageWithTwoDominos.newInstance();
-            Domino domino1 = dominoes.get(i * 2);
-            Domino domino2 = dominoes.get(i * 2 + 1);
-            page.setDominoes(domino1, domino2);
-            page.setListener(new PageWithTwoDominos.OnFragmentClickListener() {
-                @Override
-                public void onClick(Domino domino) {
-                    Toast.makeText(getApplicationContext(), domino.getUp() + " " + domino.getDown(), Toast.LENGTH_LONG).show();
-                }
-            });
-            return page;
-        }
-
-        @Override
-        public int getCount() {
-            return dominoes.size() / 2;
-        }
     }
 
 }
