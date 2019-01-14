@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +13,18 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+
 
     UserFragment userFragment;
+    CreateRoom createRoomFragment;
+    RoomsFragment roomsFragment;
     Button next;
 
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
+
+    BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,54 +34,71 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        next=findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
+
+
+
+        userFragment= UserFragment.newInstance();
+        roomsFragment=RoomsFragment.newInstance();
+        roomsFragment.setCallBack(new RoomsFragment.OnCallBackStartGame() {
             @Override
-            public void onClick(View v) {
-                Intent intent =  new Intent(getApplicationContext(), GameActivity.class);
+            public void StartGame(Room room) {
+                Intent intent =  new Intent(getApplicationContext(),GameActivity.class);
                 startActivity(intent);
             }
         });
 
+        createRoomFragment=CreateRoom.newInstance();
+       createRoomFragment.setOnCreateRoomListener(new CreateRoom.OnCreateRoomListener() {
+           @Override
+           public void OnRoomCreated(Room room) {
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment,roomsFragment).commit();
+           }
+       });
 
-        userFragment= UserFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,userFragment).commit();
 
-        next.setVisibility(View.GONE);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+
+
+
+
+
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         InitBottomNavigationBar();
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     private void InitBottomNavigationBar(){
+        Log.d("navigate",R.id.navigation_home+"");
+        Log.d("navigate",R.id.navigation_dashboard+"");
+        Log.d("navigate",R.id.navigation_notifications+"");
+        Log.d("navigate","click  "+navigation.getSelectedItemId());
         mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.d("navigate","click"+" id_item "+item.getItemId());
                 switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        next.setVisibility(View.GONE);
+                    case R.id.profile:
+
+
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment,userFragment).commit();
+                        Log.d("NAVIGATE","user");
 
                         return true;
 
-                    case R.id.navigation_dashboard:
+                    case R.id.room_list:
                         getSupportFragmentManager().beginTransaction()
-                                .remove(userFragment).commit();
-
-                        next.setVisibility(View.VISIBLE); ///remove
-
+                                .replace(R.id.fragment,roomsFragment).commit();
+                        Log.d("NAVIGATE","rooms");
                         return true;
-                    case R.id.navigation_notifications:
+                    case R.id.create_private:
                         getSupportFragmentManager().beginTransaction()
-                                .remove(userFragment).commit();
-                        next.setVisibility(View.VISIBLE);   //remove
+                                .replace(R.id.fragment,createRoomFragment).commit();
+                        Log.d("NAVIGATE","createRoomFragment");
                         return true;
                 }
                 return false;
