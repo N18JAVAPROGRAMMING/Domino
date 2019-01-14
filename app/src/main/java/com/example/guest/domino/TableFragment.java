@@ -3,11 +3,14 @@ package com.example.guest.domino;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,10 @@ public class TableFragment extends Fragment {
     private PagerAdapter viewPagerAdapter;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
+
+    public void setDominoes(ArrayList<Domino> dominoes) {
+        this.dominoes = dominoes;
+    }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
@@ -58,12 +65,13 @@ public class TableFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TableFragment newInstance() {
+    public static TableFragment newInstance(ArrayList<Domino> dominoes) {
 
         Bundle args = new Bundle();
 
         TableFragment fragment = new TableFragment();
         fragment.setArguments(args);
+        fragment.setDominoes(dominoes);
         return fragment;
     }
 
@@ -71,14 +79,12 @@ public class TableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("TableFragment", "OnCreateViewTable");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_table, container, false);
-
-        for(int i = 0; i < 10; i++){
-            dominoes.add(Domino.generateDomino());
-        }
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        viewPagerAdapter = new TableFragment.ScreenSlidePagerAdapter(getChildFragmentManager());
+        //if(viewPagerAdapter == null)
+            viewPagerAdapter = new TableFragment.ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         return view;
     }

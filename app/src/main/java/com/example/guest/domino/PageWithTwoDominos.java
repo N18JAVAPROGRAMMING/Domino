@@ -53,11 +53,11 @@ public class PageWithTwoDominos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page_with_two_dominos, container, false);
-        button1 = view.findViewById(R.id.button1);
-        button2 = view.findViewById(R.id.button2);
-        button1.setText(domino1.getTask().getDesctiprion());
-        button2.setText(domino2.getTask().getDesctiprion());
-        setOnClickListeners();
+        //button1 = view.findViewById(R.id.button1);
+        //button2 = view.findViewById(R.id.button2);
+        //button1.setText(domino1.getTask().getDesctiprion());
+        //button2.setText(domino2.getTask().getDesctiprion());
+        //setOnClickListeners();
         return view;
     }
 
