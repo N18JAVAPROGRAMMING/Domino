@@ -3,9 +3,16 @@ package com.example.guest.domino;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 /**
@@ -13,6 +20,35 @@ import android.view.ViewGroup;
  */
 public class ProblemsFragment extends Fragment {
 
+    private ViewPager viewPager;
+    private PagerAdapter viewPagerAdapter;
+
+    private ArrayList<Domino> dominoes = new ArrayList<>();
+    //private ArrayList<Fragment> fragments = new ArrayList<>();
+
+    public void addDomino(Domino domino){
+        dominoes.add(domino);
+        viewPagerAdapter.notifyDataSetChanged();
+    }
+
+    private class ProblemsScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+
+        public ProblemsScreenSlidePagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            PageWithProblem fragment = PageWithProblem.newInstance(dominoes.get(i));
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return dominoes.size();
+        }
+    }
 
     public ProblemsFragment() {
         // Required empty public constructor
@@ -27,12 +63,16 @@ public class ProblemsFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_problems, container, false);
+        //dominoes.add(Domino.generateDomino());
+        viewPager = (ViewPager) view.findViewById(R.id.problem_pager);
+        if(viewPagerAdapter == null)
+            viewPagerAdapter = new ProblemsFragment.ProblemsScreenSlidePagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
         return view;
     }
 

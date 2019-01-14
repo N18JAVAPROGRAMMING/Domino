@@ -2,11 +2,14 @@ package com.example.guest.domino;
 
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Constraints;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -14,11 +17,16 @@ import android.widget.Button;
  */
 public class PageWithTwoDominos extends Fragment {
 
-    private Button button1;
-    private Button button2;
+    private ConstraintLayout button1;
+    private ConstraintLayout button2;
 
     private Domino domino1;
     private Domino domino2;
+
+    private TextView text11;
+    private TextView text12;
+    private TextView text21;
+    private TextView text22;
 
     public void setListener(OnFragmentClickListener listener) {
         this.listener = listener;
@@ -53,11 +61,19 @@ public class PageWithTwoDominos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page_with_two_dominos, container, false);
-        //button1 = view.findViewById(R.id.button1);
-        //button2 = view.findViewById(R.id.button2);
+        button1 = view.findViewById(R.id.lay1);
+        button2 = view.findViewById(R.id.lay2);
+        text11 = view.findViewById(R.id.text11);
+        text12 = view.findViewById(R.id.text12);
+        text22 = view.findViewById(R.id.text22);
+        text21 = view.findViewById(R.id.text21);
+        text11.setText(domino1.getUp() + "");
+        text12.setText(domino1.getDown() + "");
+        text21.setText(domino2.getUp() + "");
+        text22.setText(domino2.getDown() + "");
         //button1.setText(domino1.getTask().getDesctiprion());
         //button2.setText(domino2.getTask().getDesctiprion());
-        //setOnClickListeners();
+        setOnClickListeners();
         return view;
     }
 
@@ -71,7 +87,6 @@ public class PageWithTwoDominos extends Fragment {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 listener.onClick(domino2);
             }
         });

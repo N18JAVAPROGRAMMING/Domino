@@ -3,10 +3,12 @@ package com.example.guest.domino;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -24,18 +26,29 @@ import java.util.ArrayList;
  */
 public class TableFragment extends Fragment {
 
+    public void setDominoOnClickListener(DominoOnClickListener listener) {
+        this.listener = listener;
+    }
+
+    interface DominoOnClickListener {
+        void onClick(Domino domino);
+    }
+
     private ViewPager viewPager;
     private PagerAdapter viewPagerAdapter;
+    private DominoOnClickListener listener;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
+    //private ArrayList<Fragment> fragments = new ArrayList<>();
 
     public void setDominoes(ArrayList<Domino> dominoes) {
         this.dominoes = dominoes;
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private class TableScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
-        public ScreenSlidePagerAdapter(FragmentManager fm){
+
+        public TableScreenSlidePagerAdapter(FragmentManager fm){
             super(fm);
         }
 
@@ -49,7 +62,7 @@ public class TableFragment extends Fragment {
                 @Override
                 public void onClick(Domino domino) {
                     //Toast.makeText(getApplicationContext(), domino.getUp() + " " + domino.getDown(), Toast.LENGTH_LONG).show();
-
+                    listener.onClick(domino);
                 }
             });
             return page;
@@ -75,7 +88,6 @@ public class TableFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,10 +95,9 @@ public class TableFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_table, container, false);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        //if(viewPagerAdapter == null)
-            viewPagerAdapter = new TableFragment.ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager());
+        if(viewPagerAdapter == null)
+            viewPagerAdapter = new TableScreenSlidePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         return view;
     }
-
 }

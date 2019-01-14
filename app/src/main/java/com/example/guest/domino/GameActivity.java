@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Fragment fragmentTable;
-    private Fragment fragmentProblems;
+    private TableFragment fragmentTable;
+    private ProblemsFragment fragmentProblems;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
 
@@ -30,12 +30,14 @@ public class GameActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
-                    //getSupportFragmentManager().beginTransaction().show(fragment).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    //getSupportFragmentManager().beginTransaction().hide(fragment).commit();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
+                    getSupportFragmentManager().beginTransaction().hide(fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragmentProblems).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
                     return true;
                 case R.id.navigation_notifications:
                     //getSupportFragmentManager().beginTransaction().hide(fragment).commit();
@@ -57,8 +59,19 @@ public class GameActivity extends AppCompatActivity {
         fragmentTable = TableFragment.newInstance(dominoes);
         fragmentProblems = ProblemsFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_kostil, fragmentProblems).commit();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
+            @Override
+            public void onClick(Domino domino) {
+                fragmentProblems.addDomino(domino);
+            }
+        });
+
+        //Костыль!!!
+        getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
