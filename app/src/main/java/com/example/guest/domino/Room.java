@@ -9,6 +9,7 @@ public class Room {
     int Complexity;
     List<User> active_user;
     int current_count;
+    boolean close;
 
     public static Room GenerateRoom(){
         Room r = new Room();
@@ -32,6 +33,10 @@ public class Room {
 
     public String getName() {
         return Name;
+    }
+
+    public void setPrivacyMode(boolean value){
+        close=value;
     }
 
     public void setName(String name) {

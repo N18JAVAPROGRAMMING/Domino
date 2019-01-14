@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CreateRoom">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
 
+    tools:context=".CreateRoom">
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="create_room" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Создание турнира"
+        android:textSize="24sp"
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="14sp"/>
 
-</FrameLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Название турнира"
+        android:layout_margin="6dp"
+        android:id="@+id/edit_name"
+        android:layout_below="@+id/title"/>
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seek_bar"
+        android:minWidth="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/edit_name"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="15dp"
+        />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seek_bar"
+        android:id="@+id/turnOfOn"
+        android:layout_margin="6dp"
+        android:layout_alignParentRight="true"
+
+        />
+
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Закрытый турнир"
+        android:textSize="24sp"
+        android:id="@+id/text_for_switch"
+        android:layout_below="@+id/seek_bar"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="Создать"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/create"
+        android:layout_below="@+id/text_for_switch"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+</RelativeLayout>

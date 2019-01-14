@@ -46,7 +46,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         createRoomFragment=CreateRoom.newInstance();
+       createRoomFragment.setOnCreateRoomListener(new CreateRoom.OnCreateRoomListener() {
+           @Override
+           public void OnRoomCreated(Room room) {
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment,roomsFragment).commit();
+           }
+       });
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,userFragment).commit();
 
 
