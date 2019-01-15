@@ -2,6 +2,7 @@ package com.example.guest.domino;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -28,11 +29,16 @@ public class ProblemsFragment extends Fragment {
 
     public void addDomino(Domino domino){
         dominoes.add(domino);
-        viewPagerAdapter.notifyDataSetChanged();
+        if(viewPagerAdapter != null)
+            viewPagerAdapter.notifyDataSetChanged();
     }
 
     private class ProblemsScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
 
         public ProblemsScreenSlidePagerAdapter(FragmentManager fm){
             super(fm);
@@ -70,8 +76,7 @@ public class ProblemsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_problems, container, false);
         //dominoes.add(Domino.generateDomino());
         viewPager = (ViewPager) view.findViewById(R.id.problem_pager);
-        if(viewPagerAdapter == null)
-            viewPagerAdapter = new ProblemsFragment.ProblemsScreenSlidePagerAdapter(getChildFragmentManager());
+        viewPagerAdapter = new ProblemsFragment.ProblemsScreenSlidePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         return view;
     }
