@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     CreateRoom createRoomFragment;
     RoomsFragment roomsFragment;
     Button next;
+
+
 
 
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+        StartSockets();
 
 
         userFragment= UserFragment.newInstance();
@@ -104,6 +109,35 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         };
+    }
+
+    public void StartSockets(){
+        SocketThread socketThread=SocketThread.getInstance();
+        socketThread.setOnStateConnectionListener(new SocketThread.OnStateConnectionListener() {
+            @Override
+            public void onUnableConnect() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"Нет подключения",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onServerProblems() {
+
+            }
+        });
+
+        socketThread.setOnUpdateRoomListListener(new SocketThread.OnUpdateRoomListListener() {
+            @Override
+            public void OnUpdateRoomList(Room room) {
+
+            }
+        });
+        socketThread.start();
+
     }
 
 }
