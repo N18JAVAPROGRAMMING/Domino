@@ -18,9 +18,10 @@ import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private TableFragment fragmentTable;
+    private ProblemsFragment fragmentProblems;
 
-    private Fragment fragment;
+    private ArrayList<Domino> dominoes = new ArrayList<>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -29,14 +30,17 @@ public class GameActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                   // getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
-                    getSupportFragmentManager().beginTransaction().show(fragment).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+                    getSupportFragmentManager().beginTransaction().hide(fragmentTable).commit();
+                    getSupportFragmentManager().beginTransaction().show(fragmentProblems).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+                    //getSupportFragmentManager().beginTransaction().hide(fragment).commit();
                     return true;
             }
             return false;
@@ -48,11 +52,26 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        fragment = TableFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
+        for(int i = 0; i < 10; i++){
+            dominoes.add(Domino.generateDomino());
+        }
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        fragmentTable = TableFragment.newInstance(dominoes);
+        fragmentProblems = ProblemsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_kostil, fragmentProblems).commit();
+
+        fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
+            @Override
+            public void onClick(Domino domino) {
+                fragmentProblems.addDomino(domino);
+            }
+        });
+
+        //Костыль!!!
+        getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }

@@ -3,11 +3,16 @@ package com.example.guest.domino;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +26,29 @@ import java.util.ArrayList;
  */
 public class TableFragment extends Fragment {
 
+    public void setDominoOnClickListener(DominoOnClickListener listener) {
+        this.listener = listener;
+    }
+
+    interface DominoOnClickListener {
+        void onClick(Domino domino);
+    }
+
     private ViewPager viewPager;
     private PagerAdapter viewPagerAdapter;
+    private DominoOnClickListener listener;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
+    //private ArrayList<Fragment> fragments = new ArrayList<>();
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    public void setDominoes(ArrayList<Domino> dominoes) {
+        this.dominoes = dominoes;
+    }
 
-        public ScreenSlidePagerAdapter(FragmentManager fm){
+    private class TableScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+
+        public TableScreenSlidePagerAdapter(FragmentManager fm){
             super(fm);
         }
 
@@ -42,7 +62,7 @@ public class TableFragment extends Fragment {
                 @Override
                 public void onClick(Domino domino) {
                     //Toast.makeText(getApplicationContext(), domino.getUp() + " " + domino.getDown(), Toast.LENGTH_LONG).show();
-
+                    listener.onClick(domino);
                 }
             });
             return page;
@@ -58,29 +78,26 @@ public class TableFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TableFragment newInstance() {
+    public static TableFragment newInstance(ArrayList<Domino> dominoes) {
 
         Bundle args = new Bundle();
 
         TableFragment fragment = new TableFragment();
         fragment.setArguments(args);
+        fragment.setDominoes(dominoes);
         return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("TableFragment", "OnCreateViewTable");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_table, container, false);
-
-        for(int i = 0; i < 10; i++){
-            dominoes.add(Domino.generateDomino());
-        }
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        viewPagerAdapter = new TableFragment.ScreenSlidePagerAdapter(getChildFragmentManager());
+        if(viewPagerAdapter == null)
+            viewPagerAdapter = new TableScreenSlidePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         return view;
     }
-
 }

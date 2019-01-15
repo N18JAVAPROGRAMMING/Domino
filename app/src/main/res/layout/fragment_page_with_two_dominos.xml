@@ -6,27 +6,85 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PageWithTwoDominos">
 
+
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp">
 
-        <Button
-            android:id="@+id/button1"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/lay1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/button2"
-            tools:ignore="ButtonStyle,NestedWeights" />
+            app:layout_constraintRight_toLeftOf="@+id/lay2"
+            android:orientation="vertical"
+            android:background="@drawable/cornerrect"
+            android:layout_margin="8dp">
 
-        <Button
-            android:id="@+id/button2"
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/text11"
+                app:layout_constraintBottom_toTopOf="@+id/text12"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="1"
+                android:textSize="32sp"
+                android:gravity="center"/>
+
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/text11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:id="@+id/text12"
+                android:layout_height="0dp"
+                android:text="1"
+                android:textSize="32sp"
+                android:gravity="center"/>
+
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/lay2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            tools:ignore="ButtonStyle"
-            app:layout_constraintLeft_toRightOf="@+id/button1"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintLeft_toRightOf="@+id/lay1"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical"
+            android:background="@drawable/cornerrect"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/text21"
+                app:layout_constraintBottom_toTopOf="@+id/text22"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="1"
+                android:textSize="32sp"
+                android:gravity="center"/>
+
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/text21"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:id="@+id/text22"
+                android:layout_height="0dp"
+                android:text="1"
+                android:textSize="32sp"
+                android:gravity="center"/>
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
+
+
 
 </FrameLayout>
