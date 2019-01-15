@@ -1,13 +1,23 @@
 package com.example.guest.domino;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+
+import java.util.logging.LogRecord;
 
 public class InActivity extends AppCompatActivity {
+
+    //first activity
 
 
     Button actionButton;
@@ -25,6 +35,7 @@ public class InActivity extends AppCompatActivity {
         setContentView(R.layout.activity_in);
          condition=AUTHORIZATION_CONDITION;
 
+         setMainHandler();
 
         final AuthFragment authFragment =AuthFragment.newInstance(this);
         getSupportFragmentManager().popBackStack();
@@ -68,6 +79,23 @@ public class InActivity extends AppCompatActivity {
 
         });
     }
+
+
+    @SuppressLint("HandlerLeak")
+    public void setMainHandler(){
+        HandlerManager.problemsHandler= new Handler(Looper.getMainLooper()) {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                 Bundle bundle = msg.getData();
+                 boolean noconnect=bundle.getBoolean(HandlerManager.CONNECTION);
+                 if(noconnect)Toast.makeText(getApplicationContext(),"Нет интернет соединения",
+                         Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
 
 
     public void nextActivity(){

@@ -24,6 +24,7 @@
         android:layout_below="@+id/input_text"
         android:layout_margin="10dp"
         android:id="@+id/reg_login"
+
         android:hint="login"/>
 
     <EditText
@@ -31,6 +32,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@+id/reg_login"
     android:layout_margin="10dp"
+        android:inputType="textPassword"
     android:id="@+id/reg_password"
     android:hint="password"/>
 
@@ -38,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/reg_password"
+        android:inputType="textPassword"
         android:layout_margin="10dp"
         android:id="@+id/reg_confirm_password"
         android:hint="confirmation password"/>
