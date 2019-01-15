@@ -47,6 +47,10 @@ public class TableFragment extends Fragment {
 
     private class TableScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
 
         public TableScreenSlidePagerAdapter(FragmentManager fm){
             super(fm);
@@ -94,9 +98,8 @@ public class TableFragment extends Fragment {
         Log.d("TableFragment", "OnCreateViewTable");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_table, container, false);
-        viewPager = (ViewPager) view.findViewById(R.id.pager);
-        if(viewPagerAdapter == null)
-            viewPagerAdapter = new TableScreenSlidePagerAdapter(getChildFragmentManager());
+        viewPager = view.findViewById(R.id.pager);
+        viewPagerAdapter = new TableScreenSlidePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         return view;
     }
