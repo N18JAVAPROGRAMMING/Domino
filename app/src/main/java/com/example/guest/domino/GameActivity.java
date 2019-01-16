@@ -20,6 +20,7 @@ public class GameActivity extends AppCompatActivity {
 
     private TableFragment fragmentTable;
     private ProblemsFragment fragmentProblems;
+    private ScoreTableFragment fragmentScore;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
 
@@ -41,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     //getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentScore).commit();
                     return true;
             }
             return false;
@@ -58,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
 
         fragmentTable = TableFragment.newInstance(dominoes);
         fragmentProblems = ProblemsFragment.newInstance();
+        fragmentScore = ScoreTableFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
         //getSupportFragmentManager().beginTransaction().replace(R.id.frame_kostil, fragmentProblems).commit();
 
