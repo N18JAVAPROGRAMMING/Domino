@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Room {
 
-    String name;
+    String room_name;
     String id;
     int on_start;
     int capacity;
@@ -40,7 +40,7 @@ public class Room {
     }
 
     public String getName() {
-        return name;
+        return room_name;
     }
 
     public void setPrivacyMode(boolean value){
@@ -48,7 +48,7 @@ public class Room {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.room_name = name;
     }
 
     public int getCapacity() {

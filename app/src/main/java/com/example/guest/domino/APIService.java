@@ -1,5 +1,8 @@
 package com.example.guest.domino;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,10 +22,10 @@ public interface APIService {
     Call<List<Room>> getAllRooms();
 
     @POST("peer/signup")
-    void singUp(@Query("username")String name, @Query("password")String password);
+    Call<Token> singUp(@Query("username")String name, @Query("password")String password);
 
     @POST("peer/signin")
-    Token singIn(@Query("username")String name, @Query("password")String password);
+    Call<Token> singIn(@Query("username")String name, @Query("password")String password);
 
     @POST
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
@@ -45,7 +48,21 @@ public interface APIService {
     //@GET<L>
 
     public static class Token{
-        String value;
+
+        static String VALUE="";
+
+        public static void SaveToken(Context context,String token){
+           SharedPreferences sharedPreferences =context.getSharedPreferences(MyApplication.PREFERENCES_NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString(MyApplication.TOKEN_PREFERENCES,token);
+            editor.apply();
+            }
+
+        public static String getToken(Context context){
+            SharedPreferences sharedPreferences =context.getSharedPreferences(MyApplication.PREFERENCES_NAME,Context.MODE_PRIVATE);
+         return sharedPreferences.getString(MyApplication.PREFERENCES_NAME,"");
+        }
+
     }
 
 

@@ -35,9 +35,8 @@ public class InActivity extends AppCompatActivity {
         setContentView(R.layout.activity_in);
          condition=AUTHORIZATION_CONDITION;
 
-         setMainHandler();
 
-        final AuthFragment authFragment =AuthFragment.newInstance(this);
+        final AuthFragment authFragment =AuthFragment.newInstance();
         getSupportFragmentManager().popBackStack();
         authFragment.setListener(new AuthFragment.onCallBackListener() {
             @Override
@@ -81,20 +80,6 @@ public class InActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("HandlerLeak")
-    public void setMainHandler(){
-        HandlerManager.problemsHandler= new Handler(Looper.getMainLooper()) {
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                 Bundle bundle = msg.getData();
-                 boolean noconnect=bundle.getBoolean(HandlerManager.CONNECTION);
-                 if(noconnect)Toast.makeText(getApplicationContext(),"Нет интернет соединения",
-                         Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
 
 
 
@@ -112,10 +97,5 @@ public class InActivity extends AppCompatActivity {
         });
     }
 
-    public void nextActivity(){
-        Intent intent=  new Intent(this,MainActivity.class);
-        startActivity(intent);
 
-
-    }
 }

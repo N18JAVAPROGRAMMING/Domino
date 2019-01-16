@@ -8,19 +8,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
 
 public class ServerManager {
-  Retrofit retrofit;
-  APIService service;
+  private Retrofit retrofit;
+  private APIService service;
+  /*private static ServerManager manager;*/
+
+  /*public static synchronized ServerManager getInstance(){
+      if(manager==null)
+          manager= new ServerManager();
+      return manager;
+  }*/
 
   public ServerManager(){
-      Retrofit retrofit = new Retrofit.Builder()
-              .baseUrl(APIService.HOST)
-              .addConverterFactory(GsonConverterFactory.create())
-              .build();
-     service=retrofit.create(APIService.class);
+      try {
+          Retrofit retrofit = new Retrofit.Builder()
+                  .baseUrl(APIService.HOST)
+                  .addConverterFactory(GsonConverterFactory.create())
+                  .build();
+          service = retrofit.create(APIService.class);
+      } catch (Exception e){
+
+      }
 
   }
 
-   public interface OnCallBackListenerTask{
+   public  static interface OnCallBackListenerTask{
        void onCallBack(Task task);
    }
 
@@ -45,8 +56,10 @@ public class ServerManager {
 
     }
 
-   public interface OnCallBackListenerAuth{
-      void onCallBack(boolean answer);
+
+
+   public static interface OnCallBackListenerAuth{
+      void onCallBack(boolean answer,String token);
    }
 
 
@@ -57,7 +70,7 @@ public class ServerManager {
           @Override
           public void onResponse(Call<Boolean> call, Response<Boolean> response) {
               Boolean answer= response.body();
-              listenerAuth.onCallBack(answer);
+              listenerAuth.onCallBack(answer,"");
           }
 
           @Override
@@ -69,16 +82,16 @@ public class ServerManager {
 
 
    public interface OnCallBackListenerReg{
-      void onCallBack(boolean answer);
+      void onCallBack(boolean answer,String token);
    }
 
-   public void CreateNewAccount(User user, final OnCallBackListenerReg listenerReg){
+   public void CreateNewAccount(String name, String password, final OnCallBackListenerReg listenerReg){
       Call<Boolean> call = service.CreateAccount();
       call.enqueue(new Callback<Boolean>() {
           @Override
           public void onResponse(Call<Boolean> call, Response<Boolean> response) {
               Boolean answer = response.body();
-              listenerReg.onCallBack(answer);
+              listenerReg.onCallBack(answer,"");
           }
 
           @Override

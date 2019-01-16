@@ -1,7 +1,11 @@
 package com.example.guest.domino;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +20,8 @@ import android.widget.TextView;
  */
 public class AuthFragment extends Fragment
 {
-    static InActivity inActivity;
+
+    ServerManager serverManager;
 
     onCallBackListener listener;
 
@@ -37,8 +42,7 @@ public class AuthFragment extends Fragment
         // Required empty public constructor
     }
 
-    public static AuthFragment newInstance(InActivity in) {
-        inActivity=in;
+    public static AuthFragment newInstance() {
         Bundle args = new Bundle();
         AuthFragment fragment = new AuthFragment();
         fragment.setArguments(args);
@@ -53,11 +57,35 @@ public class AuthFragment extends Fragment
         next=v.findViewById(R.id.a_next);
         login=v.findViewById(R.id.a_login);
         password=v.findViewById(R.id.a_password);
+
+        serverManager= new ServerManager();
+
+
+
+
+
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //обработка входа
-                 inActivity.nextActivity();
+                  final View view =v;
+                Intent intent=  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+
+                /*serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
+                    @Override
+                    public void onCallBack(boolean answer, String token) {
+                        if(answer){
+                            APIService.Token.SaveToken(getContext(),token);
+                            Intent intent =  new Intent(getContext(),MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Snackbar.make(view,"Неверные данные входа",Snackbar.LENGTH_LONG);
+                        }
+                    }
+                });*/
+
             }
         });
         //переопределение методов

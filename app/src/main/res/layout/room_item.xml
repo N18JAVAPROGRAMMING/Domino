@@ -5,18 +5,19 @@
 
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="125dp"
     android:layout_margin="6dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
         android:id="@+id/name"
         android:textSize="36sp"
-        android:layout_margin="8dp"/>
+        android:layout_margin="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,10 +30,12 @@
         android:layout_marginLeft="20dp"/>
 
     <ProgressBar
+        android:progressDrawable="@drawable/progress_bar"
     style="@android:style/Widget.ProgressBar.Horizontal"
     android:layout_width="match_parent"
-    android:layout_margin="8dp"
+    android:layout_margin="10dp"
     android:layout_below="@id/name"
+
     android:layout_height="wrap_content"
     android:progress="25"
     android:id="@+id/progress"/>

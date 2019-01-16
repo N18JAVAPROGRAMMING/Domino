@@ -20,6 +20,8 @@ public class RegFragment extends Fragment {
    EditText editCPassword;
    EditText editLogin;
 
+   ServerManager serverManager;
+
    static InActivity inActivity;
 
 
@@ -42,6 +44,7 @@ public class RegFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        serverManager= new ServerManager();
         View v = inflater.inflate(R.layout.fragment_reg, container, false);
         next=v.findViewById(R.id.r_next);
         editCPassword=v.findViewById(R.id.reg_confirm_password);
@@ -71,6 +74,20 @@ public class RegFragment extends Fragment {
                     Snackbar.make(v,"Пароли не совпадают",Snackbar.LENGTH_LONG).show();
                     return;
                 }
+
+               /* serverManager.CreateNewAccount(name, password, new ServerManager.OnCallBackListenerReg() {
+                    @Override
+                    public void onCallBack(boolean answer, String token) {
+                        if (answer){
+                            APIService.Token.SaveToken(getContext(),token);
+                            Snackbar.make(editCPassword,"Вы успешно зарегистрированы",Snackbar.LENGTH_LONG).show();
+                            Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });*/
+
+
 
                 Snackbar.make(v,"Вы успешно зарегистрированы (нет)",Snackbar.LENGTH_LONG).show();
                 Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
