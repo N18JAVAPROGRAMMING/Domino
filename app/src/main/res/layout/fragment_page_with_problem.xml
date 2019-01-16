@@ -56,6 +56,7 @@
                         app:layout_constraintRight_toLeftOf="@id/button_answer" />
 
                     <Button
+                        style="@style/AppTheme.DominoStyle.Button"
                         android:id="@+id/button_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -37,6 +37,7 @@
 
 
             <TextView
+                style="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text11"
                 android:layout_width="match_parent"
@@ -49,6 +50,7 @@
 
 
             <TextView
+                style="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text12"
                 android:layout_width="match_parent"
@@ -77,6 +79,7 @@
             app:layout_constraintStart_toEndOf="@+id/center">
 
             <TextView
+                style="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text21"
                 android:layout_width="match_parent"
@@ -89,6 +92,7 @@
 
 
             <TextView
+                style="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text22"
                 android:layout_width="match_parent"
