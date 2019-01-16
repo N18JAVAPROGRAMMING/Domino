@@ -4,17 +4,25 @@ import java.util.List;
 
 public class Room {
 
-    String Name;
-    int required_count;
+    String name;
+    String id;
+    int on_start;
+    int capacity;
     int Complexity;
     List<User> active_user;
-    int current_count;
+    int peer_count;
     boolean close;
+
+    public static class RoomStatus{
+        String status;
+        String prepared;
+
+    }
 
     public static Room GenerateRoom(){
         Room r = new Room();
-        r.setRequired_count((int)(Math.random()*7));
-        r.setCurrent_count(r.getRequired_count()-(int)(Math.random()*r.getRequired_count()));
+        r.setCapacity((int)(Math.random()*7));
+        r.setPeer_count(r.getCapacity()-(int)(Math.random()*r.getCapacity()));
         int n=(int)(Math.random()*4);
         switch (n){
             case 0: r.setName("CoNtEsT");
@@ -32,7 +40,7 @@ public class Room {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setPrivacyMode(boolean value){
@@ -40,15 +48,15 @@ public class Room {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public int getRequired_count() {
-        return required_count;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setRequired_count(int required_count) {
-        this.required_count = required_count;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public int getComplexity() {
@@ -67,11 +75,11 @@ public class Room {
         this.active_user = active_user;
     }
 
-    public int getCurrent_count() {
-        return current_count;
+    public int getPeer_count() {
+        return peer_count;
     }
 
-    public void setCurrent_count(int current_count) {
-        this.current_count = current_count;
+    public void setPeer_count(int peer_count) {
+        this.peer_count = peer_count;
     }
 }

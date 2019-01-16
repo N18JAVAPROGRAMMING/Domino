@@ -5,6 +5,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Query;
 
 public class ServerManager {
   Retrofit retrofit;
@@ -26,8 +27,9 @@ public class ServerManager {
    public void getTask(int id, final OnCallBackListenerTask listener){
 
 
-        Call<Task> call = service.getTask();
-        call.enqueue(new Callback<Task>() {
+        Call<Task> call = service.getTask(String.valueOf(id));
+
+                call.enqueue(new Callback<Task>() {
             @Override
             public void onResponse(Call<Task> call, Response<Task> response) {
                 Task task = response.body();

@@ -19,6 +19,8 @@ import java.util.List;
 public class RoomsFragment extends Fragment {
 
 
+
+    RoomsAdapter adapter;
     RecyclerView recyclerView;
     List<Room> rooms;
     OnCallBackStartGame onCallBackStartGame;
@@ -56,16 +58,50 @@ public class RoomsFragment extends Fragment {
         for (int i=0; i<20; i++){
             rooms.add(Room.GenerateRoom());
         }
-
-        RoomsAdapter adapter =  new RoomsAdapter(rooms);
+        defineSocketListener();
+        adapter=  new RoomsAdapter(rooms);
         adapter.setCallBackStartGame(onCallBackStartGame);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
 
-
-
         return v;
 
     }
+
+    public void defineSocketListener(){
+         SocketThread.getInstance().setOnUpdateRoomListListener(new SocketThread.OnUpdateRoomListListener() {
+             @Override
+             public void onAddNewRoom(Room room) {
+                 final Room result=room;
+                 getActivity().runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                         rooms.add(result);
+                         adapter.notifyDataSetChanged();
+                     }
+                 });
+             }
+
+             @Override
+             public void onDeleteRoom(Room room) {
+                 final Room result=room;
+                 getActivity().runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                         rooms.remove(result);
+                         adapter.notifyDataSetChanged();
+                     }
+                 });
+             }
+
+             @Override
+             public void onStartRoom(Room room) {
+
+             }
+         });
+    }
+
+
+
 
 }

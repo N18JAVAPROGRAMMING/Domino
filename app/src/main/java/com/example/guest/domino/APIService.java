@@ -9,17 +9,32 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-    public static String HOST="black-flower.tk";
+    public static String HOST="black-flower.tk/";
 
 
-    @POST("interaction/")
-    Call<Room> createRoom(@Query("id") int id, @Query("capacity") int capacity);
+    @POST("room/create")
+    void createRoom(@Query("name") String name, @Query("capacity") int capacity,@Query("initiator") String initiator);
 
-    @GET("")
+    @GET("room/info")
     Call<List<Room>> getAllRooms();
 
-    @GET("")
-    Call<Task> getTask();
+    @POST("peer/signup")
+    void singUp(@Query("username")String name, @Query("password")String password);
+
+    @POST("peer/signin")
+    Token singIn(@Query("username")String name, @Query("password")String password);
+
+    @POST
+    Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
+
+    @POST
+    void peerDisconnect(@Query("room_id")String room_id, @Query("peer_name")String username);
+
+    @POST
+    Call<Task> getTask(@Query("task_id")String id);
+
+
+
 
     @GET("")
     Call<Boolean> LogIn();
@@ -28,6 +43,10 @@ public interface APIService {
     Call<Boolean> CreateAccount();
 
     //@GET<L>
+
+    public static class Token{
+        String value;
+    }
 
 
 

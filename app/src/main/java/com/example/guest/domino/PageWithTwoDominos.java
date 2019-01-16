@@ -71,8 +71,8 @@ public class PageWithTwoDominos extends Fragment {
         text12.setText(domino1.getDown() + "");
         text21.setText(domino2.getUp() + "");
         text22.setText(domino2.getDown() + "");
-        //button1.setText(domino1.getTask().getDesctiprion());
-        //button2.setText(domino2.getTask().getDesctiprion());
+        //button1.setText(domino1.getTask().getCond());
+        //button2.setText(domino2.getTask().getCond());
         setOnClickListeners();
         return view;
     }

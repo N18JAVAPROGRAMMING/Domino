@@ -1,8 +1,9 @@
 package com.example.guest.domino;
 
-import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -19,23 +20,32 @@ public class SocketThread extends Thread {
 
 
 
-    public static String IP_SERVER=" ";
-    public static int PORT=6664;
+    public static String IP_SERVER="192.168.43.106";
+    public static int PORT=6665;
 
     private OnUpdateRoomListListener onUpdateRoomListListener;
     private OnStateConnectionListener onStateConnectionListener;
 
-    OutputStreamWriter outputStream;
+
+    private  ExampleListener exampleListener;
+
+
+
+    private OutputStreamWriter outputStream;
     private PrintWriter writer;
     private BufferedReader bufferedReader;
+    private DataInputStream in;
+    private Socket socket;
 
 
 
-    public void setOnStateConnectionListener(OnStateConnectionListener onStateConnectionListener) {
+
+
+    public synchronized void setOnStateConnectionListener(OnStateConnectionListener onStateConnectionListener) {
         this.onStateConnectionListener = onStateConnectionListener;
     }
 
-    private Socket socket;
+
 
     public static SocketThread getInstance(){
         synchronized (SocketThread.class){
@@ -46,14 +56,31 @@ public class SocketThread extends Thread {
         return  instance;
     }
 
+    public void setOnExampleListener(ExampleListener exampleListener){
+        this.exampleListener=exampleListener;
+    }
+
+    public interface ExampleListener{
+        void onExampleListener(String s);
+    }
+
     private SocketThread(){
 
     }
-    public interface OnUpdateRoomListListener{
-       void OnUpdateRoomList(Room room);
+
+
+    interface OnUpdateRoomListListener{
+
+        void onAddNewRoom(Room room);
+
+        void onDeleteRoom(Room room);
+
+        void onStartRoom(Room room);
+
     }
 
-    public void setOnUpdateRoomListListener(OnUpdateRoomListListener onUpdateRoomListListener) {
+
+    public synchronized void setOnUpdateRoomListListener(OnUpdateRoomListListener onUpdateRoomListListener) {
         this.onUpdateRoomListListener = onUpdateRoomListListener;
     }
 
@@ -77,14 +104,14 @@ public class SocketThread extends Thread {
             try {
                 InetAddress address= InetAddress.getByName(IP_SERVER);
                 socket = new Socket(address,PORT);
+                Log.d("Socket","Подключено");
+                socket_run=true;
+                connecting=true;
             } catch (IOException e) {
+                if(onStateConnectionListener!=null)
                   onStateConnectionListener.onUnableConnect();
             }
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
     }
 
@@ -101,6 +128,7 @@ public class SocketThread extends Thread {
 
     public void CloseSocket() {
         running = false;
+        connecting=false;
         socket_run=false;
         if (writer != null) {
             writer.flush();
@@ -124,23 +152,38 @@ public class SocketThread extends Thread {
         Connect();
         try {
             outputStream = new OutputStreamWriter(socket.getOutputStream());
-            writer=new PrintWriter(outputStream,false);
+            writer=new PrintWriter(outputStream,true);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+            in= new DataInputStream(socket.getInputStream());
             while (socket_run) {
-                if (writer.checkError()) {
-                    socket_run = false;
+//                if (writer.checkError()) {
+//                    socket_run = false;
+//                }
+
+                Log.d("socket","wait");
+                writer.write("SMS");
+
+                Log.d("socket","message was sent");
+
+
+               //String m =bufferedReader.readLine();
+                String mServerMessage = bufferedReader.readLine();
+                Log.d("socket",mServerMessage);
+
+                if (mServerMessage != null) {
+                    Log.d("socket","getsocket1");
+                    exampleListener.onExampleListener(mServerMessage);
+                    //MessageReceived(mServerMessage);
                 }
 
-                String mServerMessage = bufferedReader.readLine();
-             ;
-                if (mServerMessage != null) {
-                    MessageReceived(mServerMessage);
-                }
+
             }
         } catch (Exception e) {
+   //e.printStackTrace();
+            Log.d("socket","pizda");
         } finally {
             if (socket != null && socket.isConnected()) {
+                Log.d("socket","close");
                 try {
                     socket.close();
                     socket_run=false;
