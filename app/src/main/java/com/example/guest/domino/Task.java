@@ -1,13 +1,13 @@
 package com.example.guest.domino;
 
 public class Task {
-    private String desctiprion;  //условие задачи
+    private String cond;  //условие задачи
     private int id;
     private int level;
-    private String solution="";
+    private String sol ="";
 
 
-    private double answer;
+    private double ans;
 
 
     public static Task GenerateTask(){  //ждем сервер пока так :)
@@ -17,28 +17,28 @@ public class Task {
 
         switch (n){
             case 1:
-                t.setDesctiprion("Из 40 т руды выплавляют 20 т металла, " +
+                t.setCond("Из 40 т руды выплавляют 20 т металла, " +
                         "содержащего 6% примесей. Какой процент  примесей в руде? ");
-                t.setAnswer(53);
+                t.setAns(53);
                break;
             case 0:
-                t.setDesctiprion("Какое число лишнее? Оно не обладает свойством, которым обладают остальные числа.\n" +
+                t.setCond("Какое число лишнее? Оно не обладает свойством, которым обладают остальные числа.\n" +
                         "\n" +
                         "9678  4572  5261  5133  3527  6895  7768  ");
-                t.setAnswer(3527);
+                t.setAns(3527);
                 break;
             case 3:
-                t.setDesctiprion("Какое число лишнее? Оно не обладает свойством, которым обладают остальные числа.\n" +
+                t.setCond("Какое число лишнее? Оно не обладает свойством, которым обладают остальные числа.\n" +
                         "\n" +
                         "9678  4572  5261  5133  3527  6895  7768  ");
-                t.setAnswer(3527);
+                t.setAns(3527);
                 break;
             case 2:
-                t.setDesctiprion("Положительное число увеличивается в 19 раз," +
+                t.setCond("Положительное число увеличивается в 19 раз," +
                         " если в его десятичной записи поменять местами цифры, стоящие на первом" +
                         " и третьем местах после запятой. " +
                         "Найдите третью цифру после запятой в десятичной записи этого числа. ");
-                t.setAnswer(0.9405);
+                t.setAns(0.9405);
                 break;
 
 
@@ -60,20 +60,20 @@ public class Task {
 
 
 
-    public double getAnswer() {
-        return answer;
+    public double getAns() {
+        return ans;
     }
 
-    public void setAnswer(double answer) {
-        this.answer = answer;
+    public void setAns(double ans) {
+        this.ans = ans;
     }
 
-    public String getDesctiprion() {
-        return desctiprion;
+    public String getCond() {
+        return cond;
     }
 
-    public void setDesctiprion(String desctiprion) {
-        this.desctiprion = desctiprion;
+    public void setCond(String cond) {
+        this.cond = cond;
     }
 
     public int getId() {
@@ -92,12 +92,12 @@ public class Task {
         this.level = level;
     }
 
-    public String getSolution() {
-        return solution;
+    public String getSol() {
+        return sol;
     }
 
-    public void setSolution(String solution) {
-        this.solution = solution;
+    public void setSol(String sol) {
+        this.sol = sol;
     }
 
 

@@ -98,6 +98,20 @@ public class InActivity extends AppCompatActivity {
 
 
 
+    public void defineSocket(){
+        SocketThread.getInstance().setOnStateConnectionListener(new SocketThread.OnStateConnectionListener() {
+            @Override
+            public void onUnableConnect() {
+                Toast.makeText(getApplicationContext(),"No connection",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onServerProblems() {
+
+            }
+        });
+    }
+
     public void nextActivity(){
         Intent intent=  new Intent(this,MainActivity.class);
         startActivity(intent);

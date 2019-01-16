@@ -112,31 +112,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void StartSockets(){
-        SocketThread socketThread=SocketThread.getInstance();
-        socketThread.setOnStateConnectionListener(new SocketThread.OnStateConnectionListener() {
-            @Override
-            public void onUnableConnect() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),"Нет подключения",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+       MyApplication.socketThread.setOnExampleListener(new SocketThread.ExampleListener() {
+           @Override
+           public void onExampleListener(String s) {
+               final String s1 =s;
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       Toast.makeText(getApplicationContext(),s1,Toast.LENGTH_LONG).show();
+                   }
+               });
+           }
+       });
 
-            @Override
-            public void onServerProblems() {
 
-            }
-        });
-
-        socketThread.setOnUpdateRoomListListener(new SocketThread.OnUpdateRoomListListener() {
-            @Override
-            public void OnUpdateRoomList(Room room) {
-
-            }
-        });
-        socketThread.start();
 
     }
 

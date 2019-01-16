@@ -1,6 +1,5 @@
 package com.example.guest.domino;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,9 +47,9 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
             }
         });
         Room room = rooms.get(i);
-        customHolder.name.setText(room.getName());
-        customHolder.ratio.setText(room.current_count+"/"+room.required_count);
-        double p = ((double)room.current_count/room.required_count)*100;
+        customHolder.name.setText(room.getRoom_name());
+        customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
+        double p = ((double)room.peer_count /room.capacity)*100;
         customHolder.progressBar.setProgress((int)p);
     }
 

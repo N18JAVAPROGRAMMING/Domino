@@ -48,7 +48,7 @@ public class PageWithProblem extends Fragment {
         dominoText = view.findViewById(R.id.domino_text);
         problemText = view.findViewById(R.id.problem_text);
 
-        problemText.setText(domino.getTask().getDesctiprion());
+        problemText.setText(domino.getTask().getCond());
         dominoText.setText(domino.getUp() + " / " + domino.getDown());
 
         return view;
