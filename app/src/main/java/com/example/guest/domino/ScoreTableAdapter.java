@@ -30,10 +30,8 @@ public class ScoreTableAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText(data.get(position).name);
-        holder.score.setText(data.get(position).score);
-
-
+        holder.setName(data.get(position).name);
+        holder.setScore(data.get(position).score);
     }
 
     @Override
@@ -58,8 +56,15 @@ public class ScoreTableAdapter extends
             view = itemView;
             name = view.findViewById(R.id.name);
             score = view.findViewById(R.id.score);
-
-
         }
+
+        public void setName(String name){
+            this.name.setText(name);
+        }
+
+        public void setScore(int score){
+            this.score.setText(String.valueOf(score));
+        }
+
     }
 }

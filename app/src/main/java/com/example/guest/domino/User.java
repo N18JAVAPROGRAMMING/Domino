@@ -8,7 +8,7 @@ public class User {
     public static User generateUser(){
         User user = new User();
         user.name = "jdjf";
-        user.score = 1234;
+        user.score = (int)(Math.random() * 1000);
         return user;
     }
 
