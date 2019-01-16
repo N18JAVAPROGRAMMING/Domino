@@ -71,7 +71,7 @@ public class CreateRoom extends Fragment {
             public void onClick(View v) {
                 if (editName.getText().toString().length()>0){
                     Room r = new Room();
-                    r.setRoom_name(editName.getText().toString());
+                    r.setName(editName.getText().toString());
                     r.setCapacity(seekBar.getProgress());
                     boolean mode=false;
                     if(turnSwitch.isActivated()){

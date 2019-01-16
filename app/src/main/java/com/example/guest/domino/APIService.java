@@ -13,7 +13,7 @@ public interface APIService {
 
 
     @POST("room/create")
-    void createRoom(@Query("room_name") String name, @Query("capacity") int capacity,@Query("initiator") String initiator);
+    void createRoom(@Query("name") String name, @Query("capacity") int capacity,@Query("initiator") String initiator);
 
     @GET("room/info")
     Call<List<Room>> getAllRooms();
@@ -22,7 +22,7 @@ public interface APIService {
     void singUp(@Query("username")String name, @Query("password")String password);
 
     @POST("peer/signin")
-    void singIn(@Query("username")String name, @Query("password")String password);
+    Token singIn(@Query("username")String name, @Query("password")String password);
 
     @POST
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
@@ -43,6 +43,10 @@ public interface APIService {
     Call<Boolean> CreateAccount();
 
     //@GET<L>
+
+    public static class Token{
+        String value;
+    }
 
 
 

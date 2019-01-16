@@ -47,7 +47,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
             }
         });
         Room room = rooms.get(i);
-        customHolder.name.setText(room.getRoom_name());
+        customHolder.name.setText(room.getName());
         customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
         double p = ((double)room.peer_count /room.capacity)*100;
         customHolder.progressBar.setProgress((int)p);
