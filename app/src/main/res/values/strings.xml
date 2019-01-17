@@ -8,4 +8,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="add_account">+ add account</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="start">start</string>
+    <string name="Enter">Вход</string>
+    <string name="login_in">Войти</string>
 </resources>

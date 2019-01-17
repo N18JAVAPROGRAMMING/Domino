@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ public class InActivity extends AppCompatActivity {
     //first activity
 
 
-    Button actionButton;
+    CardView actionButton;
     int condition=0;
     public static final int REGISTARTION_CONDITION=0;
     public static final int AUTHORIZATION_CONDITION=1;
@@ -53,7 +54,7 @@ public class InActivity extends AppCompatActivity {
         //getSupportFragmentManager().popBackStack();
 
 
-       actionButton=findViewById(R.id.add_account);
+        actionButton=findViewById(R.id.add_account);
         actionButton.setOnClickListener(new View.OnClickListener() {   //изменение кнопки на back to auth
             @Override
             public void onClick(View v) {
@@ -62,13 +63,13 @@ public class InActivity extends AppCompatActivity {
                 switch(condition){
                     case REGISTARTION_CONDITION:
                         fragmentTransaction.replace(R.id.fragment,authFragment).commit();
-                        actionButton.setText("+ CREATE NEW ACCOUNT");
+                        //actionButton.setText("+ CREATE NEW ACCOUNT");
                         condition=AUTHORIZATION_CONDITION;
                         break;
                     case AUTHORIZATION_CONDITION:
                         fragmentTransaction.replace(R.id.fragment,regFragment).commit();
                         fragmentTransaction.addToBackStack(null);
-                        actionButton.setText("LOG_IN");
+                        //actionButton.setText("LOG_IN");
                         condition=REGISTARTION_CONDITION;
                         break;
 
