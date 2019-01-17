@@ -9,18 +9,5 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="AppTheme.DominoStyle">
-        <item name="android:textColor">#FFFFFF</item>
-    </style>
-
-    <style name="AppTheme.DominoStyle.Back">
-        <item name="android:background">@color/lightBlack</item>
-    </style>
-
-    <style name="AppTheme.DominoStyle.Button">
-        <item name="android:background">@color/pink</item>
-    </style>
-
-    <style name="Empty" />
 
 </resources>

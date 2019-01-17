@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageWithProblem"
-    style="@style/AppTheme.DominoStyle.Back">
+    tools:context=".PageWithProblem">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -39,14 +38,13 @@
                     android:id="@+id/problem_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    tools:layout_editor_absoluteX="16dp" />
+                    android:textSize="24sp" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/problem_text"
-                    android:layout_marginBottom="100dp">
+                    android:layout_marginBottom="70dp">
 
                     <EditText
                         android:id="@+id/answer_field"
@@ -57,7 +55,6 @@
                         app:layout_constraintRight_toLeftOf="@id/button_answer" />
 
                     <Button
-                        style="@style/AppTheme.DominoStyle.Button"
                         android:id="@+id/button_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

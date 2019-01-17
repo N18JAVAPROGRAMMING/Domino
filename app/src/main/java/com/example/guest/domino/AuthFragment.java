@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,8 @@ public class AuthFragment extends Fragment
 
     onCallBackListener listener;
 
-    Button next;
+    //Button next;
+    CardView next;
     TextView login;
     EditText password;
 
@@ -54,7 +56,8 @@ public class AuthFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_auth, container, false);
-        next=v.findViewById(R.id.a_next);
+        //next=v.findViewById(R.id.a_next);
+        next = v.findViewById(R.id.next);
         login=v.findViewById(R.id.a_login);
         password=v.findViewById(R.id.a_password);
 
