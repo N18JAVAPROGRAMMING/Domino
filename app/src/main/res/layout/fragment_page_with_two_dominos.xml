@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PageWithTwoDominos"
-    android:background="@color/lightBlack">
+    style="@style/AppTheme.DominoStyle.Back">
 
 
 
@@ -37,7 +37,9 @@
 
 
             <TextView
+                android:visibility="gone"
                 style="@style/Empty"
+                android:theme="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text11"
                 android:layout_width="match_parent"
@@ -50,7 +52,9 @@
 
 
             <TextView
+                android:visibility="gone"
                 style="@style/Empty"
+                android:theme="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text12"
                 android:layout_width="match_parent"
@@ -79,7 +83,9 @@
             app:layout_constraintStart_toEndOf="@+id/center">
 
             <TextView
+                android:visibility="gone"
                 style="@style/Empty"
+                android:theme="@style/Empty"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text21"
                 android:layout_width="match_parent"
@@ -92,7 +98,7 @@
 
 
             <TextView
-                style="@style/Empty"
+                android:visibility="gone"
                 android:textColor="#FFFFFF"
                 android:id="@+id/text22"
                 android:layout_width="match_parent"
