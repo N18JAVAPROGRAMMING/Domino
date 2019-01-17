@@ -70,7 +70,7 @@ public class AuthFragment extends Fragment
             @Override
             public void onClick(View v) {
                   final View view =v;
-                Intent intent=  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                Intent intent=  new Intent(getActivity().getApplicationContext(),coordinator_test.class);
                 startActivity(intent);
 
                 /*serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {

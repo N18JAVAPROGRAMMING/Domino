@@ -1,10 +1,16 @@
 package com.example.guest.domino;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class Task {
-    private String cond;  //условие задачи
-    private int id;
-    private int level;
-    private String sol ="";
+    String cond;
+    //условие задачи
+    @PrimaryKey
+    int id;
+     int level;
+     String sol ="";
 
 
     private double ans;
