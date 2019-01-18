@@ -8,6 +8,44 @@
         <item name="colorAccent">@color/pink</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.Background.BottomNavigation">
+        <item name="cardElevation">50dp</item>
+        <item name="android:background">@color/lighter_light_black</item>
+    </style>
+
+    <style name="AppTheme.PinkButton">
+        <item name="cardBackgroundColor">@color/pink</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="AppTheme.GreyButton">
+        <item name="cardElevation">20dp</item>
+        <item name="cardBackgroundColor">@color/grey</item>
+    </style>
+
+    <style name="AppTheme.Background">
+        <item name="cardBackgroundColor">@color/lightBlack</item>
+    </style>
+
+    <style name="AppTheme.NotCardBackground">
+        <item name="android:background">@color/lightBlack</item>
+    </style>
+    
+    <style name="AppTheme.Background.UpperInfo">
+        <item name="cardElevation">30dp</item>
+        <item name="android:background">@color/lighter_light_black</item>
+    </style>
+
+    <style name="AppTheme.EditText">
+        <item name="cardBackgroundColor">@color/darkBlack</item>
+        <item name="android:textColorHint">@color/lighter_light_black</item>
+        <item name="editTextColor">#FFFFFF</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">24sp</item>
+        <item name="contentPadding">12dp</item>
     </style>
 
 </resources>

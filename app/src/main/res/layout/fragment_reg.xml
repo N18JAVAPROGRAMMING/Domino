@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    style="@style/AppTheme.NotCardBackground">
 
     <!-- TODO: Update blank fragment layout -->
 
