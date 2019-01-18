@@ -11,6 +11,7 @@ public class MyApplication extends Application {
     public static final String TOKEN_PREFERENCES="TOKEN";
 
     static SocketThread socketThread;
+    static User user;
    private  static TaskData MainData;
 
 

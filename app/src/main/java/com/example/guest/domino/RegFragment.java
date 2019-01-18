@@ -75,23 +75,37 @@ public class RegFragment extends Fragment {
                     return;
                 }
 
-               /* serverManager.CreateNewAccount(name, password, new ServerManager.OnCallBackListenerReg() {
+                serverManager.CreateNewAccount(name, password, new ServerManager.OnCallBackListenerReg() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
                         if (answer){
                             APIService.Token.SaveToken(getContext(),token);
-                            Snackbar.make(editCPassword,"Вы успешно зарегистрированы",Snackbar.LENGTH_LONG).show();
-                            Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
-                            startActivity(intent);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Snackbar.make(editCPassword,"Вы успешно зарегистрированы",Snackbar.LENGTH_SHORT).show();
+                                    Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                        } else {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Snackbar.make(editCPassword,"Ошибка сервера",Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                     }
-                });*/
+                });
 
 
 
-                Snackbar.make(v,"Вы успешно зарегистрированы (нет)",Snackbar.LENGTH_LONG).show();
+               /* Snackbar.make(v,"Вы успешно зарегистрированы (нет)",Snackbar.LENGTH_LONG).show();
                 Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
                 return;
 
             }

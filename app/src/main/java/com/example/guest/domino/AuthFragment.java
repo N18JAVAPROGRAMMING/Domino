@@ -72,22 +72,37 @@ public class AuthFragment extends Fragment
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  final View view =v;
-                Intent intent=  new Intent(getActivity().getApplicationContext(),coordinator_test.class);
-                startActivity(intent);
 
-                /*serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
+                final View view =v;
+
+               /*Intent intent=  new Intent(getActivity().getApplicationContext(),PreGameAcivity.class);
+                startActivity(intent);
+*/
+                serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
+                        final String t = token;
                         if(answer){
-                            APIService.Token.SaveToken(getContext(),token);
-                            Intent intent =  new Intent(getContext(),MainActivity.class);
-                            startActivity(intent);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    APIService.Token.SaveToken(getContext(),t);
+                                    Intent intent =  new Intent(getContext(),MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
                         } else {
-                            Snackbar.make(view,"Неверные данные входа",Snackbar.LENGTH_LONG);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Snackbar.make(view,"Неверные данные входа",Snackbar.LENGTH_LONG).show();
+                                }
+                            });
+
                         }
                     }
-                });*/
+                });
 
             }
         });
