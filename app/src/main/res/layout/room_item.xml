@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="125dp"
-    android:layout_margin="6dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name"
-        android:id="@+id/name"
-        android:textSize="36sp"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5/6"
-        android:textSize="40sp"
-        android:id="@+id/ratio"
-        android:layout_alignBottom="@+id/name"
-        android:layout_toRightOf="@+id/name"
-        android:layout_marginLeft="20dp"/>
-
-    <ProgressBar
-        android:progressDrawable="@drawable/progress_bar"
-    style="@android:style/Widget.ProgressBar.Horizontal"
-    android:layout_width="match_parent"
-    android:layout_margin="10dp"
-    android:layout_below="@id/name"
-
     android:layout_height="wrap_content"
-    android:progress="25"
-    android:id="@+id/progress"/>
-    </RelativeLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    app:cardCornerRadius="5dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/name_room"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Name"
+            android:textColor="@color/darkBlack"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/count"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/description_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/lighter_light_black"
+            android:text="Descriprion"
+            app:layout_constraintEnd_toEndOf="@+id/name_room"
+            app:layout_constraintStart_toStartOf="@+id/name_room"
+            app:layout_constraintTop_toBottomOf="@+id/name_room" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/darkBlack"
+            android:textSize="30sp"
+            android:text="5/6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
 </android.support.v7.widget.CardView>
-
-
-
-</RelativeLayout>

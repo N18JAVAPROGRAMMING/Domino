@@ -40,17 +40,17 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
     @Override
     public void onBindViewHolder(@NonNull CustomHolder customHolder, int i) {
         final int number=i;
-        customHolder.view.setOnClickListener(new View.OnClickListener() {
+        /*customHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onCallBackStartGame.StartGame(rooms.get(number));
             }
-        });
+        });*/
         Room room = rooms.get(i);
-        customHolder.name.setText(room.getName());
-        customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
+        //customHolder.name.setText(room.getName());
+        //customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
         double p = ((double)room.peer_count /room.capacity)*100;
-        customHolder.progressBar.setProgress((int)p);
+        //customHolder.progressBar.setProgress((int)p);
     }
 
     @Override
@@ -67,10 +67,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         public CustomHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
-            name=itemView.findViewById(R.id.name);
-            progressBar=itemView.findViewById(R.id.progress);
-            progressBar.setMax(100);
-            ratio =itemView.findViewById(R.id.ratio);
+            //name=itemView.findViewById(R.id.name);
+            //progressBar=itemView.findViewById(R.id.progress);
+            //progressBar.setMax(100);
+            //ratio =itemView.findViewById(R.id.ratio);
         }
 
 
