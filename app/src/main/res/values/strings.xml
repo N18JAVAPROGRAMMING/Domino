@@ -16,4 +16,5 @@
     <string name="login_in">Войти</string>
     <string name="create_tournir">Создание турнира</string>
     <string name="enter_name">Введите название</string>
+    <string name="nazvanie">Название</string>
 </resources>

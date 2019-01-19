@@ -46,7 +46,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/cardView1"
         app:cardCornerRadius="5dp"
-        android:id="@+id/cardView2">
+        android:id="@+id/Domino1">
 
         <EditText
             style="@style/AppTheme.EditText"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/next"
         app:cardCornerRadius="5dp"
-        app:layout_constraintTop_toBottomOf="@id/cardView2"
+        app:layout_constraintTop_toBottomOf="@id/Domino1"
         app:contentPadding="10dp"
         android:layout_marginTop="24dp">
 
