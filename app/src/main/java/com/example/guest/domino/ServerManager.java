@@ -10,6 +10,9 @@ import retrofit2.http.Query;
 public class ServerManager {
   private Retrofit retrofit;
   private APIService service;
+
+  OnCallBackListenerAuth listenerAuth;
+  OnCallBackListenerReg listenerReg;
   /*private static ServerManager manager;*/
 
   /*public static synchronized ServerManager getInstance(){
@@ -20,7 +23,7 @@ public class ServerManager {
 
   public ServerManager(){
       try {
-          Retrofit retrofit = new Retrofit.Builder()
+         retrofit = new Retrofit.Builder()
                   .baseUrl(APIService.HOST)
                   .addConverterFactory(GsonConverterFactory.create())
                   .build();
@@ -63,21 +66,25 @@ public class ServerManager {
    }
 
 
-   public void LogIn(String login, String password, final OnCallBackListenerAuth listenerAuth){
-      Call<Boolean> call = service.LogIn();
+   public void LogIn(String login, String password, final OnCallBackListenerAuth listener){
 
-      call.enqueue(new Callback<Boolean>() {
-          @Override
-          public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-              Boolean answer= response.body();
-              listenerAuth.onCallBack(answer,"");
-          }
+          this.listenerAuth=listener;
+      Call<APIService.Token> call = service.logIn(login,password);
 
-          @Override
-          public void onFailure(Call<Boolean> call, Throwable t) {
+       call.enqueue(new Callback<APIService.Token>() {
+           boolean answer=false;
+           @Override
+           public void onResponse(Call<APIService.Token> call, Response<APIService.Token> response) {
+              answer=true;
+              APIService.Token token = response.body();
+              listenerAuth.onCallBack(answer,token.token);
+           }
 
-          }
-      });
+           @Override
+           public void onFailure(Call<APIService.Token> call, Throwable t) {
+               listenerAuth.onCallBack(false,"");
+           }
+       });
    }
 
 
@@ -85,18 +92,18 @@ public class ServerManager {
       void onCallBack(boolean answer,String token);
    }
 
-   public void CreateNewAccount(String name, String password, final OnCallBackListenerReg listenerReg){
-      Call<Boolean> call = service.CreateAccount();
-      call.enqueue(new Callback<Boolean>() {
+   public void CreateNewAccount(String name, String password, final OnCallBackListenerReg listener){
+      listenerReg=listener;
+      Call<APIService.Token> call = service.singUp(name,password);
+      call.enqueue(new Callback<APIService.Token>() {
           @Override
-          public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-              Boolean answer = response.body();
-              listenerReg.onCallBack(answer,"");
+          public void onResponse(Call<APIService.Token> call, Response<APIService.Token> response) {
+              listenerReg.onCallBack(true,response.body().token);
           }
 
           @Override
-          public void onFailure(Call<Boolean> call, Throwable t) {
-
+          public void onFailure(Call<APIService.Token> call, Throwable t) {
+              listenerReg.onCallBack(false,"");
           }
       });
    }

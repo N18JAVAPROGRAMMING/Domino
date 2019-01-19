@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ScoreTableAdapter extends
-        RecyclerView.Adapter<ScoreTableAdapter.ViewHolder> {
+public class UserAdapter extends
+        RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> data;
 
-    public ScoreTableAdapter(final List<User> data) {
+    public UserAdapter(final List<User> data) {
         this.data = data;
 
     }
@@ -23,7 +23,7 @@ public class ScoreTableAdapter extends
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.item_user,
+                .inflate(R.layout.user_item,
                         parent,
                         false));
     }

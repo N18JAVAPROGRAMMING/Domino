@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.guest.domino">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".MyApplication"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:hardwareAccelerated="true">
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".InActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +28,7 @@
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game" />
+        <activity android:name=".PreGameAcivity"></activity>
     </application>
 
 </manifest>
