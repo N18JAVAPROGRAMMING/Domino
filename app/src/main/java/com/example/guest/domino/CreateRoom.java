@@ -54,19 +54,19 @@ public class CreateRoom extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v  =inflater.inflate(R.layout.fragment_create_room, container, false);
-        editName=v.findViewById(R.id.edit_name);
-        seekBar = v.findViewById(R.id.seek_bar);
-        turnSwitch = v.findViewById(R.id.turnOfOn);
-        seekBar.setMax(5);
+        //editName=v.findViewById(R.id.edit_name);
+        //seekBar = v.findViewById(R.id.seek_bar);
+        //turnSwitch = v.findViewById(R.id.turnOfOn);
+        //seekBar.setMax(5);
 
-        createButton=v.findViewById(R.id.create);
-        setCreateRoomListener();
+        //createButton=v.findViewById(R.id.create);
+        //setCreateRoomListener();
 
         return v;
     }
 
     public void setCreateRoomListener(){
-        createButton.setOnClickListener(new View.OnClickListener() {
+        /*createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editName.getText().toString().length()>0){
@@ -84,7 +84,7 @@ public class CreateRoom extends Fragment {
                     Snackbar.make(v,"Не введено имя турнира",Snackbar.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
     }
 
 }
