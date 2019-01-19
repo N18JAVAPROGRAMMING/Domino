@@ -18,10 +18,8 @@ import android.widget.Switch;
  */
 public class CreateRoom extends Fragment {
 
-    EditText  editName;
-    Switch turnSwitch;
-    SeekBar seekBar;
-    Button  createButton;
+    private EditText  editName;
+    private SeekBar seekBar;
     static OnCreateRoomListener onCreateRoomListener;
 
    public interface  OnCreateRoomListener{

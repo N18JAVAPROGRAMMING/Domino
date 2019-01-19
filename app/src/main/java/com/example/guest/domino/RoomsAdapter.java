@@ -40,12 +40,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
     @Override
     public void onBindViewHolder(@NonNull CustomHolder customHolder, int i) {
         final int number=i;
-        /*customHolder.view.setOnClickListener(new View.OnClickListener() {
+        customHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onCallBackStartGame.StartGame(rooms.get(number));
             }
-        });*/
+        });
         Room room = rooms.get(i);
         //customHolder.name.setText(room.getName());
         //customHolder.ratio.setText(room.peer_count +"/"+room.capacity);

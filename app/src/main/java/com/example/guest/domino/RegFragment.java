@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 
 public class RegFragment extends Fragment {
 
-   Button next;
+   CardView next;
    EditText editPassword;
    EditText editCPassword;
    EditText editLogin;
@@ -46,10 +47,10 @@ public class RegFragment extends Fragment {
         // Inflate the layout for this fragment
         serverManager= new ServerManager();
         View v = inflater.inflate(R.layout.fragment_reg, container, false);
-        next=v.findViewById(R.id.r_next);
-        editCPassword=v.findViewById(R.id.reg_confirm_password);
-        editPassword=v.findViewById(R.id.reg_password);
-        editLogin=v.findViewById(R.id.reg_login);
+        next=v.findViewById(R.id.next);
+        editCPassword=v.findViewById(R.id.repeat_password);
+        editPassword=v.findViewById(R.id.edit_password);
+        editLogin=v.findViewById(R.id.edit_login);
         setOnClickListener();
 
 

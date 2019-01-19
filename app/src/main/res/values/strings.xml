@@ -17,4 +17,10 @@
     <string name="create_tournir">Создание турнира</string>
     <string name="enter_name">Введите название</string>
     <string name="nazvanie">Название</string>
+    <string name="description">Описание</string>
+    <string name="enter_description">Введите описание</string>
+    <string name="registration_text">Регистрация</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="register_in">Зарегестрироваться</string>
+    <string name="number_of_players">Количество игроков</string>
 </resources>
