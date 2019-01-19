@@ -88,6 +88,10 @@ public class AuthFragment extends Fragment
                                 public void run() {
                                     APIService.Token.SaveToken(getContext(),t);
                                     Intent intent =  new Intent(getContext(),MainActivity.class);
+                                    User user = new User();
+                                    user.name=login.getText().toString();
+                                    //score
+                                    MyApplication.saveActiveUser(user,getContext());
                                     startActivity(intent);
                                 }
                             });
@@ -96,11 +100,21 @@ public class AuthFragment extends Fragment
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(view,"Неверные данные входа",Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view,t,Snackbar.LENGTH_LONG).show();
                                 }
                             });
 
                         }
+                    }
+
+                    @Override
+                    public void error() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Snackbar.make(view,"Ошибка подключения",Snackbar.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 });
 

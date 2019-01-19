@@ -13,8 +13,8 @@ import java.util.List;
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder> {
 
 
-    List<Room> rooms;
-    RoomsFragment.OnCallBackStartGame onCallBackStartGame;
+    private List<Room> rooms;
+    private RoomsFragment.OnCallBackStartGame onCallBackStartGame;
 
 
     public  RoomsAdapter(List<Room> list){
@@ -31,6 +31,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
 
 
         return new CustomHolder(v);
+    }
+
+    public void setRoomList(List<Room> rooms){
+        this.rooms=rooms;
     }
 
     public void setCallBackStartGame(RoomsFragment.OnCallBackStartGame onCallBackStartGame) {

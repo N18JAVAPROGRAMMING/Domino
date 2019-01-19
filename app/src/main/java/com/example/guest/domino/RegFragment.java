@@ -63,7 +63,7 @@ public class RegFragment extends Fragment {
             public void onClick(View v) {
                 String password =editPassword.getText().toString();
                 String conf_password=editCPassword.getText().toString();
-                String name=editLogin.getText().toString();
+                final String name=editLogin.getText().toString();
 
                 if(name.length()==0){
                     Snackbar.make(v,"Введите логин",Snackbar.LENGTH_LONG).show();
@@ -75,16 +75,26 @@ public class RegFragment extends Fragment {
                     return;
                 }
 
+                if(password.length()==0){
+                    Snackbar.make(v,"Введите пароль",Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 serverManager.CreateNewAccount(name, password, new ServerManager.OnCallBackListenerReg() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
+                        final String t =token;
                         if (answer){
-                            APIService.Token.SaveToken(getContext(),token);
+                            APIService.Token.SaveToken(getActivity().getApplicationContext(),token);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Snackbar.make(editCPassword,"Вы успешно зарегистрированы",Snackbar.LENGTH_SHORT).show();
                                     Intent intent =  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                                    User user = new User();
+                                    user.name=name;
+                                    //score
+                                    MyApplication.saveActiveUser(user,getContext());
                                     startActivity(intent);
                                 }
                             });
@@ -93,13 +103,24 @@ public class RegFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(editCPassword,"Ошибка сервера",Snackbar.LENGTH_SHORT).show();
+                                    Snackbar.make(editCPassword,t,Snackbar.LENGTH_SHORT).show();
                                 }
                             });
 
                         }
                     }
+                    @Override
+                    public void error() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Snackbar.make(editCPassword,"Ошибка подключения",Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 });
+
+
 
 
 
