@@ -1,5 +1,7 @@
 package com.example.guest.domino;
 
+import android.util.Log;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,7 +84,9 @@ public class ServerManager {
 
            @Override
            public void onFailure(Call<APIService.Token> call, Throwable t) {
+               Log.d("Server",t.getMessage());
                listenerAuth.onCallBack(false,"");
+
            }
        });
    }
