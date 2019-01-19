@@ -64,6 +64,7 @@
         </android.support.v7.widget.CardView>
 
         <ImageView
+            android:layout_margin="5dp"
             android:id="@+id/Domino11"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -71,7 +72,8 @@
             app:layout_constraintRight_toRightOf="@id/Domino1"
             app:layout_constraintLeft_toLeftOf="@id/Domino1"
             app:layout_constraintBottom_toTopOf="@id/Domino12"
-            android:src="@mipmap/kost1"/>
+            android:src="@mipmap/kost5"
+            android:elevation="100dp"/>
         <ImageView
             android:id="@+id/Domino12"
             android:layout_width="0dp"

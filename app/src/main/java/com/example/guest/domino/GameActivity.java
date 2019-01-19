@@ -71,6 +71,24 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+        fragmentProblems.addDomino(Domino.generateDomino());
+
         //Костыль!!!
         //getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
 
