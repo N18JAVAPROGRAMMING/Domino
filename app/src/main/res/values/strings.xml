@@ -23,4 +23,7 @@
     <string name="repeat_password">Повторите пароль</string>
     <string name="register_in">Зарегестрироваться</string>
     <string name="number_of_players">Количество игроков</string>
+    <string name="back">Покинуть</string>
+    <string name="enter_answer">Введите ответ</string>
+    <string name="solve_solution">Ответить</string>
 </resources>

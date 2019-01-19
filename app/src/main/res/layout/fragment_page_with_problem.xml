@@ -4,30 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageWithProblem">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".PageWithProblem"
+    style="@style/AppTheme.NotCardBackground">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <TextView
+        <android.support.v7.widget.CardView
             android:id="@+id/domino_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="180dp"
+            android:layout_height="90dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/darkBlack">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/domino_horizontal"/>
+
+        </android.support.v7.widget.CardView>
 
         <ScrollView
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/domino_text"
-            tools:layout_editor_absoluteX="16dp"
             tools:ignore="MissingConstraints">
 
             <RelativeLayout
@@ -44,25 +51,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/problem_text"
-                    android:layout_marginBottom="70dp">
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="16dp">
 
-                    <EditText
-                        android:id="@+id/answer_field"
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/answer_field_card"
+                        style="@style/AppTheme.EditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        app:cardCornerRadius="5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/button_answer" />
+                        app:layout_constraintRight_toLeftOf="@id/button_answer">
 
-                    <Button
+                        <EditText
+                            android:id="@+id/answer_field"
+                            style="@style/AppTheme.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/enter_answer" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        style="@style/AppTheme.PinkButton"
                         android:id="@+id/button_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ответить"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/answer_field"
+                        app:layout_constraintLeft_toRightOf="@id/answer_field_card"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:contentPadding="10dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/solve_solution"
+                            android:textSize="24sp"/>
+
+                    </android.support.v7.widget.CardView>
+
                 </android.support.constraint.ConstraintLayout>
 
             </RelativeLayout>
