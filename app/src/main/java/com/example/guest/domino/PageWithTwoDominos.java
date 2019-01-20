@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -17,22 +18,24 @@ import android.widget.TextView;
  */
 public class PageWithTwoDominos extends Fragment {
 
-    //private ConstraintLayout button1;
-    //private ConstraintLayout button2;
-
     private Domino domino1;
     private Domino domino2;
 
-    /*private TextView text11;
-    private TextView text12;
-    private TextView text21;
-    private TextView text22;*/
+    private ImageView img11;
+    private ImageView img12;
+    private ImageView img21;
+    private ImageView img22;
 
     public void setListener(OnFragmentClickListener listener) {
         this.listener = listener;
     }
 
     OnFragmentClickListener listener;
+
+    public void setColors(){
+        if(domino1.getUp() != 0)
+            img11.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getUp()));
+    }
 
     public interface OnFragmentClickListener{
         void onClick(Domino domino);
@@ -61,19 +64,10 @@ public class PageWithTwoDominos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page_with_two_dominos, container, false);
-        //button1 = view.findViewById(R.id.lay1);
-        //button2 = view.findViewById(R.id.lay2);
-        /*text11 = view.findViewById(R.id.text11);
-        text12 = view.findViewById(R.id.text12);
-        text22 = view.findViewById(R.id.text22);
-        text21 = view.findViewById(R.id.text21);
-        text11.setText(domino1.getUp() + "");
-        text12.setText(domino1.getDown() + "");
-        text21.setText(domino2.getUp() + "");
-        text22.setText(domino2.getDown() + "");*/
-        //button1.setText(domino1.getTask().getCond());
-        //button2.setText(domino2.getTask().getCond());
-        //setOnClickListeners();
+        img11 = view.findViewById(R.id.Domino11);
+        img12 = view.findViewById(R.id.Domino12);
+        img21 = view.findViewById(R.id.Domino21);
+        img22 = view.findViewById(R.id.Domino22);
         return view;
     }
 /*

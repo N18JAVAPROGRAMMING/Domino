@@ -75,6 +75,7 @@
             android:src="@mipmap/kost5"
             android:elevation="100dp"/>
         <ImageView
+            android:layout_margin="5dp"
             android:id="@+id/Domino12"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -82,6 +83,27 @@
             app:layout_constraintLeft_toLeftOf="@id/Domino1"
             app:layout_constraintTop_toBottomOf="@id/Domino11"
             app:layout_constraintBottom_toBottomOf="@id/Domino1"/>
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/Domino21"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/Domino2"
+            app:layout_constraintRight_toRightOf="@id/Domino2"
+            app:layout_constraintLeft_toLeftOf="@id/Domino2"
+            app:layout_constraintBottom_toTopOf="@id/Domino22"
+            android:src="@mipmap/kost5"
+            android:elevation="100dp"/>
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/Domino22"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintRight_toRightOf="@id/Domino2"
+            app:layout_constraintLeft_toLeftOf="@id/Domino2"
+            app:layout_constraintTop_toBottomOf="@id/Domino21"
+            app:layout_constraintBottom_toBottomOf="@id/Domino2"/>
 
 
     </android.support.constraint.ConstraintLayout>

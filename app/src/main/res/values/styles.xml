@@ -37,6 +37,8 @@
     <style name="AppTheme.Background.UpperInfo">
         <item name="cardElevation">30dp</item>
         <item name="android:background">@color/lighter_light_black</item>
+        <item name="android:textSize">40sp</item>
+        <item name="contentPadding">8dp</item>
     </style>
 
     <style name="AppTheme.EditText">
