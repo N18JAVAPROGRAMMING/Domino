@@ -75,9 +75,9 @@ public class AuthFragment extends Fragment
 
                 final View view =v;
 
-               /*Intent intent=  new Intent(getActivity().getApplicationContext(),PreGameAcivity.class);
+               Intent intent=  new Intent(getActivity().getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-*/
+/*
                 serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
@@ -118,7 +118,7 @@ public class AuthFragment extends Fragment
                     }
                 });
 
-            }
+            */}
         });
         //переопределение методов
         return v;

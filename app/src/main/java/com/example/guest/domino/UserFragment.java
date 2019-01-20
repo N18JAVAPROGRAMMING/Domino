@@ -52,14 +52,13 @@ public class UserFragment extends Fragment {
         userImage=v.findViewById(R.id.user_image);
         name=v.findViewById(R.id.name);
         score=v.findViewById(R.id.score);
-        exit=v.findViewById(R.id.exit);
-        setExitOnClickListener();
+        //setExitOnClickListener();
         mainUser=MyApplication.getActiveUser(getContext());
         if (mainUser==null){
             ErrorLoadUser();
         } else {
 
-            name.setText(mainUser.name);
+            //name.setText(mainUser.name);
             score.setText(String.valueOf(mainUser.score));
 
 
