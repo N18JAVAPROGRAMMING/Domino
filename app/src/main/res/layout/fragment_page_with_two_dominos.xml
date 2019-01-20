@@ -72,7 +72,6 @@
             app:layout_constraintRight_toRightOf="@id/Domino1"
             app:layout_constraintLeft_toLeftOf="@id/Domino1"
             app:layout_constraintBottom_toTopOf="@id/Domino12"
-            android:src="@mipmap/kost5"
             android:elevation="100dp"/>
         <ImageView
             android:layout_margin="5dp"
@@ -82,7 +81,8 @@
             app:layout_constraintRight_toRightOf="@id/Domino1"
             app:layout_constraintLeft_toLeftOf="@id/Domino1"
             app:layout_constraintTop_toBottomOf="@id/Domino11"
-            app:layout_constraintBottom_toBottomOf="@id/Domino1"/>
+            app:layout_constraintBottom_toBottomOf="@id/Domino1"
+            android:elevation="100dp"/>
 
         <ImageView
             android:layout_margin="5dp"
@@ -93,7 +93,6 @@
             app:layout_constraintRight_toRightOf="@id/Domino2"
             app:layout_constraintLeft_toLeftOf="@id/Domino2"
             app:layout_constraintBottom_toTopOf="@id/Domino22"
-            android:src="@mipmap/kost5"
             android:elevation="100dp"/>
         <ImageView
             android:layout_margin="5dp"
@@ -103,7 +102,8 @@
             app:layout_constraintRight_toRightOf="@id/Domino2"
             app:layout_constraintLeft_toLeftOf="@id/Domino2"
             app:layout_constraintTop_toBottomOf="@id/Domino21"
-            app:layout_constraintBottom_toBottomOf="@id/Domino2"/>
+            app:layout_constraintBottom_toBottomOf="@id/Domino2"
+            android:elevation="100dp"/>
 
 
     </android.support.constraint.ConstraintLayout>
