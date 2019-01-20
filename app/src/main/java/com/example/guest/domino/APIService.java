@@ -17,9 +17,26 @@ public interface APIService {
 
     public static String HOST="http://95.163.180.246/";
 
+    public static class ModelCreateRoom{
+        String token;
+        String domino_amt;
+        String room_name;
+        int capacity;
+
+        public ModelCreateRoom(String token, String domino_amt, String room_name, int capacity) {
+            this.token = token;
+            this.domino_amt = domino_amt;
+            this.room_name = room_name;
+            this.capacity = capacity;
+        }
+    }
+
+
+  /*  @POST("room/create")
+    void createRoom(@Query("token") String token, @Query("domino_amt") String amount,@Query("room_name") String name, @Query("capacity") int capacity);*/
 
     @POST("room/create")
-    void createRoom(@Query("token") String token, @Query("domino_amt") String amount,@Query("room_name") String name, @Query("capacity") int capacity);
+    Call<Room> createRoom(@Body ModelCreateRoom model);
 
     @GET("room/info")
     Call<List<Room>> getAllRooms(@Query("token") String token);
@@ -44,7 +61,7 @@ public interface APIService {
 
 
     @GET("room/status")
-    Call<Room> roomStatus(@Query("token") String token,@Query("id") String room_id);
+    Call<Room> roomStatus(@Query("token") String token,@Query("room_id") String room_id);
 
   /*  @POST()
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
@@ -54,14 +71,14 @@ public interface APIService {
 
 
      //new Version
-    @POST("room/d")
+    @POST("room/connect")
     Call<Room> peerConnect(@Body ModelPeer model);
 
-    @POST("room/connect")
+    @POST("room/disconnect")
     Call<List<Room>> peerDisconnect(@Body ModelPeer model);
 
     @GET("game/dependencies")
-    Dependencies dependencies(@Query("room_id")String room_id,@Query("token") String token);
+    Call<Dependencies> dependencies(@Query("room_id")String room_id,@Query("token") String token);
 
 
 
@@ -81,8 +98,8 @@ public interface APIService {
     //@GET<L>
 
     class Dependencies{
-        List<Integer> ids;
-        List<Integer>  numbers;
+        List<Integer> dominoes;
+        List<Integer>  tasks;
     }
 
     public static class ModelPeer{

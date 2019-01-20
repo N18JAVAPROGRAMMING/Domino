@@ -24,6 +24,8 @@ public class GameActivity extends AppCompatActivity {
     private ProblemsFragment fragmentProblems;
     private ScoreTableFragment fragmentScore;
 
+    ServerManager manager;
+
     Room currentroom;
     int room_id=-1;
     ArrayList<Domino> dominoes;
@@ -58,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        manager= new ServerManager(getApplicationContext());
 
         room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
 
@@ -79,6 +82,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+      //   getDependencies();
 
         for (int i=0; i<14; i++){
             fragmentProblems.addDomino(Domino.generateDomino());
@@ -90,6 +94,27 @@ public class GameActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
+
+    public void getDependencies(){
+        manager.setDependencies(room_id, new ServerManager.OnGetDependencies() {
+            @Override
+            public void response(APIService.Dependencies dependencies) {
+                ArrayList<Domino> result=new ArrayList<Domino>();
+                for (int i=0; i<dependencies.dominoes.size(); i++){
+                    Domino add=  new Domino(Domino.main[dependencies.dominoes.get(i)][0],Domino.main[dependencies.dominoes.get(i)][0]);
+                    add.task_id=dependencies.tasks.get(i);
+                    result.add(add);
+                }
+               fragmentTable.UpdateDominoList(result);
+            }
+
+            @Override
+            public void fail() {
+
+            }
+        });
+    }
+
 
     public void GoBack(){
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -90,6 +91,10 @@ public class TableFragment extends Fragment {
         fragment.setArguments(args);
         fragment.setDominoes(dominoes);
         return fragment;
+    }
+
+    public void  UpdateDominoList(ArrayList<Domino> dominoes){
+        setDominoes(dominoes);
     }
 
     @Override

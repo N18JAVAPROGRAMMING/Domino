@@ -75,9 +75,8 @@ public class AuthFragment extends Fragment
 
                 final View view =v;
 
-               Intent intent=  new Intent(getActivity().getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-/*
+
+
                 serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
@@ -100,7 +99,7 @@ public class AuthFragment extends Fragment
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(view,t,Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view,"Ошибка авторизации",Snackbar.LENGTH_LONG).show();
                                 }
                             });
 
@@ -118,7 +117,7 @@ public class AuthFragment extends Fragment
                     }
                 });
 
-            */}
+            }
         });
         //переопределение методов
         return v;

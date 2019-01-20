@@ -9,8 +9,8 @@ public class Room {
     public int on_start;
     public int capacity;
    public  int Complexity;
-   public  List<User> users;
-   public List<String> peer_list;
+   public  List<User> peer_list;
+
    public int peer_count;
    public boolean close;
 
@@ -69,11 +69,11 @@ public class Room {
     }
 
     public List<User> getActive_user() {
-        return users;
+        return peer_list;
     }
 
     public void setActive_user(List<User> active_user) {
-        this.users = active_user;
+        this.peer_list = active_user;
     }
 
     public int getPeer_count() {

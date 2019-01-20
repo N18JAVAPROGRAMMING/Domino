@@ -21,6 +21,8 @@ public class CreateRoom extends Fragment {
     private EditText  editName;
     private SeekBar seekBar;
     static OnCreateRoomListener onCreateRoomListener;
+    private View createButton;
+    ServerManager manager ;
 
 
    public interface  OnCreateRoomListener{
@@ -53,14 +55,14 @@ public class CreateRoom extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v  =inflater.inflate(R.layout.fragment_create_room, container, false);
-        //editName=v.findViewById(R.id.edit_name);
-        //seekBar = v.findViewById(R.id.seek_bar);
-        //turnSwitch = v.findViewById(R.id.turnOfOn);
-        //seekBar.setMax(5);
+        editName=v.findViewById(R.id.edit_name);
+        seekBar = v.findViewById(R.id.players_number);
+        manager =new ServerManager(getContext());
 
-        //createButton=v.findViewById(R.id.create);
-        //setCreateRoomListener();
+        seekBar.setMax(5);
 
+        createButton=v.findViewById(R.id.next);
+        setCreateRoomListener();
         return v;
     }
 
@@ -75,9 +77,7 @@ public class CreateRoom extends Fragment {
                     r.setName(editName.getText().toString());
                     r.setCapacity(seekBar.getProgress());
                     boolean mode=false;
-                    if(turnSwitch.isActivated()){
-                        mode=true;
-                    }
+                    manager.createRoom(r.room_name,r.capacity);
                     r.setPrivacyMode(mode);
                     Snackbar.make(v,"Заявка на турнир приянята",Snackbar.LENGTH_LONG).show();
                     onCreateRoomListener.OnRoomCreated(r);
