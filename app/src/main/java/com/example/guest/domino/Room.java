@@ -4,15 +4,15 @@ import java.util.List;
 
 public class Room {
 
-    String room_name;
-    String id;
-    int on_start;
-    int capacity;
-    int Complexity;
-    List<User> users;
-    List<String> peer_list;
-    int peer_count;
-    boolean close;
+    public String room_name;
+   public  String id;
+    public int on_start;
+    public int capacity;
+   public  int Complexity;
+   public  List<User> users;
+   public List<String> peer_list;
+   public int peer_count;
+   public boolean close;
 
     public static class RoomStatus{
         String status;

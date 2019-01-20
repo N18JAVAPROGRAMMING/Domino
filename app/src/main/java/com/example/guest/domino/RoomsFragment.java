@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class RoomsFragment extends Fragment {
     RecyclerView recyclerView;
     List<Room> rooms;
     OnCallBackStartGame onCallBackStartGame;
+    ServerManager.BackgroundThread thread;
 
 
     interface OnCallBackStartGame{
@@ -54,18 +56,40 @@ public class RoomsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         recyclerView=v.findViewById(R.id.list);
 
-        rooms= new ArrayList<Room>();
-        for (int i=0; i<20; i++){
+       rooms= new ArrayList<Room>();
+       /* for (int i=0; i<20; i++){
             rooms.add(Room.GenerateRoom());
-        }
-        defineSocketListener();
+        }*/
+        //defineSocketListener();
         adapter=  new RoomsAdapter(rooms);
         adapter.setCallBackStartGame(onCallBackStartGame);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
 
+
+        thread =  new ServerManager.BackgroundThread(getContext(),ServerManager.BackgroundThread.UPDATE_ROOMLIST);
+        setOnUpdate();
+        thread.start();
+
         return v;
 
+    }
+
+    public void setOnUpdate(){
+        thread.setUpdateRoomListListener(new ServerManager.UpdateRoomListListener() {
+            @Override
+            public void onUpdate(List<Room> main) {
+                Log.d("rooms",String.valueOf(main.size()));
+                adapter.setRoomList(main);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void error(String msg) {
+
+            }
+        });
     }
 
     public void defineSocketListener(){

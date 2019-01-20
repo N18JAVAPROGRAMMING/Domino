@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+
 
 public interface APIService {
 
@@ -21,14 +24,27 @@ public interface APIService {
     @GET("room/info")
     Call<List<Room>> getAllRooms(@Query("token") String token);
 
-    @GET("room/status")
-    Call<Room> roomStatus(@Query("token") String token,@Query("id") String room_id);
+    @GET("token/check")
+    Call<Token> checkToken(@Query("token") Token token);
 
-    @POST("peer/signup")
+
+/*    @POST("peer/signup")
     Call<Token> singUp(@Query("username")String name, @Query("password")String password);
 
     @POST("peer/login")
-    Call<Token> logIn(@Query("username")String name, @Query("password")String password);
+    Call<Token> logIn(@Query("username")String name, @Query("password")String password);*/
+
+   // @Headers("Content-Type: application/json")
+    @POST("peer/signup")
+    Call<Token> singUp(@Body User user);
+
+    //@Headers("Content-Type: application/json")
+    @POST("peer/login")
+    Call<Token> logIn(@Body User user);
+
+
+    @GET("room/status")
+    Call<Room> roomStatus(@Query("token") String token,@Query("id") String room_id);
 
     @POST()
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
@@ -43,6 +59,12 @@ public interface APIService {
     Call<Task> getTask(@Query("task_id")String id);
 
 
+    static class User{
+       public String password;
+       public String username;
+    }
+
+
 
 
 
@@ -50,7 +72,7 @@ public interface APIService {
 
     public static class Token{
 
-        String token="";
+        public String token="";
 
 
         public static void SaveToken(Context context,String token){
@@ -62,7 +84,7 @@ public interface APIService {
 
         public static String getToken(Context context){
             SharedPreferences sharedPreferences =context.getSharedPreferences(MyApplication.PREFERENCES_NAME,Context.MODE_PRIVATE);
-         return sharedPreferences.getString(MyApplication.PREFERENCES_NAME,"");
+         return sharedPreferences.getString(MyApplication.TOKEN_PREFERENCES,"");
         }
 
     }

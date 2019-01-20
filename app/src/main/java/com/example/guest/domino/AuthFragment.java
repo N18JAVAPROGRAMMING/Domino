@@ -75,10 +75,10 @@ public class AuthFragment extends Fragment
 
                 final View view =v;
 
-               Intent intent=  new Intent(getActivity().getApplicationContext(),MainActivity.class);
+               /*Intent intent=  new Intent(getActivity().getApplicationContext(),PreGameAcivity.class);
                 startActivity(intent);
-
-                /*serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
+*/
+                serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
                         final String t = token;
@@ -88,6 +88,10 @@ public class AuthFragment extends Fragment
                                 public void run() {
                                     APIService.Token.SaveToken(getContext(),t);
                                     Intent intent =  new Intent(getContext(),MainActivity.class);
+                                    User user = new User();
+                                    user.name=login.getText().toString();
+                                    //score
+                                    MyApplication.saveActiveUser(user,getContext());
                                     startActivity(intent);
                                 }
                             });
@@ -96,13 +100,23 @@ public class AuthFragment extends Fragment
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(view,"Неверные данные входа",Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view,t,Snackbar.LENGTH_LONG).show();
                                 }
                             });
 
                         }
                     }
-                });*/
+
+                    @Override
+                    public void error() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Snackbar.make(view,"Ошибка подключения",Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
 
             }
         });

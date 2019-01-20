@@ -27,6 +27,4 @@ public interface DaoTask {
     @Delete
     void delete(Task task);
 
-
-
 }
