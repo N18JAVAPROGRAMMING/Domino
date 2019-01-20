@@ -7,66 +7,83 @@
     tools:context=".PreGameAcivity"
     style="@style/AppTheme.NotCardBackground">
 
-  <!--  <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
-        <android.support.constraint.ConstraintLayout
+        <ProgressBar
+            android:progressDrawable="@drawable/progress_bar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content"
+            android:progress="25"
+            android:id="@+id/progress"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/title"
+            style="@style/AppTheme.Background.UpperInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ProgressBar
-                android:progressDrawable="@drawable/progress_bar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                app:layout_constraintTop_toBottomOf="@id/title"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
-                android:layout_height="wrap_content"
-                android:progress="25"
-                android:id="@+id/progress"/>
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/Enter"
-                android:textSize="40sp"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/user_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progress" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/back"
-                style="@style/AppTheme.PinkButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:cardCornerRadius="5dp"
-                app:contentPadding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_list">
+                android:layout_height="wrap_content">
 
                 <TextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/name_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Турнир 1"
+                    android:textSize="32sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/name_room"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/room_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/back"
-                    android:textSize="24sp" />
+                    android:text="Классический режим"/>
 
-            </android.support.v7.widget.CardView>
+            </android.support.constraint.ConstraintLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/user_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/back"
+            style="@style/AppTheme.PinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="5dp"
+            app:contentPadding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_list">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/back"
+                android:textSize="24sp" />
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.constraint.ConstraintLayout>

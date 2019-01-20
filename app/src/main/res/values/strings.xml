@@ -26,4 +26,6 @@
     <string name="back">Покинуть</string>
     <string name="enter_answer">Введите ответ</string>
     <string name="solve_solution">Ответить</string>
+    <string name="profile">Профиль</string>
+    <string name="create_room">Создать турнир</string>
 </resources>
