@@ -10,7 +10,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-         ServerManager server =  new ServerManager();
+         ServerManager server =  new ServerManager(getApplicationContext());
          server.CheckToken(new ServerManager.OnCheckTokenListener() {
              @Override
              public void ok() {

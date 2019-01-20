@@ -74,7 +74,8 @@ public class RoomsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        thread =  new ServerManager.BackgroundThread(getContext(),ServerManager.BackgroundThread.UPDATE_ROOMLIST);
+        thread =  new ServerManager.BackgroundThread(getContext(), ServerManager.BackgroundThread.UPDATE_ROOMLIST,2000);
+
         setOnUpdate();
         thread.start();
 
