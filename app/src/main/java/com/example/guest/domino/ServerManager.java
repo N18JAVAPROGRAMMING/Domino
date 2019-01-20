@@ -21,6 +21,13 @@ public class ServerManager {
   OnCallBackListenerAuth listenerAuth;
   OnCallBackListenerReg listenerReg;
   OnCheckTokenListener listenerToken;
+  onPeerConnectListener peerConnectListener;
+  onPeerDisonnectListener peerDisonnectListener;
+
+
+
+
+  Context context;
   /*private static ServerManager manager;*/
 
   /*public static synchronized ServerManager getInstance(){
@@ -29,7 +36,8 @@ public class ServerManager {
       return manager;
   }*/
 
-  public ServerManager(){
+  public ServerManager(Context context){
+      this.context=context;
       try {
           GsonBuilder builder =  new GsonBuilder();
          retrofit = new Retrofit.Builder()
@@ -169,6 +177,52 @@ public class ServerManager {
       void error(String msg);
    }
 
+   public interface onPeerConnectListener{
+      void connect(Room room);
+      void fail();
+   }
+
+    public interface onPeerDisonnectListener{
+        void disconnect(List<Room> list);
+        void error();
+    }
+
+    public void peerConnect(int room_id, final onPeerConnectListener listener){
+      APIService.ModelPeer model = new APIService.ModelPeer(String.valueOf(room_id),
+              APIService.Token.getToken(context));
+        Call<Room> call =  service.peerConnect(model);
+        call.enqueue(new Callback<Room>() {
+            @Override
+            public void onResponse(Call<Room> call, Response<Room> response) {
+                Room room = response.body();
+                listener.connect(room);
+            }
+
+            @Override
+            public void onFailure(Call<Room> call, Throwable t) {
+               listener.fail();
+            }
+        });
+    }
+
+    public void peerDisconnect(int room_id, final onPeerDisonnectListener listener){
+        APIService.ModelPeer model = new APIService.ModelPeer(String.valueOf(room_id),
+                APIService.Token.getToken(context));
+        Call<List<Room>> call =  service.peerDisconnect(model);
+        call.enqueue(new Callback<List<Room>>() {
+            @Override
+            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
+                listener.disconnect(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Room>> call, Throwable t) {
+               listener.error();
+            }
+        });
+    }
+
+
 
 
 
@@ -177,8 +231,15 @@ public class ServerManager {
        private Retrofit retrofit;
        private APIService service;
        Context context;
+       volatile boolean runflag;
 
        UpdateRoomListListener updateRoomListListener;
+       OnLoadRoomInformation loadRoomInformation;
+
+       interface OnLoadRoomInformation{
+           void ok(Room room);
+           void fail();
+       }
 
       int mode=-1;
 
@@ -188,11 +249,13 @@ public class ServerManager {
 
       public static final int UPDATE_ROOMLIST=0;
       public static final int UPDATE_SCORE=1;
+      public static final int UPDATE_ROOMINFO=2;
 
+      int delay;
+      int room_id;
 
-
-       public BackgroundThread(Context context, int mode
-       ){
+       public BackgroundThread(Context context, int mode, int delay){
+           this.delay=delay;
            this.mode=mode;
            this.context=context;
            retrofit = new Retrofit.Builder()
@@ -203,19 +266,30 @@ public class ServerManager {
        }
 
        @Override
-       public void run() {
-           switch (mode){
-               case UPDATE_ROOMLIST:
-                   OnUpdateRoomList();
-                   break;
-               case UPDATE_SCORE:
-                   break;
-           }
+       public synchronized void start() {
+           runflag=true;
+           super.start();
+       }
 
-           try {
-               Thread.sleep(5000);
-           } catch (InterruptedException e) {
-               e.printStackTrace();
+       @Override
+       public void run() {
+           while(runflag) {
+               switch (mode) {
+                   case UPDATE_ROOMLIST:
+                       OnUpdateRoomList();
+                       break;
+                   case UPDATE_SCORE:
+                       break;
+                   case UPDATE_ROOMINFO:
+                       onUpdateRoomInfo();
+                       break;
+               }
+
+               try {
+                   Thread.sleep(delay);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
            }
        }
 
@@ -235,6 +309,38 @@ public class ServerManager {
            });
 
        }
+
+       public void onUpdateRoomInfo(){
+           Call<Room> call =  service.roomStatus(APIService.Token.getToken(context),String.valueOf(room_id));
+           call.enqueue(new Callback<Room>() {
+               @Override
+               public void onResponse(Call<Room> call, Response<Room> response) {
+                   if (response.body()==null){
+                       loadRoomInformation.fail();
+                   } else {
+                       loadRoomInformation.ok(response.body());
+                   }
+               }
+
+               @Override
+               public void onFailure(Call<Room> call, Throwable t) {
+                   loadRoomInformation.fail();
+               }
+           });
+       }
+
+       public void setLoadRoomInformation(int room_id, final OnLoadRoomInformation onLoadRoomInformation){
+           loadRoomInformation=onLoadRoomInformation;
+           this.room_id=room_id;
+
+
+       }
+
+       public void setRunFlag(boolean value){
+              runflag=value;
+       }
+
+
    }
 
 

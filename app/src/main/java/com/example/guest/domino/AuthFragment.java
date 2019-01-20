@@ -61,7 +61,7 @@ public class AuthFragment extends Fragment
         login=v.findViewById(R.id.a_login);
         password=v.findViewById(R.id.a_password);
 
-        serverManager= new ServerManager();
+        serverManager= new ServerManager(getActivity().getApplicationContext());
 
 
 
