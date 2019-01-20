@@ -37,16 +37,11 @@ public class GameActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
-                    //getSupportFragmentManager().beginTransaction().show(fragmentTable).commit();
-                    //getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    //getSupportFragmentManager().beginTransaction().hide(fragmentTable).commit();
-                    //getSupportFragmentManager().beginTransaction().show(fragmentProblems).commit();
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    //getSupportFragmentManager().beginTransaction().hide(fragment).commit();
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentScore).commit();
                     return true;
             }
@@ -70,7 +65,6 @@ public class GameActivity extends AppCompatActivity {
         fragmentProblems = ProblemsFragment.newInstance();
         fragmentScore = ScoreTableFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.frame_kostil, fragmentProblems).commit();
 
         fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
             @Override
@@ -83,8 +77,6 @@ public class GameActivity extends AppCompatActivity {
         for (int i=0; i<14; i++){
             fragmentProblems.addDomino(Domino.generateDomino());
         }
-        //Костыль!!!
-        //getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
