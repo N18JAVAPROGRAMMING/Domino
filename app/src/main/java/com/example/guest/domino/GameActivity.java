@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity {
 
     Room currentroom;
     int room_id=-1;
-    ArrayList<Domino> dominoes;
+    ArrayList<Domino> dominoes = new ArrayList<>();
     List<Domino> current_list;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
