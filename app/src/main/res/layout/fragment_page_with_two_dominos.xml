@@ -12,6 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.CardView
+            style="@style/AppTheme.Background.UpperInfo"
+            android:id="@+id/UpperInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 1"
+                android:textSize="32sp"
+                android:gravity="center"
+                />
+
+        </android.support.v7.widget.CardView>
+
         <View
             android:id="@+id/center"
             android:layout_width="1dp"
@@ -31,7 +48,7 @@
             app:layout_constraintEnd_toStartOf="@+id/center"
             app:layout_constraintHorizontal_bias="0.66"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/UpperInfo"
             app:layout_constraintVertical_bias="0.18">
 
             <ImageView
