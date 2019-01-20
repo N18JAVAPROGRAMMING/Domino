@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     CreateRoom createRoomFragment;
     RoomsFragment roomsFragment;
     Button next;
+    boolean connect=false;
+    int press=0;
 
 
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         manager = new ServerManager(getApplicationContext());
+        connect=false;
 
 
 
@@ -50,16 +53,28 @@ public class MainActivity extends AppCompatActivity {
          roomsFragment.setListener(new RoomsFragment.OnStartListener() {
              @Override
              public void preGame(Room room) {
+                 press++;
+                 if (connect){
+                     return;
+                 }
+                 if (press>1){
+                     return;
+                 }
                 final Room r =room;
+                Log.d("listener","room_id  "+r.id);
                 manager.peerConnect(Integer.valueOf(room.id),new ServerManager.onPeerConnectListener() {
                     @Override
                     public void connect(Room room) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (!connect){
+                                    connect=true;
                                 Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
-                                intent.putExtra(MyApplication.CURRENT_ROOM,r.id);
+                                Log.d("listener","topregame");
+                                intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
                                 startActivity(intent);
+                                press=0;}
                             }
                         });
 
@@ -67,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void fail() {
-                         //nothing to do
+                         press=0;
                     }
                 });
              }
@@ -93,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
         InitBottomNavigationBar();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+    }
+
+    @Override
+    protected void onRestart() {
+        connect=false;
+        super.onRestart();
     }
 
     private void InitBottomNavigationBar(){

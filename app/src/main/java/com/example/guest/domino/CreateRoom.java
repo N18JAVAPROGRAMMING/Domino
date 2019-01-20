@@ -26,6 +26,8 @@ public class CreateRoom extends Fragment {
     private TextView numberOfPlayers;
     static OnCreateRoomListener onCreateRoomListener;
     CardView createButton;
+    ServerManager manager ;
+
 
    public interface  OnCreateRoomListener{
        void OnRoomCreated(Room room);
@@ -85,6 +87,8 @@ public class CreateRoom extends Fragment {
     }
 
     public void setCreateRoomListener(){
+
+
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +97,8 @@ public class CreateRoom extends Fragment {
                     r.setName(editName.getText().toString());
                     r.setCapacity(seekBar.getProgress());
                     boolean mode=false;
+                    manager.createRoom(r.room_name,r.capacity);
+                    r.setPrivacyMode(mode);
                     Snackbar.make(v,"Заявка на турнир приянята",Snackbar.LENGTH_LONG).show();
                     onCreateRoomListener.OnRoomCreated(r);
                 } else {

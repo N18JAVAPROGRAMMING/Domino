@@ -63,10 +63,15 @@ public class RoomsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         recyclerView=v.findViewById(R.id.list);
 
+        thread =  new ServerManager.BackgroundThread(getContext(), ServerManager.BackgroundThread.UPDATE_ROOMLIST,2000);
+
+        setOnUpdate();
+        thread.start();
+
        rooms= new ArrayList<Room>();
-        for (int i=0; i<20; i++){
+       /* for (int i=0; i<20; i++){
             rooms.add(Room.GenerateRoom());
-        }
+        }*/
         //defineSocketListener();
         adapter=  new RoomsAdapter(rooms);
          setAdapterListener();
@@ -74,12 +79,22 @@ public class RoomsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        thread =  new ServerManager.BackgroundThread(getContext(),ServerManager.BackgroundThread.UPDATE_ROOMLIST, 2000);
-        setOnUpdate();
-        thread.start();
+
 
         return v;
 
+    }
+
+    @Override
+    public void onResume() {
+       thread.setRunFlag(true);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+       thread.setRunFlag(false);
+        super.onPause();
     }
 
     public void setAdapterListener(){
@@ -95,7 +110,7 @@ public class RoomsFragment extends Fragment {
         thread.setUpdateRoomListListener(new ServerManager.UpdateRoomListListener() {
             @Override
             public void onUpdate(List<Room> main) {
-                Log.d("rooms",String.valueOf(main.size()));
+                Log.d("listener","onUpdate");
                 adapter.setRoomList(main);
                 adapter.notifyDataSetChanged();
 

@@ -8,7 +8,15 @@ public class Domino {
    public static final int WASTED_MODE=2;
 
 
+   public int task_id;
+
    private int up;
+
+   public Domino(int up, int down) {
+      this.up = up;
+      this.down = down;
+   }
+
    private int down;
 
    private boolean free;
@@ -16,6 +24,10 @@ public class Domino {
 
 
 
+
+   public  Domino(){
+
+   }
    public static int[][] main=
            {{0,0},{0,1},{0,2},{0,3},{0,4},{0,5},
            {0,6},{1,1},{1,2},{1,3},{1,4},

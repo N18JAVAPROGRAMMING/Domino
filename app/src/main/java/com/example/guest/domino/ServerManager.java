@@ -23,6 +23,7 @@ public class ServerManager {
   OnCheckTokenListener listenerToken;
   onPeerConnectListener peerConnectListener;
   onPeerDisonnectListener peerDisonnectListener;
+  OnGetDependencies dependencies;
 
 
 
@@ -35,6 +36,51 @@ public class ServerManager {
           manager= new ServerManager();
       return manager;
   }*/
+
+  public interface OnGetDependencies{
+      void response(APIService.Dependencies dependencies);
+      void fail();
+  }
+
+  public void setDependencies(int id, final OnGetDependencies listener){
+      Call<APIService.Dependencies> call = service.dependencies(String.valueOf(id),
+              APIService.Token.getToken(context));
+      call.enqueue(new Callback<APIService.Dependencies>() {
+          @Override
+          public void onResponse(Call<APIService.Dependencies> call, Response<APIService.Dependencies> response) {
+              if(response.body()==null){
+                  listener.fail();
+                  return;
+              }
+              listener.response(response.body());
+          }
+
+          @Override
+          public void onFailure(Call<APIService.Dependencies> call, Throwable t) {
+                   listener.fail();
+          }
+      });
+
+  }
+
+
+  public void createRoom(String room_name, int capacity){
+      APIService.ModelCreateRoom model =  new APIService.ModelCreateRoom(
+              APIService.Token.getToken(context),String.valueOf(28),room_name,capacity);
+      Call<Room> call = service.createRoom(model);
+      call.enqueue(new Callback<Room>() {
+          @Override
+          public void onResponse(Call<Room> call, Response<Room> response) {
+
+          }
+
+          @Override
+          public void onFailure(Call<Room> call, Throwable t) {
+
+          }
+      });
+
+  }
 
   public ServerManager(Context context){
       this.context=context;
@@ -315,6 +361,7 @@ public class ServerManager {
            call.enqueue(new Callback<Room>() {
                @Override
                public void onResponse(Call<Room> call, Response<Room> response) {
+                   Log.d("listener_manager",response.body().toString());
                    if (response.body()==null){
                        loadRoomInformation.fail();
                    } else {

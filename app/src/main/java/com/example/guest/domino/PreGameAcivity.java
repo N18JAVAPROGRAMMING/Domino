@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,14 @@ public class PreGameAcivity extends AppCompatActivity {
     ServerManager.BackgroundThread thread;
     Room current_room;
     boolean startGame=false;
+    boolean press=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pre_game_acivity);
 
-        room_id =getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
+        room_id =Integer.valueOf(getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1));
         manager=  new ServerManager(getApplicationContext());
 
         LoadInformation();
@@ -50,8 +52,20 @@ public class PreGameAcivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        thread.setRunFlag(false);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        thread.setRunFlag(true);
+        super.onResume();
+    }
+
     public void UpdateAdapter(){
-        adapter.setData(current_room.users);
+        adapter.setData(current_room.peer_list);
         adapter.notifyDataSetChanged();
     }
 
@@ -89,7 +103,6 @@ public class PreGameAcivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        if(!startGame){
            manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
                @Override
                public void disconnect(List<Room> list) {
@@ -101,7 +114,6 @@ public class PreGameAcivity extends AppCompatActivity {
 
                }
            });
-        }
         super.onStop();
     }
 
@@ -112,14 +124,13 @@ public class PreGameAcivity extends AppCompatActivity {
         thread.setLoadRoomInformation(room_id, new ServerManager.BackgroundThread.OnLoadRoomInformation() {
             @Override
             public void ok(Room room) {
-               final List<User> users=current_room.users;
+               final List<User> users=current_room.peer_list;
                 current_room=room;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         UpdateAdapter();
                         if (current_room.on_start==1){
-                            startRoom();
                             thread.setRunFlag(false);
                             startGame=true;
                             startRoom();
@@ -132,7 +143,9 @@ public class PreGameAcivity extends AppCompatActivity {
 
             @Override
             public void fail() {
-                goBack();
+                Log.d("listener","fail_room_information");
+               // thread.setRunFlag(false);
+                //goBack();
 
             }
         });
@@ -142,8 +155,10 @@ public class PreGameAcivity extends AppCompatActivity {
 
 
     public void goBack(){
-        Intent intent =  new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
+
+       /* Intent intent =  new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);*/
+       finish();
     }
 
 
