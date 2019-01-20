@@ -46,14 +46,24 @@ public interface APIService {
     @GET("room/status")
     Call<Room> roomStatus(@Query("token") String token,@Query("id") String room_id);
 
-    @POST()
+  /*  @POST()
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
 
-    @GET("game/dependencies")
-    String dependencies(@Query("room_id")String room_id,@Query("token") String token);
-
     @POST()
-    void peerDisconnect(@Query("room_id")String room_id, @Query("peer_name")String username);
+    void peerDisconnect(@Query("room_id")String room_id, @Query("peer_name")String username);*/
+
+
+     //new Version
+    @POST("room/d")
+    Call<Room> peerConnect(@Body ModelPeer model);
+
+    @POST("room/connect")
+    Call<List<Room>> peerDisconnect(@Body ModelPeer model);
+
+    @GET("game/dependencies")
+    Dependencies dependencies(@Query("room_id")String room_id,@Query("token") String token);
+
+
 
     @GET
     Call<Task> getTask(@Query("task_id")String id);
@@ -69,6 +79,22 @@ public interface APIService {
 
 
     //@GET<L>
+
+    class Dependencies{
+        List<Integer> ids;
+        List<Integer>  numbers;
+    }
+
+    public static class ModelPeer{
+
+        String room_id;
+        String token;
+
+        public ModelPeer(String room_id, String token) {
+            this.room_id = room_id;
+            this.token = token;
+        }
+    }
 
     public static class Token{
 

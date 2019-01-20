@@ -16,6 +16,7 @@ public class MyApplication extends Application {
     public static final String TOKEN_PREFERENCES="TOKEN";
     public static final String MAIN_USER_LOGIN="USER_LOGIN";
     public static final String MAIN_USER_SCORE="USER_SCORE";
+    public static final String CURRENT_ROOM="CURRENT_ROOM";
 
     static SocketThread socketThread;
     static User user;

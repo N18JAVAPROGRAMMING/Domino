@@ -29,6 +29,9 @@ public class InActivity extends AppCompatActivity {
     // 1 - регистрация
 
 
+    @Override
+    public void onBackPressed(){
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

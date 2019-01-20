@@ -25,6 +25,18 @@ public class ProblemsFragment extends Fragment {
     private PagerAdapter viewPagerAdapter;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
+    private ArrayList<Domino> currentList = new ArrayList<>();
+
+    private OnDominoClickListener listener;
+
+    public interface OnDominoClickListener{
+        void click(Domino domino);
+    }
+
+    public void setDominoListener(){
+
+    }
+
     //private ArrayList<Fragment> fragments = new ArrayList<>();
 
     public void addDomino(Domino domino){

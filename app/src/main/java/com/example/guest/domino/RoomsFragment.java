@@ -24,12 +24,17 @@ public class RoomsFragment extends Fragment {
     RoomsAdapter adapter;
     RecyclerView recyclerView;
     List<Room> rooms;
-    OnCallBackStartGame onCallBackStartGame;
+
     ServerManager.BackgroundThread thread;
+    OnStartListener listener;
 
 
-    interface OnCallBackStartGame{
+   static interface OnSelectedRoom{
         void StartGame(Room room);
+    }
+
+    interface  OnStartListener{
+       void preGame(Room room);
     }
 
     public RoomsFragment() {
@@ -45,9 +50,11 @@ public class RoomsFragment extends Fragment {
         return fragment;
     }
 
-    public void setCallBack(OnCallBackStartGame onCallBackStartGame){
-        this.onCallBackStartGame=onCallBackStartGame;
+    public void setListener(OnStartListener start){
+       listener=start;
     }
+
+
 
 
     @Override
@@ -62,7 +69,7 @@ public class RoomsFragment extends Fragment {
         }
         //defineSocketListener();
         adapter=  new RoomsAdapter(rooms);
-        adapter.setCallBackStartGame(onCallBackStartGame);
+         setAdapterListener();
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
 
@@ -73,6 +80,15 @@ public class RoomsFragment extends Fragment {
 
         return v;
 
+    }
+
+    public void setAdapterListener(){
+        adapter.setCallBackStartGame(new OnSelectedRoom() {
+            @Override
+            public void StartGame(Room room) {
+                listener.preGame(room);
+            }
+        });
     }
 
     public void setOnUpdate(){

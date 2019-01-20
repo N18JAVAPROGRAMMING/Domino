@@ -1,5 +1,6 @@
 package com.example.guest.domino;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -22,7 +24,10 @@ public class GameActivity extends AppCompatActivity {
     private ProblemsFragment fragmentProblems;
     private ScoreTableFragment fragmentScore;
 
-    private ArrayList<Domino> dominoes = new ArrayList<>();
+    Room currentroom;
+    int room_id=-1;
+    ArrayList<Domino> dominoes;
+    List<Domino> current_list;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,6 +59,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
+
+
         for(int i = 0; i < 10; i++){
             dominoes.add(Domino.generateDomino());
         }
@@ -71,16 +79,10 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
-        fragmentProblems.addDomino(Domino.generateDomino());
 
+        for (int i=0; i<14; i++){
+            fragmentProblems.addDomino(Domino.generateDomino());
+        }
         //Костыль!!!
         //getSupportFragmentManager().beginTransaction().hide(fragmentProblems).commit();
 
@@ -89,4 +91,10 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public void GoBack(){
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
+
 }
+

@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    ServerManager manager;
     UserFragment userFragment;
     CreateRoom createRoomFragment;
     RoomsFragment roomsFragment;
@@ -33,24 +34,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        manager = new ServerManager(getApplicationContext());
 
 
 
 
 
 
-        StartSockets();
+       // StartSockets();
 
 
         userFragment= UserFragment.newInstance();
         roomsFragment=RoomsFragment.newInstance();
-        roomsFragment.setCallBack(new RoomsFragment.OnCallBackStartGame() {
-            @Override
-            public void StartGame(Room room) {
-                Intent intent =  new Intent(getApplicationContext(),GameActivity.class);
-                startActivity(intent);
-            }
-        });
+
+         roomsFragment.setListener(new RoomsFragment.OnStartListener() {
+             @Override
+             public void preGame(Room room) {
+                final Room r =room;
+                manager.peerConnect(Integer.valueOf(room.id),new ServerManager.onPeerConnectListener() {
+                    @Override
+                    public void connect(Room room) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
+                                intent.putExtra(MyApplication.CURRENT_ROOM,r.id);
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void fail() {
+                         //nothing to do
+                    }
+                });
+             }
+         });
 
         createRoomFragment=CreateRoom.newInstance();
        createRoomFragment.setOnCreateRoomListener(new CreateRoom.OnCreateRoomListener() {

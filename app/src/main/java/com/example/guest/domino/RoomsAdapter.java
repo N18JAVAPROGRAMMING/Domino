@@ -14,7 +14,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
 
 
     private List<Room> rooms;
-    private RoomsFragment.OnCallBackStartGame onCallBackStartGame;
+    private RoomsFragment.OnSelectedRoom listener;
 
 
     public  RoomsAdapter(List<Room> list){
@@ -37,8 +37,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         this.rooms=rooms;
     }
 
-    public void setCallBackStartGame(RoomsFragment.OnCallBackStartGame onCallBackStartGame) {
-        this.onCallBackStartGame = onCallBackStartGame;
+    public void setCallBackStartGame(RoomsFragment.OnSelectedRoom onCallBackStartGame) {
+        listener= onCallBackStartGame;
     }
 
     @Override
@@ -47,12 +47,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         customHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCallBackStartGame.StartGame(rooms.get(number));
+                listener.StartGame(rooms.get(number));
             }
         });
         Room room = rooms.get(i);
-        //customHolder.name.setText(room.getName());
-        //customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
+        customHolder.name.setText(room.getName());
+        customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
         double p = ((double)room.peer_count /room.capacity)*100;
         //customHolder.progressBar.setProgress((int)p);
     }
@@ -71,10 +71,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         public CustomHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
-            //name=itemView.findViewById(R.id.name);
+            name=itemView.findViewById(R.id.name_room);
             //progressBar=itemView.findViewById(R.id.progress);
             //progressBar.setMax(100);
-            //ratio =itemView.findViewById(R.id.ratio);
+            ratio =itemView.findViewById(R.id.count);
         }
 
 

@@ -45,7 +45,7 @@ public class RegFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        serverManager= new ServerManager();
+        serverManager= new ServerManager(getActivity().getApplicationContext());
         View v = inflater.inflate(R.layout.fragment_reg, container, false);
         next=v.findViewById(R.id.next);
         editCPassword=v.findViewById(R.id.repeat_password);
@@ -68,6 +68,11 @@ public class RegFragment extends Fragment {
 
                 if(name.length()==0){
                     Snackbar.make(v,"Введите логин",Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(name.length()>15){
+                    Snackbar.make(v,"Максимальная длинна логина 15 символов",Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
