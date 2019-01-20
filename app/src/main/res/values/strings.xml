@@ -28,4 +28,5 @@
     <string name="solve_solution">Ответить</string>
     <string name="profile">Профиль</string>
     <string name="create_room">Создать турнир</string>
+    <string name="yours_rating">Ваш рейтинг</string>
 </resources>

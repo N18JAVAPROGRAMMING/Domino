@@ -21,7 +21,7 @@ public class CreateRoom extends Fragment {
     private EditText  editName;
     private SeekBar seekBar;
     static OnCreateRoomListener onCreateRoomListener;
-    public static createButton;
+
 
    public interface  OnCreateRoomListener{
        void OnRoomCreated(Room room);

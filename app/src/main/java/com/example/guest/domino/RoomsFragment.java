@@ -64,9 +64,9 @@ public class RoomsFragment extends Fragment {
         recyclerView=v.findViewById(R.id.list);
 
        rooms= new ArrayList<Room>();
-       /* for (int i=0; i<20; i++){
+        for (int i=0; i<20; i++){
             rooms.add(Room.GenerateRoom());
-        }*/
+        }
         //defineSocketListener();
         adapter=  new RoomsAdapter(rooms);
          setAdapterListener();

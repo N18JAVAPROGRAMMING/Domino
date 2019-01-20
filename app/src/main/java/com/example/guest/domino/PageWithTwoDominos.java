@@ -35,6 +35,12 @@ public class PageWithTwoDominos extends Fragment {
     public void setColors(){
         if(domino1.getUp() != 0)
             img11.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getUp()));
+        if(domino1.getDown() != 0)
+            img12.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getDown()));
+        if(domino2.getUp() != 0)
+            img21.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getUp()));
+        if(domino2.getDown() != 0)
+            img22.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getDown()));
     }
 
     public interface OnFragmentClickListener{
@@ -68,6 +74,7 @@ public class PageWithTwoDominos extends Fragment {
         img12 = view.findViewById(R.id.Domino12);
         img21 = view.findViewById(R.id.Domino21);
         img22 = view.findViewById(R.id.Domino22);
+        setColors();
         return view;
     }
 /*

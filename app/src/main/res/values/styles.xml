@@ -17,17 +17,22 @@
     </style>
 
     <style name="AppTheme.PinkButton">
-        <item name="cardBackgroundColor">@color/pink</item>
+        <item name="cardBackgroundColor">@color/pink_button</item>
         <item name="android:textSize">24sp</item>
     </style>
 
     <style name="AppTheme.GreyButton">
         <item name="cardElevation">20dp</item>
-        <item name="cardBackgroundColor">@color/grey</item>
+        <item name="cardBackgroundColor">@color/gray_button</item>
     </style>
 
     <style name="AppTheme.Background">
         <item name="cardBackgroundColor">@color/lightBlack</item>
+    </style>
+
+    <style name="AppTheme.RoomItem">
+        <item name="cardBackgroundColor">@color/room_clickable</item>
+        <item name="cardElevation">5dp</item>
     </style>
 
     <style name="AppTheme.NotCardBackground">
