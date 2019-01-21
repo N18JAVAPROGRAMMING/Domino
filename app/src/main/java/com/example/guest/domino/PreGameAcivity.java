@@ -151,6 +151,7 @@ public class PreGameAcivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        if(!startGame){
            manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
                @Override
                public void disconnect(List<Room> list) {
@@ -161,7 +162,7 @@ public class PreGameAcivity extends AppCompatActivity {
                public void error() {
 
                }
-           });
+           });}
         super.onStop();
     }
 

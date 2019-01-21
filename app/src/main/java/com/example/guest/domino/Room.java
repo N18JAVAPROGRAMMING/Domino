@@ -37,6 +37,10 @@ public class Room {
 
     }
 
+    public int getImageLink(){
+       return res[img];
+    }
+
     public static Room GenerateRoom(){
         Room r = new Room();
         r.setCapacity((int)(Math.random()*7));

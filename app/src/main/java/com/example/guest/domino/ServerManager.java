@@ -152,7 +152,7 @@ public class ServerManager {
     public void getTask(int id, final OnCallBackListenerTask listener) {
 
 
-        Call<Task> call = service.getTask(String.valueOf(id));
+        Call<Task> call = service.getTask(APIService.Token.getToken(context),String.valueOf(id));
 
         call.enqueue(new Callback<Task>() {
             @Override

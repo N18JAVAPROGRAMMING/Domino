@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         Room room = rooms.get(i);
         customHolder.name.setText(room.getName());
         customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
+        customHolder.roomImage.setImageResource(room.getImageLink());
         double p = ((double)room.peer_count /room.capacity)*100;
     }
 
@@ -60,12 +62,14 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
 
    class  CustomHolder extends RecyclerView.ViewHolder{
         TextView name;
-        TextView ratio; //temporary
+        TextView ratio;
+        ImageView roomImage;//temporary
         View view;
 
         public CustomHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
+            roomImage=itemView.findViewById(R.id.imageView);
             name=itemView.findViewById(R.id.name_room);
             ratio =itemView.findViewById(R.id.count);
         }

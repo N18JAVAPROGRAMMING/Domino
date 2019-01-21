@@ -135,6 +135,7 @@ public class TableFragment extends Fragment {
 
     public void  UpdateDominoList(ArrayList<Domino> dominoes){
         setDominoes(dominoes);
+        viewPagerAdapter.notifyDataSetChanged();
     }
 
     @Override

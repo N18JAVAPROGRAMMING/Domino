@@ -111,6 +111,10 @@ public class ProblemsFragment extends Fragment {
         return view;
     }
 
+    public View getAnyChild(){
+        return viewPager;
+    }
+
 
      interface onGetAnswer{
         void answer(String answer,Domino domino);

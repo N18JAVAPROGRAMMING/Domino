@@ -95,10 +95,12 @@ public class UserFragment extends Fragment {
         } else {
 
             name.setText(mainUser.name);
+            mainUser.generateImg();
+            userImage.setImageResource(mainUser.getImgLink());
             score.setText(String.valueOf(mainUser.score));
 
 
-            setUserImage();
+           // setUserImage();
         }
 
         return v;

@@ -82,8 +82,8 @@ public interface APIService {
 
 
 
-    @GET
-    Call<Task> getTask(@Query("task_id")String id);
+    @GET("game/domino")
+    Call<Task> getTask(@Query("token")String token,@Query("task_id")String id);
 
 
     static class User{

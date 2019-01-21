@@ -113,6 +113,7 @@ public class RoomsFragment extends Fragment {
             @Override
             public void onUpdate(List<Room> main) {
                 final List<Room> m =main;
+                if (getActivity()==null)return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

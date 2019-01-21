@@ -22,6 +22,10 @@ public class User {
         return user;
     }
 
+    public int getImgLink(){
+        return res[img];
+    }
+
     public void generateImg(){
         long hash = 0;
         long q = 257, p = 1000000013;
