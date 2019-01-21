@@ -4,6 +4,7 @@ package com.example.guest.domino;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,10 @@ public class PageWithProblem extends Fragment {
     private ImageView numbers2;
 
     private CardView favourite;
+
+    public interface OnAnswerListener{
+        void send(String ans, Domino domino);
+    }
 
     public PageWithProblem() {
         // Required empty public constructor
