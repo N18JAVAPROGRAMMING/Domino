@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class PreGameAcivity extends AppCompatActivity {
     ServerManager.BackgroundThread thread;
     Room current_room;
     View leave;
+    ProgressBar progressBar;
     boolean startGame=false;
     boolean press=false;
 
@@ -47,6 +49,8 @@ public class PreGameAcivity extends AppCompatActivity {
 
 
         recyclerView=findViewById(R.id.user_list);
+        progressBar=findViewById(R.id.progress);
+
         leave = findViewById(R.id.exit);
         leave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +105,8 @@ public class PreGameAcivity extends AppCompatActivity {
             users.add(user);
         }
 
+        progressBar.setProgress(users.size());
+
         adapter.setData(users);
         adapter.notifyDataSetChanged();
     }
@@ -116,6 +122,7 @@ public class PreGameAcivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         current_room=r;
+                        progressBar.setMax(r.capacity);
                         UpdateAdapter();
                     }
                 });
@@ -205,6 +212,7 @@ public class PreGameAcivity extends AppCompatActivity {
         Intent intent= new Intent(getApplicationContext(),GameActivity.class);
         intent.putExtra(MyApplication.CURRENT_ROOM,room_id);
         startActivity(intent);
+
     }
 
 

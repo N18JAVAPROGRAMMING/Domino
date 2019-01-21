@@ -6,6 +6,7 @@ public class Room {
 
     public String room_name;
    public  String id;
+   int img;
     public int on_start;
     public int capacity;
    public  int Complexity;
@@ -17,6 +18,10 @@ public class Room {
    public boolean close;
 
    public Room(){
+
+   }
+
+   public void generateImg(){
 
    }
 

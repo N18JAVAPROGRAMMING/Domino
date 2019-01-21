@@ -113,7 +113,7 @@ public class PageWithTwoDominos extends Fragment  {
         return view;
     }
 
-    /*public void setListener(View v ){
+   /* public void setListener(View v ){
         //not working now
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,8 +121,8 @@ public class PageWithTwoDominos extends Fragment  {
                 listener.onClick(new Domino());
             }
         });
-    }*/
-
+    }
+*/
 
 
 }
