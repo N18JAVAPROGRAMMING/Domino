@@ -1,11 +1,13 @@
 package com.example.guest.domino;
 
 
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -20,8 +22,9 @@ public class PageWithProblem extends Fragment {
 
     private Domino domino;
 
-    private TextView dominoText;
     private TextView problemText;
+    private ImageView numbers1;
+    private ImageView numbers2;
 
     public PageWithProblem() {
         // Required empty public constructor
@@ -45,11 +48,19 @@ public class PageWithProblem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page_with_problem, container, false);
-        dominoText = view.findViewById(R.id.domino_text);
         problemText = view.findViewById(R.id.problem_text);
+        numbers1 = view.findViewById(R.id.numbers1);
+        numbers2 = view.findViewById(R.id.numbers2);
+
+        if(domino.getUp() != 0)
+            numbers1.setImageBitmap(ColoredNumbers.getInstance()
+                    .numberWhite(getContext(), domino.getUp()));
+
+        if(domino.getDown() != 0)
+            numbers2.setImageBitmap(ColoredNumbers.getInstance()
+                    .numberWhite(getContext(), domino.getDown()));
 
         problemText.setText(domino.getTask().getCond());
-        dominoText.setText(domino.getUp() + " / " + domino.getDown());
 
         return view;
     }
