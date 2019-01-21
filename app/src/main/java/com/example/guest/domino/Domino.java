@@ -8,6 +8,8 @@ public class Domino {
    public static final int WASTED_MODE=2;
    public static final int RESERVED=3;
 
+   private int status = FREE_MODE;
+
    public int task_id;
    public int attempt=0;
 
@@ -22,8 +24,6 @@ public class Domino {
 
    private boolean free;
    int mode;
-
-
 
 
    public  Domino(){
@@ -78,7 +78,7 @@ public class Domino {
       this.free = free;
    }
 
-
-
-
+   public void setStatus(int status) {
+      this.status = status;
+   }
 }

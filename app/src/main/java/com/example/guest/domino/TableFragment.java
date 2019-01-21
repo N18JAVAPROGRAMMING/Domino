@@ -20,12 +20,35 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TableFragment extends Fragment {
+
+    public void setStatus(int id, int status){
+
+        for(Domino domino : dominoes){
+            if(domino.getTask().getId() == id){
+                domino.setStatus(status);
+            }
+        }
+
+        viewPagerAdapter.notifyDataSetChanged();
+
+    }
+
+    public void setStatus(HashMap<Integer, Integer> changes){
+
+        for(Domino domino : dominoes){
+            domino.setStatus(changes.get(domino.getTask().getId()));
+        }
+
+        viewPagerAdapter.notifyDataSetChanged();
+
+    }
 
     public void setDominoOnClickListener(DominoOnClickListener listener) {
         this.listener = listener;
@@ -40,7 +63,6 @@ public class TableFragment extends Fragment {
     private DominoOnClickListener listener;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
-    //private ArrayList<Fragment> fragments = new ArrayList<>();4
 
     public ArrayList<Domino> getList(){
         return  dominoes;
@@ -82,10 +104,9 @@ public class TableFragment extends Fragment {
             Domino domino1 = dominoes.get(i * 2);
             Domino domino2 = dominoes.get(i * 2 + 1);
             page.setDominoes(domino1, domino2);
-            page.setListener(new PageWithTwoDominos.OnFragmentClickListener() {
+            page.setOnFragmentClickListener(new PageWithTwoDominos.OnFragmentClickListener() {
                 @Override
                 public void onClick(Domino domino) {
-                    //Toast.makeText(getApplicationContext(), domino.getUp() + " " + domino.getDown(), Toast.LENGTH_LONG).show();
                     listener.onClick(domino);
                 }
             });

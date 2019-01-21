@@ -26,7 +26,6 @@ public class AuthFragment extends Fragment
 
     onCallBackListener listener;
 
-    //Button next;
     CardView next;
     TextView login;
     EditText password;
@@ -56,18 +55,11 @@ public class AuthFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_auth, container, false);
-        //next=v.findViewById(R.id.a_next);
         next = v.findViewById(R.id.next);
         login=v.findViewById(R.id.a_login);
         password=v.findViewById(R.id.a_password);
 
         serverManager= new ServerManager(getActivity().getApplicationContext());
-
-
-
-
-
-
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +67,11 @@ public class AuthFragment extends Fragment
 
                 final View view =v;
 
-                /*Intent intent =  new Intent(getContext(), MainActivity.class);
-                startActivity(intent);*/
+                Intent intent =  new Intent(getContext(), GameActivity.class);
+                startActivity(intent);
 
-                serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {
+                serverManager.LogIn(login.getText().toString(),password.getText()
+                        .toString(), new ServerManager.OnCallBackListenerAuth() {
                     @Override
                     public void onCallBack(boolean answer, String token) {
                         final String t = token;
@@ -90,7 +83,6 @@ public class AuthFragment extends Fragment
                                     Intent intent =  new Intent(getContext(),MainActivity.class);
                                     User user = new User();
                                     user.name=login.getText().toString();
-                                    //score
                                     MyApplication.saveActiveUser(user,getContext());
                                     startActivity(intent);
                                 }
@@ -100,7 +92,8 @@ public class AuthFragment extends Fragment
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(view,"Ошибка авторизации",Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(view,"Ошибка авторизации",
+                                            Snackbar.LENGTH_LONG).show();
                                 }
                             });
 
@@ -112,7 +105,8 @@ public class AuthFragment extends Fragment
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Snackbar.make(view,"Ошибка подключения",Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view,"Ошибка подключения",
+                                        Snackbar.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -120,7 +114,6 @@ public class AuthFragment extends Fragment
 
             }
         });
-        //переопределение методов
         return v;
     }
 
