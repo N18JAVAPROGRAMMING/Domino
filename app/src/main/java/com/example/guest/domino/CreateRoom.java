@@ -1,7 +1,9 @@
 package com.example.guest.domino;
 
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -63,13 +65,16 @@ public class CreateRoom extends Fragment {
         editName = view.findViewById(R.id.edit_name);
         editSescription = view.findViewById(R.id.edit_description);
         seekBar = view.findViewById(R.id.players_number);
+        seekBar.setMax(4);
         numberOfPlayers = view.findViewById(R.id.count);
         createButton = view.findViewById(R.id.next);
+        setCreateRoomListener();
+        manager =  new ServerManager(getContext());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                numberOfPlayers.setText(String.valueOf(progress));
+                numberOfPlayers.setText(String.valueOf(progress+2));
             }
 
             @Override
@@ -95,12 +100,19 @@ public class CreateRoom extends Fragment {
                 if (editName.getText().toString().length()>0){
                     Room r = new Room();
                     r.setName(editName.getText().toString());
-                    r.setCapacity(seekBar.getProgress());
+                    r.setCapacity(seekBar.getProgress()+2);
                     boolean mode=false;
-                    manager.createRoom(r.room_name,r.capacity);
                     r.setPrivacyMode(mode);
                     Snackbar.make(v,"Заявка на турнир приянята",Snackbar.LENGTH_LONG).show();
-                    onCreateRoomListener.OnRoomCreated(r);
+                    manager.createRoom(r.room_name, r.capacity, new ServerManager.OnCreateRoomListener() {
+                        @Override
+                        public void create(Room room) {
+                            onCreateRoomListener.OnRoomCreated(room);
+                        }
+                    });
+
+
+
                 } else {
                     Snackbar.make(v,"Не введено имя турнира",Snackbar.LENGTH_LONG).show();
                 }

@@ -9,10 +9,16 @@ public class Room {
     public int on_start;
     public int capacity;
    public  int Complexity;
-   public  List<User> peer_list;
+   //public  List<User> peer_list;
+   public  List<String> peer_list;
+
 
    public int peer_count;
    public boolean close;
+
+   public Room(){
+
+   }
 
     public static class RoomStatus{
         String status;
@@ -68,11 +74,11 @@ public class Room {
         Complexity = complexity;
     }
 
-    public List<User> getActive_user() {
+    public List<String> getActive_user() {
         return peer_list;
     }
 
-    public void setActive_user(List<User> active_user) {
+    public void setActive_user(List<String> active_user) {
         this.peer_list = active_user;
     }
 

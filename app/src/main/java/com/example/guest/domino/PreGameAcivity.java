@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,14 @@ public class PreGameAcivity extends AppCompatActivity {
     ServerManager manager;
     ServerManager.BackgroundThread thread;
     Room current_room;
+    View leave;
     boolean startGame=false;
     boolean press=false;
+
+    @Override
+    public void onBackPressed() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,28 @@ public class PreGameAcivity extends AppCompatActivity {
 
 
         recyclerView=findViewById(R.id.user_list);
+        leave = findViewById(R.id.exit);
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
+                    @Override
+                    public void disconnect(List<Room> list) {
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               goBack();
+                           }
+                       });
+                    }
+
+                    @Override
+                    public void error() {
+
+                    }
+                });
+            }
+        });
            users= new ArrayList<User>();
         for (int i=0; i<5; i++){
             users.add(User.generateUser());
@@ -65,7 +94,14 @@ public class PreGameAcivity extends AppCompatActivity {
     }
 
     public void UpdateAdapter(){
-        adapter.setData(current_room.peer_list);
+        ArrayList<User> users =  new ArrayList<User>();
+        for (String s:current_room.peer_list){
+            User user =  new User();
+            user.name=s;
+            users.add(user);
+        }
+
+        adapter.setData(users);
         adapter.notifyDataSetChanged();
     }
 
@@ -101,6 +137,8 @@ public class PreGameAcivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onStop() {
            manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
@@ -124,8 +162,9 @@ public class PreGameAcivity extends AppCompatActivity {
         thread.setLoadRoomInformation(room_id, new ServerManager.BackgroundThread.OnLoadRoomInformation() {
             @Override
             public void ok(Room room) {
-               final List<User> users=current_room.peer_list;
+
                 current_room=room;
+                final List<String> users=current_room.peer_list;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

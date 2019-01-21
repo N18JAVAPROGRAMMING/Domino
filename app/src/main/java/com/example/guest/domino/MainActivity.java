@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -98,7 +99,15 @@ public class MainActivity extends AppCompatActivity {
        createRoomFragment.setOnCreateRoomListener(new CreateRoom.OnCreateRoomListener() {
            @Override
            public void OnRoomCreated(Room room) {
-               getSupportFragmentManager().beginTransaction().replace(R.id.fragment,roomsFragment).commit();
+               final Room r=room;
+               connect=true;
+               //getSupportFragmentManager().beginTransaction().replace(R.id.fragment,roomsFragment).commit();
+               if (room==null){
+                   Snackbar.make(next,"Ошибка создания",Snackbar.LENGTH_SHORT);
+               } else {
+               Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
+               intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
+               startActivity(intent);}
            }
        });
 

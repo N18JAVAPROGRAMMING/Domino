@@ -37,6 +37,12 @@ public class ServerManager {
       return manager;
   }*/
 
+    public interface OnCreateRoomListener{
+        void create(Room room);
+    }
+
+
+
     public interface OnGetDependencies {
         void response(APIService.Dependencies dependencies);
 
@@ -65,14 +71,15 @@ public class ServerManager {
     }
 
 
-    public void createRoom(String room_name, int capacity) {
+    public void createRoom(String room_name, int capacity, final OnCreateRoomListener listener) {
+
         APIService.ModelCreateRoom model = new APIService.ModelCreateRoom(
                 APIService.Token.getToken(context), String.valueOf(28), room_name, capacity);
         Call<Room> call = service.createRoom(model);
         call.enqueue(new Callback<Room>() {
             @Override
             public void onResponse(Call<Room> call, Response<Room> response) {
-
+                listener.create(response.body());
             }
 
             @Override
@@ -398,7 +405,7 @@ public class ServerManager {
             call.enqueue(new Callback<Room>() {
                 @Override
                 public void onResponse(Call<Room> call, Response<Room> response) {
-                    Log.d("listener_manager", response.body().toString());
+
                     if (response.body() == null) {
                         loadRoomInformation.fail();
                     } else {
@@ -416,6 +423,7 @@ public class ServerManager {
         public void setLoadRoomInformation(int room_id, final OnLoadRoomInformation onLoadRoomInformation) {
             loadRoomInformation = onLoadRoomInformation;
             this.room_id = room_id;
+
 
 
         }
