@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         userFragment= UserFragment.newInstance();
         roomsFragment=RoomsFragment.newInstance();
 
+
+
          roomsFragment.setListener(new RoomsFragment.OnStartListener() {
              @Override
              public void preGame(Room room) {
@@ -62,29 +64,33 @@ public class MainActivity extends AppCompatActivity {
                  }
                 final Room r =room;
                 Log.d("listener","room_id  "+r.id);
-                manager.peerConnect(Integer.valueOf(room.id),new ServerManager.onPeerConnectListener() {
-                    @Override
-                    public void connect(Room room) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!connect){
-                                    connect=true;
-                                Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
-                                Log.d("listener","topregame");
-                                intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
-                                startActivity(intent);
-                                press=0;}
-                            }
-                        });
+                 manager.peerConnect(Integer.valueOf(room.id),new ServerManager.onPeerConnectListener() {
+                     @Override
+                     public void connect(Room room) {
+                         Log.d("listener",""+connect);
+                         runOnUiThread(new Runnable() {
+                             @Override
+                             public void run() {
+                                 if (!connect){
+                                     connect=true;
+                                     Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
+                                     Log.d("listener","topregame");
+                                     intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
+                                     startActivity(intent);
+                                     press=0;}
+                             }
+                         });
 
-                    }
+                     }
 
-                    @Override
-                    public void fail() {
+                     @Override
+                     public void fail() {
                          press=0;
-                    }
-                });
+                     }
+                 });
+
+
+
              }
          });
 

@@ -16,7 +16,7 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PageWithTwoDominos extends Fragment {
+public class PageWithTwoDominos extends Fragment  {
 
     private Domino domino1;
     private Domino domino2;
@@ -42,6 +42,7 @@ public class PageWithTwoDominos extends Fragment {
         if(domino2.getDown() != 0)
             img22.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getDown()));
     }
+
 
     public interface OnFragmentClickListener{
         void onClick(Domino domino);
@@ -74,23 +75,21 @@ public class PageWithTwoDominos extends Fragment {
         img12 = view.findViewById(R.id.Domino12);
         img21 = view.findViewById(R.id.Domino21);
         img22 = view.findViewById(R.id.Domino22);
+
         setColors();
         return view;
     }
-/*
-    private void setOnClickListeners(){
-        button1.setOnClickListener(new View.OnClickListener() {
+
+    public void setListener(View v ){
+        //not working now
+        v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(domino1);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick(domino2);
+                listener.onClick(new Domino());
             }
         });
     }
-*/
+
+
+
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
 
     Room currentroom;
     int room_id=-1;
+    int localScore;
     ArrayList<Domino> dominoes = new ArrayList<>();
     List<Domino> current_list;
 
@@ -61,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         manager= new ServerManager(getApplicationContext());
+        setTimer();
 
         room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
 
@@ -77,13 +80,66 @@ public class GameActivity extends AppCompatActivity {
 
         fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
             @Override
-            public void onClick(Domino domino) {
-                fragmentProblems.addDomino(domino);
+            public void onClick(final Domino domino) {
+                //fragmentProblems.
+                if (fragmentProblems.getListDomino().size()<2){
+                    //проверка доступности - весь код в теле метода get запроса
+                    manager.getTask(room_id, new ServerManager.OnCallBackListenerTask() {
+                        @Override
+                        public void onCallBack(Task task) {
+                            domino.setTask(task);
+                        }
+
+                        @Override
+                        public void error(String msg) {
+                          final  String m=msg;
+                          runOnUiThread(new Runnable() {
+                              @Override
+                              public void run() {
+                                  Snackbar.make(fragmentProblems.getView(),m,Snackbar.LENGTH_SHORT).show();
+                              }
+                          });
+                        }
+                    });
+
+                    //внутри onCallBack();
+                    fragmentProblems.addDomino(domino);
+                    fragmentTable.getList().remove(domino);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
+                    Snackbar.make(fragmentProblems.getView(),"Домино добавлена",Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(fragmentProblems.getView(),"Стек задач переполнен",Snackbar.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        //запрос
+
+        fragmentProblems.setOnAnswerListener(new ProblemsFragment.onGetAnswer() {
+            @Override
+            public void answer(String answer,Domino domino) {
+                // отправляем запрос на начисление баллов
+                int add=0;
+                if (domino.getTask().getAns().equals(answer)){
+                    if (domino.attempt==0){
+                        add+=domino.getUp()+domino.getDown();
+                    } else {
+                        add+=Math.max(domino.getUp(),domino.getDown());
+                    }
+                }  else {
+                    if (domino.attempt==1){
+                        add-=Math.min(domino.getUp(),domino.getDown());
+                    }
+                }
+              //начисление add
+                fragmentProblems.removeDomino(domino);
+                fragmentTable.addDomino(domino);
             }
         });
 
       //   getDependencies();
-
+      // gjkxtyb pf;f
         for (int i=0; i<14; i++){
             fragmentProblems.addDomino(Domino.generateDomino());
         }
@@ -115,6 +171,10 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+
+    public void setTimer(){
+
+    }
 
     public void GoBack(){
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);

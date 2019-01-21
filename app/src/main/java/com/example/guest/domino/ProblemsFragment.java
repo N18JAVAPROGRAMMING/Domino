@@ -24,23 +24,35 @@ public class ProblemsFragment extends Fragment {
     private ViewPager viewPager;
     private PagerAdapter viewPagerAdapter;
 
-    private ArrayList<Domino> dominoes = new ArrayList<>();
+    // ArrayList<Domino> dominoes = new ArrayList<>();
     private ArrayList<Domino> currentList = new ArrayList<>();
 
-    private OnDominoClickListener listener;
+    private onGetAnswer listener;
+
+    public ArrayList<Domino> getListDomino(){
+        return currentList;
+    }
 
     public interface OnDominoClickListener{
         void click(Domino domino);
     }
 
-    public void setDominoListener(){
-
+    public void setOnAnswerListener(onGetAnswer l){
+        listener=l;
     }
+
+
 
     //private ArrayList<Fragment> fragments = new ArrayList<>();
 
     public void addDomino(Domino domino){
-        dominoes.add(domino);
+        currentList.add(domino);
+        if(viewPagerAdapter != null)
+            viewPagerAdapter.notifyDataSetChanged();
+    }
+
+    public void removeDomino(Domino domino){
+        currentList.remove(domino);
         if(viewPagerAdapter != null)
             viewPagerAdapter.notifyDataSetChanged();
     }
@@ -58,13 +70,19 @@ public class ProblemsFragment extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
-            PageWithProblem fragment = PageWithProblem.newInstance(dominoes.get(i));
+            PageWithProblem fragment = PageWithProblem.newInstance(currentList.get(i));
+            fragment.setOnAnswerListener(new PageWithProblem.OnAnswerListener() {
+                @Override
+                public void send(String ans,Domino domino) {
+                    listener.answer(ans,domino);
+                }
+            });
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return dominoes.size();
+            return currentList.size();
         }
     }
 
@@ -93,4 +111,8 @@ public class ProblemsFragment extends Fragment {
         return view;
     }
 
+
+     interface onGetAnswer{
+        void answer(String answer,Domino domino);
+     }
 }

@@ -152,6 +152,7 @@
 
                         <TextView
                             android:gravity="center"
+                            android:id="@+id/answer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/solve_solution"

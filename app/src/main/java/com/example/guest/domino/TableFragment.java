@@ -40,7 +40,25 @@ public class TableFragment extends Fragment {
     private DominoOnClickListener listener;
 
     private ArrayList<Domino> dominoes = new ArrayList<>();
-    //private ArrayList<Fragment> fragments = new ArrayList<>();
+    //private ArrayList<Fragment> fragments = new ArrayList<>();4
+
+    public ArrayList<Domino> getList(){
+        return  dominoes;
+    }
+
+    public void addDomino(Domino domino){
+        dominoes.add(domino);
+        if (viewPagerAdapter!=null){
+            viewPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void removeDomino(Domino domino){
+        dominoes.remove(domino);
+        if (viewPagerAdapter!=null){
+            viewPagerAdapter.notifyDataSetChanged();
+        }
+    }
 
     public void setDominoes(ArrayList<Domino> dominoes) {
         this.dominoes = dominoes;
@@ -60,6 +78,7 @@ public class TableFragment extends Fragment {
         @Override
         public Fragment getItem(int i) {
             PageWithTwoDominos page = PageWithTwoDominos.newInstance();
+
             Domino domino1 = dominoes.get(i * 2);
             Domino domino2 = dominoes.get(i * 2 + 1);
             page.setDominoes(domino1, domino2);

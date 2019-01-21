@@ -2,6 +2,7 @@ package com.example.guest.domino;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -101,6 +102,7 @@ public class RoomsFragment extends Fragment {
         adapter.setCallBackStartGame(new OnSelectedRoom() {
             @Override
             public void StartGame(Room room) {
+                Log.d("listener","pregame");
                 listener.preGame(room);
             }
         });
@@ -110,15 +112,21 @@ public class RoomsFragment extends Fragment {
         thread.setUpdateRoomListListener(new ServerManager.UpdateRoomListListener() {
             @Override
             public void onUpdate(List<Room> main) {
-                Log.d("listener","onUpdate");
-                adapter.setRoomList(main);
-                adapter.notifyDataSetChanged();
+                final List<Room> m =main;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("listener","onUpdate");
+                        adapter.setRoomList(m);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
 
             }
 
             @Override
             public void error(String msg) {
-
+                Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT);
             }
         });
     }

@@ -9,6 +9,7 @@ public class Domino {
 
 
    public int task_id;
+   public int attempt=0;
 
    private int up;
 
