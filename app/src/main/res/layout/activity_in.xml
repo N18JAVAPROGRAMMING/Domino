@@ -29,6 +29,7 @@
         <TextView
             android:gravity="center"
             android:layout_width="match_parent"
+            android:id="@+id/dinamictest"
             android:layout_height="wrap_content"
             android:text="@string/add_account"
             android:textSize="20sp"/>

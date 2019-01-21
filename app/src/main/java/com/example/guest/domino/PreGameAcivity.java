@@ -121,8 +121,11 @@ public class PreGameAcivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                       if(current_room==null){
+                           progressBar.setMax(r.capacity);
+                       }
                         current_room=r;
-                        progressBar.setMax(r.capacity);
+
                         UpdateAdapter();
                     }
                 });

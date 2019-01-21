@@ -40,6 +40,7 @@ public class InActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in);
          condition=AUTHORIZATION_CONDITION;
+         textButton=findViewById(R.id.dinamictest);
 
 
         final AuthFragment authFragment =AuthFragment.newInstance();
@@ -68,12 +69,14 @@ public class InActivity extends AppCompatActivity {
                 switch(condition){
                     case REGISTARTION_CONDITION:
                         fragmentTransaction.replace(R.id.fragment,authFragment).commit();
+                        textButton.setText("Создать аккаунт");
                         //actionButton.setText("+ CREATE NEW ACCOUNT");
                         condition=AUTHORIZATION_CONDITION;
                         break;
                     case AUTHORIZATION_CONDITION:
                         fragmentTransaction.replace(R.id.fragment,regFragment).commit();
                         fragmentTransaction.addToBackStack(null);
+                        textButton.setText("Войти");
                         //actionButton.setText("LOG_IN");
                         condition=REGISTARTION_CONDITION;
                         break;
