@@ -13,6 +13,7 @@ public class Room {
    //public  List<User> peer_list;
    public  List<String> peer_list;
 
+    private static int[] res=  {R.mipmap.r_1,R.mipmap.r_2,R.mipmap.r_3,R.mipmap.r_4,R.mipmap.r_5};
 
    public int peer_count;
    public boolean close;

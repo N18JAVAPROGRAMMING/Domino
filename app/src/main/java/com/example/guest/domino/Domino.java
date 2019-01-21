@@ -8,6 +8,8 @@ public class Domino {
    public static final int WASTED_MODE=2;
    public static final int RESERVED=3;
 
+
+
    private int status = FREE_MODE;
 
    public int task_id;

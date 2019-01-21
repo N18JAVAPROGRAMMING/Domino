@@ -13,6 +13,8 @@ public class User {
     public int score;
     int img;
 
+    private static int[] res= {R.mipmap.u_1,R.mipmap.u_2,R.mipmap.u_3,R.mipmap.u_4,R.mipmap.u_5,R.mipmap.u_6};
+
     public static User generateUser(){
         User user = new User();
         user.name = "jdjf";
