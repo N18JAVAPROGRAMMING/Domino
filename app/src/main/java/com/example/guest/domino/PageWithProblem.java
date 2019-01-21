@@ -1,9 +1,10 @@
 package com.example.guest.domino;
 
 
-import android.arch.persistence.room.PrimaryKey;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ public class PageWithProblem extends Fragment {
     private TextView problemText;
     private ImageView numbers1;
     private ImageView numbers2;
+
+    private CardView favourite;
 
     public PageWithProblem() {
         // Required empty public constructor
@@ -51,6 +54,19 @@ public class PageWithProblem extends Fragment {
         problemText = view.findViewById(R.id.problem_text);
         numbers1 = view.findViewById(R.id.numbers1);
         numbers2 = view.findViewById(R.id.numbers2);
+        favourite = view.findViewById(R.id.like);
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyApplication.saveTask(domino.getTask());
+                    }
+                }).start();
+            }
+        });
 
         if(domino.getUp() != 0)
             numbers1.setImageBitmap(ColoredNumbers.getInstance()
