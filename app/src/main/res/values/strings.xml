@@ -31,4 +31,6 @@
     <string name="yours_rating">Ваш рейтинг</string>
     <string name="exit">Выйти из аккаунта</string>
     <string name="type">Режим</string>
+    <string name="show_solution">Показать решение</string>
+    <string name="exit_">Выйти</string>
 </resources>
