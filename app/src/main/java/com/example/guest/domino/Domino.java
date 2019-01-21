@@ -6,7 +6,7 @@ public class Domino {
    public static final int FREE_MODE=0;
    public static final int SOLVING_MODE=1;
    public static final int WASTED_MODE=2;
-
+   public static final int RESERVED=3;
 
    public int task_id;
    public int attempt=0;
