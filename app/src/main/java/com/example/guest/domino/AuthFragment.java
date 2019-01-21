@@ -75,7 +75,7 @@ public class AuthFragment extends Fragment
 
                 final View view =v;
 
-                Intent intent =  new Intent(getContext(),GameActivity.class);
+                Intent intent =  new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
 
                 serverManager.LogIn(login.getText().toString(),password.getText().toString(), new ServerManager.OnCallBackListenerAuth() {

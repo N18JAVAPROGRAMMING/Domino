@@ -24,7 +24,6 @@ public class PageWithProblem extends Fragment {
 
     private Domino domino;
 
-    private TextView dominoText;
     private TextView problemText;
     private EditText editText;
     private View ansNext;
@@ -91,7 +90,11 @@ public class PageWithProblem extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        MyApplication.saveTask(domino.getTask());
+                        try {
+                            MyApplication.saveTask(domino.getTask());
+                        }catch (Exception e){
+
+                        }
                     }
                 }).start();
             }
@@ -106,7 +109,6 @@ public class PageWithProblem extends Fragment {
                     .numberWhite(getContext(), domino.getDown()));
 
         problemText.setText(domino.getTask().getCond());
-        dominoText.setText(domino.getUp() + " / " + domino.getDown());
 
         return view;
     }

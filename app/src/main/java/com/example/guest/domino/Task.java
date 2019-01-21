@@ -48,7 +48,7 @@ public class Task {
 
 
         }
-        t.setId((int)Math.random()*10000);
+        t.setId((int)(Math.random()*10000));
         t.setLevel(1+(int)(Math.random()*4));
         return t;
 
