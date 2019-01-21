@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,10 @@ public class PageWithTwoDominos extends Fragment  {
     private ImageView img21;
     private ImageView img22;
 
-    public void setListener(OnFragmentClickListener listener) {
+    private CardView button1;
+    private CardView button2;
+
+    public void setOnFragmentClickListener(OnFragmentClickListener listener) {
         this.listener = listener;
     }
 
@@ -34,13 +38,25 @@ public class PageWithTwoDominos extends Fragment  {
 
     public void setColors(){
         if(domino1.getUp() != 0)
-            img11.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getUp()));
+            if(domino1.attempt == 0)
+                img11.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getUp()));
+            else
+                img11.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino1.getUp()));
         if(domino1.getDown() != 0)
-            img12.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getDown()));
+            if(domino1.attempt < 2)
+                img12.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino1.getDown()));
+            else
+                img12.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino1.getDown()));
         if(domino2.getUp() != 0)
-            img21.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getUp()));
+            if(domino2.attempt == 0)
+                img21.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getUp()));
+            else
+                img21.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino2.getUp()));
         if(domino2.getDown() != 0)
-            img22.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getDown()));
+            if(domino2.attempt < 2)
+                img22.setImageBitmap(ColoredNumbers.getInstance().numberWhite(getContext(), domino2.getDown()));
+            else
+                img22.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino2.getDown()));
     }
 
 
@@ -76,11 +92,28 @@ public class PageWithTwoDominos extends Fragment  {
         img21 = view.findViewById(R.id.Domino21);
         img22 = view.findViewById(R.id.Domino22);
 
+        button1 = view.findViewById(R.id.begin1);
+        button2 = view.findViewById(R.id.begin2);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(domino1);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(domino2);
+            }
+        });
+
         setColors();
         return view;
     }
 
-    public void setListener(View v ){
+    /*public void setListener(View v ){
         //not working now
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +121,7 @@ public class PageWithTwoDominos extends Fragment  {
                 listener.onClick(new Domino());
             }
         });
-    }
+    }*/
 
 
 
