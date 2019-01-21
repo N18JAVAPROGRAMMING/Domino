@@ -23,7 +23,12 @@ public class Room {
    }
 
    public void generateImg(){
-
+       long hash = 0;
+       long q = 257, p = 1000000013;
+       for(int i = 0; i < id.length(); i++){
+           hash = (hash * q + (long)id.charAt(i)) % p;
+       }
+       img = (int)hash % 5;
    }
 
     public static class RoomStatus{
