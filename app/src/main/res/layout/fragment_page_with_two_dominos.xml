@@ -150,6 +150,7 @@
             app:layout_constraintEnd_toEndOf="@id/Domino1">
 
             <TextView
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,6 +172,7 @@
 
             <TextView
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Начать решать"

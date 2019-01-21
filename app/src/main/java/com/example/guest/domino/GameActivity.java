@@ -55,9 +55,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        manager= new ServerManager(getApplicationContext());
+        //manager= new ServerManager(getApplicationContext());
 
-        room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
+        //room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
 
 
         for(int i = 0; i < 10; i++){
