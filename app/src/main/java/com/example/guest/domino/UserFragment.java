@@ -70,6 +70,14 @@ public class UserFragment extends Fragment {
                     @Override
                     public void run() {
                         adapter = new FavouriteProblemsAdapter(tasks);
+                        adapter.setCallBackListener(new FavouriteProblemsAdapter.onCallBackListener() {
+                            @Override
+                            public void callBack(int id) {
+                                Intent intent = new Intent(getContext(), FavouriteActivity.class);
+                                intent.putExtra("id", id);
+                                startActivity(intent);
+                            }
+                        });
                         list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
                         list.setAdapter(adapter);
                     }

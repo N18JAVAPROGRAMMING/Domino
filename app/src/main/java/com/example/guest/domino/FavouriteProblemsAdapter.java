@@ -1,5 +1,6 @@
 package com.example.guest.domino;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,17 @@ import java.util.List;
 public class FavouriteProblemsAdapter extends RecyclerView.Adapter<FavouriteProblemsAdapter.CustomHolder> {
 
     private List<Task> data;
+    private onCallBackListener callBackListener;
+
+    interface onCallBackListener{
+
+        void callBack(int id);
+
+    }
+
+    public void setCallBackListener(onCallBackListener callBackListener) {
+        this.callBackListener = callBackListener;
+    }
 
     public FavouriteProblemsAdapter(List<Task> data){
         this.data = data;
@@ -26,13 +38,13 @@ public class FavouriteProblemsAdapter extends RecyclerView.Adapter<FavouriteProb
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomHolder customHolder, int i) {
+    public void onBindViewHolder(@NonNull final CustomHolder customHolder, int i) {
         final int id = data.get(i).getId();
-        customHolder.setProblemName(data.get(i).getCond().substring(0, 25) + "...");
+        customHolder.setProblemName(data.get(i).getCond().substring(0, 20) + "...");
         customHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TO DO
+                callBackListener.callBack(id);
             }
         });
     }

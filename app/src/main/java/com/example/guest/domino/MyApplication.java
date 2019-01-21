@@ -78,4 +78,12 @@ public class MyApplication extends Application {
         APIService.Token.SaveToken(context,"");
     }
 
+    public static Task getTaskById(int id){
+        for(Task t: getTasks()){
+            if(t.getId() == id)
+                return t;
+        }
+        return null;
+    }
+
 }
