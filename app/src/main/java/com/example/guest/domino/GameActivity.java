@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -63,7 +62,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         manager= new ServerManager(getApplicationContext());
-        setTimer();
 
         room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
 
@@ -139,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
       //   getDependencies();
-      // gjkxtyb pf;f
+
         for (int i=0; i<14; i++){
             fragmentProblems.addDomino(Domino.generateDomino());
         }

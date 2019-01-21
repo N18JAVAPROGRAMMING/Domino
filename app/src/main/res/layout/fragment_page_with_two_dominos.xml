@@ -18,14 +18,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/name_room"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Room 1"
-                android:textSize="32sp"
-                android:gravity="center"
-                />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/name_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Room 1"
+                    android:textSize="32sp"
+                    android:gravity="center" />
+
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:countDown="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="28sp"/>
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -121,6 +137,48 @@
             app:layout_constraintTop_toBottomOf="@id/Domino21"
             app:layout_constraintBottom_toBottomOf="@id/Domino2"
             android:elevation="100dp"/>
+
+        <android.support.v7.widget.CardView
+            style="@style/AppTheme.PinkButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/begin1"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Domino1"
+            app:layout_constraintStart_toStartOf="@id/Domino1"
+            app:layout_constraintEnd_toEndOf="@id/Domino1">
+
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Начать решать"
+                android:textSize="24sp"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/AppTheme.PinkButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:id="@+id/begin2"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Domino2"
+            app:layout_constraintStart_toStartOf="@id/Domino2"
+            app:layout_constraintEnd_toEndOf="@id/Domino2">
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Начать решать"
+                android:textSize="24sp"/>
+
+        </android.support.v7.widget.CardView>
 
 
     </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -21,13 +22,16 @@ public class PageWithProblem extends Fragment {
     }
 
     private Domino domino;
-    private View likeView;
 
     private TextView dominoText;
     private TextView problemText;
     private EditText editText;
     private View ansNext;
     OnAnswerListener listener;
+    private ImageView numbers1;
+    private ImageView numbers2;
+
+    private CardView favourite;
 
     public PageWithProblem() {
         // Required empty public constructor
@@ -55,9 +59,8 @@ public class PageWithProblem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page_with_problem, container, false);
-        dominoText = view.findViewById(R.id.domino_text);
         problemText = view.findViewById(R.id.problem_text);
-        likeView= view.findViewById(R.id.like);
+
         editText=view.findViewById(R.id.answer_field);
         ansNext=view.findViewById(R.id.answer);
         ansNext.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +74,31 @@ public class PageWithProblem extends Fragment {
                 listener.send(editText.getText().toString(),domino);
             }
         });
-        setOnSaveListener();
 
+
+        numbers1 = view.findViewById(R.id.numbers1);
+        numbers2 = view.findViewById(R.id.numbers2);
+        favourite = view.findViewById(R.id.like);
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyApplication.saveTask(domino.getTask());
+                    }
+                }).start();
+            }
+        });
+
+        if(domino.getUp() != 0)
+            numbers1.setImageBitmap(ColoredNumbers.getInstance()
+                    .numberWhite(getContext(), domino.getUp()));
+
+        if(domino.getDown() != 0)
+            numbers2.setImageBitmap(ColoredNumbers.getInstance()
+                    .numberWhite(getContext(), domino.getDown()));
 
         problemText.setText(domino.getTask().getCond());
         dominoText.setText(domino.getUp() + " / " + domino.getDown());
@@ -80,17 +106,4 @@ public class PageWithProblem extends Fragment {
         return view;
     }
 
-    private void setOnSaveListener(){
-        likeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyApplication.saveTask(domino.getTask());
-                Snackbar.make(v,"Задача сохранена",Snackbar.LENGTH_SHORT);
-            }
-        });
-    }
-
-    public static interface OnAnswerListener{
-        void send(String ans,Domino domino);
-    }
 }

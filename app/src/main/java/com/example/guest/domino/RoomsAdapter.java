@@ -27,9 +27,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
     @Override
     public CustomHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, int i) {
         View v =LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.room_item,viewGroup,false);
-
-
-
         return new CustomHolder(v);
     }
 
@@ -54,7 +51,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         customHolder.name.setText(room.getName());
         customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
         double p = ((double)room.peer_count /room.capacity)*100;
-        //customHolder.progressBar.setProgress((int)p);
     }
 
     @Override
@@ -64,16 +60,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
 
    class  CustomHolder extends RecyclerView.ViewHolder{
         TextView name;
-        ProgressBar progressBar;
         TextView ratio; //temporary
-       View view;
+        View view;
 
         public CustomHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
             name=itemView.findViewById(R.id.name_room);
-            //progressBar=itemView.findViewById(R.id.progress);
-            //progressBar.setMax(100);
             ratio =itemView.findViewById(R.id.count);
         }
 
