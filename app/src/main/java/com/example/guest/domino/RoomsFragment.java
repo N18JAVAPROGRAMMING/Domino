@@ -126,7 +126,7 @@ public class RoomsFragment extends Fragment {
 
             @Override
             public void error(String msg) {
-                Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT);
+                Snackbar.make(getView(),msg,Snackbar.LENGTH_SHORT).show();
             }
         });
     }

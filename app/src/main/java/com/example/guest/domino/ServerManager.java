@@ -376,7 +376,7 @@ public class ServerManager {
             call.enqueue(new Callback<List<Room>>() {
                 @Override
                 public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
-                    if (response.body()==null){
+                    if (response.body()!=null){
                         updateRoomListListener.onUpdate(response.body());
                     } else {
                         updateRoomListListener.error("Пустой ответ List<Room>");

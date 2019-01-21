@@ -61,6 +61,10 @@ public class UserFragment extends Fragment {
         score=v.findViewById(R.id.score);
         mainUser=MyApplication.getActiveUser(getContext());
         list = v.findViewById(R.id.favourite_problems);
+        exit=v.findViewById(R.id.exit);
+
+
+        setOnExitListener(exit);
 
         new Thread(new Runnable() {
             @Override
@@ -98,6 +102,18 @@ public class UserFragment extends Fragment {
         }
 
         return v;
+    }
+
+    public void setOnExitListener(View view){
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                APIService.Token.SaveToken(getContext(),"");
+                getActivity().finish();
+                Intent intent =  new Intent(getContext(),InActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void ErrorLoadUser(){
