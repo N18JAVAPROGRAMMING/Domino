@@ -70,9 +70,9 @@ public class GameActivity extends AppCompatActivity {
         room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
 
 
-       /* for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 10; i++){
             dominoes.add(Domino.generateDomino());
-        }*/
+        }
 
         fragmentTable = TableFragment.newInstance(dominoes);
         fragmentProblems = ProblemsFragment.newInstance();
@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
                           runOnUiThread(new Runnable() {
                               @Override
                               public void run() {
-                                  Snackbar.make(fragmentProblems.getView(),m,Snackbar.LENGTH_SHORT).show();
+                                  //Snackbar.make(fragmentProblems.getView(),m,Snackbar.LENGTH_SHORT).show();
                               }
                           });
                         }
@@ -106,9 +106,9 @@ public class GameActivity extends AppCompatActivity {
                     fragmentTable.setStatus(domino.getTask().getId(), Domino.SOLVING_MODE);
                     fragmentProblems.addDomino(domino);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
-                    Snackbar.make(fragmentProblems.getAnyChild(),"Домино добавлена",Snackbar.LENGTH_SHORT).show();
+                    //Snackbar.make(fragmentProblems.getAnyChild(),"Домино добавлена",Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Snackbar.make(fragmentProblems.getAnyChild(),"Стек задач переполнен",Snackbar.LENGTH_SHORT).show();
+                    //Snackbar.make(fragmentProblems.getAnyChild(),"Стек задач переполнен",Snackbar.LENGTH_SHORT).show();
                 }
 
             }
@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void answer(String answer,Domino domino) {
                 // отправляем запрос на начисление баллов
-               /* int add=0;
+                int add=0;
                 if (domino.getTask().getAns().equals(answer)){
                     if (domino.attempt==0){
                         add+=domino.getUp()+domino.getDown();
@@ -131,7 +131,7 @@ public class GameActivity extends AppCompatActivity {
                     if (domino.attempt==1){
                         add-=Math.min(domino.getUp(),domino.getDown());
                     }
-                }*/
+                }
                 domino.attempt++;
               //начисление add
                 fragmentProblems.removeDomino(domino);
@@ -139,7 +139,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        getDependencies();
+        //getDependencies();
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -159,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
                     add.task_id=dependencies.tasks.get(i);
                     result.add(add);
                 }
-               fragmentTable.UpdateDominoList(result);
+                fragmentTable.UpdateDominoList(result);
                 thread= new EndThread(result.size());
                 thread.start();
             }
