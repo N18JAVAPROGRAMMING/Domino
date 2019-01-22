@@ -12,6 +12,8 @@ public class Domino {
 
    private int status = FREE_MODE;
 
+
+   public int id;
    public int task_id;
    public int attempt=0;
 

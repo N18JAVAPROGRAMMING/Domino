@@ -31,6 +31,7 @@ public class UserFragment extends Fragment {
     private View exit;
     private FavouriteProblemsAdapter adapter;
     private RecyclerView list;
+    ServerManager manager;
 
 
     public static UserFragment newInstance() {
@@ -90,18 +91,48 @@ public class UserFragment extends Fragment {
         }).start();
 
 
+
+
+
         if (mainUser==null){
             ErrorLoadUser();
         } else {
 
+
             name.setText(mainUser.name);
             mainUser.generateImg();
             userImage.setImageResource(mainUser.getImgLink());
-            score.setText(String.valueOf(mainUser.score));
+
+
+            manager =  new ServerManager(getContext());
+            manager.getGlobalScore(mainUser.name, new ServerManager.GlobalScoreGetter() {
+                @Override
+                public void ok(final int s) {
+
+                    if (getActivity()==null)return;
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainUser.score=s;
+                            score.setText(String.valueOf(mainUser.score));
+                        }
+                    });
+
+                }
+
+                @Override
+                public void fail() {
+
+                }
+            });
 
 
            // setUserImage();
         }
+
+
+
+
 
         return v;
     }

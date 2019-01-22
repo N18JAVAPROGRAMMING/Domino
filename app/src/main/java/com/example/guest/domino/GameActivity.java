@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
 
     Room currentroom;
     int room_id=-1;
-    int localScore;
+    int localScore=0;
     ArrayList<Domino> dominoes = new ArrayList<>();
     List<Domino> current_list;
 
@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
             dominoes.add(Domino.generateDomino());
         }
 
-        fragmentTable = TableFragment.newInstance(dominoes);
+        fragmentTable = TableFragment.newInstance(dominoes,room_id);
         fragmentProblems = ProblemsFragment.newInstance();
         fragmentScore = ScoreTableFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
@@ -133,13 +133,14 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
                 domino.attempt++;
+                manager.setScore(add,domino.task_id);
               //начисление add
                 fragmentProblems.removeDomino(domino);
                 fragmentTable.setStatus(domino.getTask().getId(), Domino.FREE_MODE);
             }
         });
 
-        //getDependencies();
+        getDependencies();
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
