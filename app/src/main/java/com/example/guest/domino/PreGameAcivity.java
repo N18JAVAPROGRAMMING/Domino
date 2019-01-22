@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class PreGameAcivity extends AppCompatActivity {
     RecyclerView recyclerView;
     UserAdapter adapter;
     int room_id;
+    TextView title;
     ServerManager manager;
     ServerManager.BackgroundThread thread;
     Room current_room;
@@ -40,7 +42,7 @@ public class PreGameAcivity extends AppCompatActivity {
 
         room_id =Integer.valueOf(getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1));
         manager=  new ServerManager(getApplicationContext());
-
+        title = findViewById(R.id.name_room);
         LoadInformation();
         thread.start();
 
@@ -180,6 +182,7 @@ public class PreGameAcivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         UpdateAdapter();
+                        title.setText(current_room.getName());
                         if (current_room.on_start==1){
                             thread.setRunFlag(false);
                             startGame=true;
