@@ -33,4 +33,5 @@
     <string name="type">Режим</string>
     <string name="show_solution">Показать решение</string>
     <string name="exit_">Выйти</string>
+    <string name="game_over">Игра окончена</string>
 </resources>

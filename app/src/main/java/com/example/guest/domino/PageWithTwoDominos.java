@@ -80,7 +80,8 @@ public class PageWithTwoDominos extends Fragment  {
                 break;
             case Domino.WASTED_MODE:
                 button1.setCardBackgroundColor(R.color.pink_button);
-                textView1.setText("Решена???");
+                textView1.setText("Решена");
+                break;
         }
     }
 

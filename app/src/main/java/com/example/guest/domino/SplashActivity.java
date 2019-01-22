@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
                  runOnUiThread(new Runnable() {
                      @Override
                      public void run() {
-                         Intent intent =  new Intent(getApplicationContext(),GameActivity.class);
+                         Intent intent =  new Intent(getApplicationContext(),InActivity.class);
                          startActivity(intent);
                      }
                  });
