@@ -139,7 +139,7 @@
             android:elevation="100dp"/>
 
         <android.support.v7.widget.CardView
-            style="@style/AppTheme.PinkButton"
+            app:cardBackgroundColor="@color/pink_button"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:id="@+id/begin1"
@@ -150,6 +150,7 @@
             app:layout_constraintEnd_toEndOf="@id/Domino1">
 
             <TextView
+                android:id="@+id/text_button_1"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -171,6 +172,7 @@
             app:layout_constraintEnd_toEndOf="@id/Domino2">
 
             <TextView
+                android:id="@+id/text_button_2"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"

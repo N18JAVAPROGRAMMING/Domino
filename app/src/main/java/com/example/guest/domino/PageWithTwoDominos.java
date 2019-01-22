@@ -1,6 +1,7 @@
 package com.example.guest.domino;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
@@ -29,6 +30,9 @@ public class PageWithTwoDominos extends Fragment  {
 
     private CardView button1;
     private CardView button2;
+
+    private TextView textView1;
+    private TextView textView2;
 
     public void setOnFragmentClickListener(OnFragmentClickListener listener) {
         this.listener = listener;
@@ -59,6 +63,26 @@ public class PageWithTwoDominos extends Fragment  {
                 img22.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino2.getDown()));
     }
 
+    @SuppressLint("ResourceAsColor")
+    public void setButtons(){
+        switch (domino1.getStatus()){
+            case Domino.FREE_MODE:
+                button1.setCardBackgroundColor(R.color.pink_button);
+                textView1.setText("Начать решать");
+                break;
+            case Domino.RESERVED:
+                button1.setCardBackgroundColor(R.color.reserved);
+                textView1.setText("Решается игроком");
+                break;
+            case Domino.SOLVING_MODE:
+                button1.setCardBackgroundColor(R.color.reserved);
+                textView1.setText("Решается вами");
+                break;
+            case Domino.WASTED_MODE:
+                button1.setCardBackgroundColor(R.color.pink_button);
+                textView1.setText("Решена???");
+        }
+    }
 
     public interface OnFragmentClickListener{
         void onClick(Domino domino);
@@ -95,6 +119,9 @@ public class PageWithTwoDominos extends Fragment  {
         button1 = view.findViewById(R.id.begin1);
         button2 = view.findViewById(R.id.begin2);
 
+        textView1 = button1.findViewById(R.id.text_button_1);
+        textView2 = button2.findViewById(R.id.text_button_2);
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +136,7 @@ public class PageWithTwoDominos extends Fragment  {
             }
         });
 
+        setButtons();
         setColors();
         return view;
     }
