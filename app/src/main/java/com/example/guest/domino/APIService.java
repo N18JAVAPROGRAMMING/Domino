@@ -85,10 +85,22 @@ public interface APIService {
     @GET("game/domino")
     Call<Task> getTask(@Query("token")String token,@Query("task_id")String id);
 
+    @GET("game/task")
+    Call<CaptureModel> statusTasks(@Query("token") String token,@Query("room_id") String id);
+
+
+
 
     static class User{
        public String password;
        public String username;
+    }
+
+
+
+    class CaptureModel{
+        List<Integer> dominoes;
+        List<Integer> task_status;
     }
 
 

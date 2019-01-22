@@ -1,10 +1,12 @@
 package com.example.guest.domino;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,9 +110,18 @@ public class PageWithProblem extends Fragment {
             numbers2.setImageBitmap(ColoredNumbers.getInstance()
                     .numberWhite(getContext(), domino.getDown()));
 
-        problemText.setText(domino.getTask().getCond());
+
+       // problemText.setText(domino.getTask().getCond());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            problemText.setText(Html.fromHtml(domino.getTask().getCond(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            problemText.setText(Html.fromHtml(domino.getTask().getCond()));
+        }
 
         return view;
     }
+
+
 
 }
