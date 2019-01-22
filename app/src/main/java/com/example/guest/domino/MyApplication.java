@@ -17,6 +17,7 @@ public class MyApplication extends Application {
     public static final String MAIN_USER_LOGIN="USER_LOGIN";
     public static final String MAIN_USER_SCORE="USER_SCORE";
     public static final String CURRENT_ROOM="CURRENT_ROOM";
+    public static final String ROOM_NAME="ROOM_NAME";
 
     static SocketThread socketThread;
     static User user;
@@ -84,6 +85,18 @@ public class MyApplication extends Application {
                 return t;
         }
         return null;
+    }
+
+    public static void setRoomName(Context context, String room_name){
+        SharedPreferences sharedPreferences =context.getSharedPreferences(MyApplication.PREFERENCES_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(MyApplication.ROOM_NAME,room_name);
+        editor.apply();
+    }
+
+    public static String getRoomName(Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences(MyApplication.PREFERENCES_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(ROOM_NAME,"");
     }
 
 }

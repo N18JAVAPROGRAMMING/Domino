@@ -66,6 +66,7 @@ public class CreateRoom extends Fragment {
         editSescription = view.findViewById(R.id.edit_description);
         seekBar = view.findViewById(R.id.players_number);
         seekBar.setMax(4);
+        numberOfPlayers.setText("3");
         numberOfPlayers = view.findViewById(R.id.count);
         createButton = view.findViewById(R.id.next);
         setCreateRoomListener();
@@ -103,7 +104,7 @@ public class CreateRoom extends Fragment {
                     r.setCapacity(seekBar.getProgress()+2);
                     boolean mode=false;
                     r.setPrivacyMode(mode);
-                    Snackbar.make(v,"Заявка на турнир приянята",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v,"Заявка на турнир принята",Snackbar.LENGTH_LONG).show();
                     manager.createRoom(r.room_name, r.capacity, new ServerManager.OnCreateRoomListener() {
                         @Override
                         public void create(Room room) {

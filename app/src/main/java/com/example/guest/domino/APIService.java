@@ -93,8 +93,8 @@ public interface APIService {
 
 
 
-    @GET("game/domino")
-    Call<Task> getTask(@Query("token")String token,@Query("task_id")String id);
+    @POST("game/domino")
+    Call<Task> getTask(@Body ModelGetTask model);
 
     @GET("game/task")
     Call<CaptureModel> statusTasks(@Query("token") String token,@Query("room_id") String id);
@@ -147,6 +147,16 @@ public interface APIService {
     class CaptureModel{
         List<Integer> dominoes;
         List<Integer> task_status;
+    }
+
+    class ModelGetTask{
+        String token;
+        String task_id;
+
+        public ModelGetTask(String token, String task_id) {
+            this.token = token;
+            this.task_id = task_id;
+        }
     }
 
 

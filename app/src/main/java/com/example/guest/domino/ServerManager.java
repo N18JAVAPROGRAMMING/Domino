@@ -151,6 +151,10 @@ public class ServerManager {
         call.enqueue(new Callback<APIService.Status>() {
             @Override
             public void onResponse(Call<APIService.Status> call, Response<APIService.Status> response) {
+                if (response.body()==null){
+                    checkTokenListener.error();
+                    return;
+                }
                 if (response.body().status.equals("success")){
                     checkTokenListener.ok();
                 } else {
@@ -180,8 +184,8 @@ public class ServerManager {
 
     public void getTask(int id, final OnCallBackListenerTask listener) {
 
-
-        Call<Task> call = service.getTask(APIService.Token.getToken(context),String.valueOf(id));
+           APIService.ModelGetTask model=  new APIService.ModelGetTask(APIService.Token.getToken(context),String.valueOf(id));
+        Call<Task> call = service.getTask(model);
 
         call.enqueue(new Callback<Task>() {
             @Override
@@ -408,6 +412,11 @@ public class ServerManager {
 
         @Override
         public void run() {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             while (runflag) {
                 switch (mode) {
                     case UPDATE_ROOMLIST:
@@ -417,13 +426,14 @@ public class ServerManager {
                         break;
                     case UPDATE_ROOMINFO:
                         onUpdateRoomInfo();
+                        break;
                     case UPDATE_TASKS:
                         onUpdateDomino();
                         break;
                 }
 
                 try {
-                    Thread.sleep(delay);
+                    Thread.sleep(delay/2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,15 +31,30 @@ import java.util.List;
 public class TableFragment extends Fragment {
 
 
+
+
+
     ServerManager manager;
     ServerManager.BackgroundThread thread;
     int room_id;
+    String room_name;
+    TextView scoreView;
+    TextView nameView;
+
+    public void setScore(String score){
+        scoreView.setText(score);
+        Log.d("dominotask scoreView",score);
+    }
+
+    public void setName(String name){
+       room_name=name;
+    }
 
     public void setStatus(int id, int status){
 
 
         for(Domino domino : dominoes){
-            if(domino.getTask().getId() == id){
+            if(domino.id == id){
                 domino.setStatus(status);
             }
         }
@@ -160,9 +176,12 @@ public class TableFragment extends Fragment {
         // Inflate the layout for this fragment
         startUpdate();
         View view = inflater.inflate(R.layout.fragment_table, container, false);
+        scoreView=view.findViewById(R.id.score);
+        nameView=view.findViewById(R.id.name_room);
         viewPager = view.findViewById(R.id.pager);
         viewPagerAdapter = new TableScreenSlidePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+        nameView.setText(room_name);
         return view;
     }
 
@@ -219,6 +238,8 @@ public class TableFragment extends Fragment {
 
             }
         });
+
+        thread.start();
 
     }
 }

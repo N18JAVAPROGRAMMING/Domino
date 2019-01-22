@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -29,12 +30,16 @@ public class GameActivity extends AppCompatActivity {
 
     EndThread thread;
     ServerManager manager;
-
+    User mainUser;
+    int score=0;
+    int count=0;
     Room currentroom;
+    BottomNavigationView view;
+
     int room_id=-1;
     int localScore=0;
     ArrayList<Domino> dominoes = new ArrayList<>();
-    List<Domino> current_list;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,16 +68,20 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         manager= new ServerManager(getApplicationContext());
-
+        view =findViewById(R.id.navigation);
         room_id=getIntent().getIntExtra(MyApplication.CURRENT_ROOM,-1);
+        currentroom= new Room();
+        currentroom.on_start=1;
+        currentroom.id=String.valueOf(room_id);
 
 
-        for(int i = 0; i < 10; i++){
+       /* for(int i = 0; i < 10; i++){
             dominoes.add(Domino.generateDomino());
-        }
+        }*/
 
         fragmentTable = TableFragment.newInstance(dominoes,room_id);
         fragmentProblems = ProblemsFragment.newInstance();
@@ -82,13 +91,36 @@ public class GameActivity extends AppCompatActivity {
         fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
             @Override
             public void onClick(final Domino domino) {
-                //fragmentProblems.
-                if (fragmentProblems.getListDomino().size()<2){
-                    //проверка доступности - весь код в теле метода get запроса
-                    manager.getTask(room_id, new ServerManager.OnCallBackListenerTask() {
+                   boolean con=true;
+                if (count<2){
+                    switch (domino.getStatus()){
+                       case Domino.WASTED_MODE:
+                            Snackbar.make(view,"Эта задача уже недоступна",Snackbar.LENGTH_SHORT).show();
+                            con=false;
+                            break;
+                        case Domino.RESERVED:
+                            Snackbar.make(view,"Задча решается другой командой",Snackbar.LENGTH_SHORT).show();
+                            con=false;
+                            break;
+                        case Domino.SOLVING_MODE:
+                            Snackbar.make(view,"Задча решается другой командой",Snackbar.LENGTH_SHORT).show();
+                            con=false;
+                            break;
+
+                    }
+                    if(!con)return;
+
+                    if (domino.getTask()!=null){
+                        fragmentTable.setStatus(domino.id, Domino.SOLVING_MODE);
+                        fragmentProblems.addDomino(domino);
+                    } else {
+                    manager.getTask(domino.task_id, new ServerManager.OnCallBackListenerTask() {
                         @Override
                         public void onCallBack(Task task) {
                             domino.setTask(task);
+                            fragmentTable.setStatus(domino.id, Domino.SOLVING_MODE);
+
+                            fragmentProblems.addDomino(domino);
                         }
 
                         @Override
@@ -97,18 +129,17 @@ public class GameActivity extends AppCompatActivity {
                           runOnUiThread(new Runnable() {
                               @Override
                               public void run() {
-                                  //Snackbar.make(fragmentProblems.getView(),m,Snackbar.LENGTH_SHORT).show();
+                                  Snackbar.make(view,m,Snackbar.LENGTH_SHORT).show();
                               }
                           });
                         }
-                    });
+                    });}
                     //внутри onCallBack();
-                    fragmentTable.setStatus(domino.getTask().getId(), Domino.SOLVING_MODE);
-                    fragmentProblems.addDomino(domino);
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
-                    //Snackbar.make(fragmentProblems.getAnyChild(),"Домино добавлена",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view,"Задача добавлена",Snackbar.LENGTH_SHORT).show();
                 } else {
-                    //Snackbar.make(fragmentProblems.getAnyChild(),"Стек задач переполнен",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view,"Одновременно можно решать только 2 задачи",Snackbar.LENGTH_SHORT).show();
                 }
 
             }
@@ -122,21 +153,41 @@ public class GameActivity extends AppCompatActivity {
                 // отправляем запрос на начисление баллов
                 int add=0;
                 if (domino.getTask().getAns().equals(answer)){
+                    Log.d("dominotask","true");
                     if (domino.attempt==0){
                         add+=domino.getUp()+domino.getDown();
                     } else {
                         add+=Math.max(domino.getUp(),domino.getDown());
                     }
+                    Snackbar.make(view,"Правильный ответ +"+add,Snackbar.LENGTH_SHORT).show();
+                    fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
                 }  else {
+                    Log.d("dominotask","true");
                     if (domino.attempt==1){
                         add-=Math.min(domino.getUp(),domino.getDown());
+                        fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
+                        Snackbar.make(view,"Неверный ответ "+add,Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        fragmentTable.setStatus(domino.id, Domino.FREE_MODE);
+                        Snackbar.make(view,"Осталась 1 попытка"+add,Snackbar.LENGTH_SHORT).show();
                     }
                 }
+
+                score+=add;
+                Log.d("dominotask","score add "+add );
+                Log.d("dominotask","score add "+score );
+                fragmentTable.setScore(String.valueOf(score));
                 domino.attempt++;
+                if (domino.attempt==2){
+                    fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
+                }
                 manager.setScore(add,domino.task_id);
+
+
               //начисление add
-                fragmentProblems.removeDomino(domino);
-                fragmentTable.setStatus(domino.getTask().getId(), Domino.FREE_MODE);
+                 fragmentProblems.removeDomino(domino);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+
             }
         });
 
@@ -145,6 +196,8 @@ public class GameActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        currentroom.room_name=getIntent().getStringExtra(MyApplication.ROOM_NAME);
+        fragmentTable.setName(currentroom.room_name);
 
     }
 
@@ -156,7 +209,9 @@ public class GameActivity extends AppCompatActivity {
                 for (int i=0; i<dependencies.dominoes.size(); i++){
                     int n1 =Domino.main[dependencies.dominoes.get(i)-1][0];
                     int n2 =Domino.main[dependencies.dominoes.get(i)-1][1];
+                    Log.d("dominotask",n1+"  "+n2);
                     Domino add=  new Domino(Math.min(n1,n2),Math.max(n1,n2));
+                    add.id=dependencies.dominoes.get(i);
                     add.task_id=dependencies.tasks.get(i);
                     result.add(add);
                 }

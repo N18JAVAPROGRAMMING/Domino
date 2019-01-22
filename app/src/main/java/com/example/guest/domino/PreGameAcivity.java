@@ -76,9 +76,9 @@ public class PreGameAcivity extends AppCompatActivity {
             }
         });
            users= new ArrayList<User>();
-        for (int i=0; i<5; i++){
+      /*  for (int i=0; i<5; i++){
             users.add(User.generateUser());
-        }
+        }*/
         adapter=  new UserAdapter(users);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL,false));
@@ -218,6 +218,7 @@ public class PreGameAcivity extends AppCompatActivity {
     public void startRoom(){
         Intent intent= new Intent(getApplicationContext(),GameActivity.class);
         intent.putExtra(MyApplication.CURRENT_ROOM,room_id);
+        intent.putExtra(MyApplication.ROOM_NAME,current_room.room_name);
         startActivity(intent);
 
     }

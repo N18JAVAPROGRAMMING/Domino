@@ -56,6 +56,7 @@ public class Domino {
 
    public void setTask(Task task) {
       this.task = task;
+      task.id=task_id;
    }
 
    public int getUp() {
