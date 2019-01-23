@@ -42,11 +42,16 @@ public class TableFragment extends Fragment {
 
     public void setStatus(HashMap<Integer, Integer> changes){
 
-        for(Domino domino : dominoes){
-            domino.setStatus(changes.get(domino.getTask().getId()));
-        }
+        boolean changed = false;
 
-        viewPagerAdapter.notifyDataSetChanged();
+        for(Domino domino : dominoes){
+            if(domino.getStatus() != changes.get(domino.getTask().getId())) {
+                domino.setStatus(changes.get(domino.getTask().getId()));
+                changed = true;
+            }
+        }
+        if(changed)
+            viewPagerAdapter.notifyDataSetChanged();
 
     }
 

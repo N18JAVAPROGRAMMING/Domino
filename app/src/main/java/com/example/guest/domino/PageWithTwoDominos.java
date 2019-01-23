@@ -67,19 +67,19 @@ public class PageWithTwoDominos extends Fragment  {
     public void setButtons(){
         switch (domino1.getStatus()){
             case Domino.FREE_MODE:
-                button1.setCardBackgroundColor(R.color.pink_button);
+                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink_button));
                 textView1.setText("Начать решать");
                 break;
             case Domino.RESERVED:
-                button1.setCardBackgroundColor(R.color.reserved);
+                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
                 textView1.setText("Решается игроком");
                 break;
             case Domino.SOLVING_MODE:
-                button1.setCardBackgroundColor(R.color.reserved);
+                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
                 textView1.setText("Решается вами");
                 break;
             case Domino.WASTED_MODE:
-                button1.setCardBackgroundColor(R.color.pink_button);
+                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.solved));
                 textView1.setText("Решена");
                 break;
         }
