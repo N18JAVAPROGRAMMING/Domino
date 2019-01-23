@@ -21,7 +21,7 @@ public class ScoreTableFragment extends Fragment {
     private RecyclerView table;
     private ArrayList<User> list = new ArrayList<>();
 
-    UserAdapter adapter;
+    UserScoreAdapter adapter;
     ServerManager manager;
     int room_id;
     ServerManager.BackgroundThread thread;
@@ -52,18 +52,19 @@ public class ScoreTableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_score_table, container, false);
         table = view.findViewById(R.id.table);
 
-/*
+
         for (int i=0; i<20; i++) {
 
             list.add(User.generateUser());
-        }*/
+        }
 
         manager=  new ServerManager(getActivity().getApplicationContext());
         thread=  new ServerManager.BackgroundThread(getContext(),
                 ServerManager.BackgroundThread.UPDATE_SCORE,2000);
 
 
-        adapter = new UserAdapter(list,false);
+        table.setLayoutFrozen(true);
+        adapter = new UserScoreAdapter(list);
         table.setAdapter(adapter);
         table.setLayoutManager(new LinearLayoutManager(getContext()));
         startBackground();
