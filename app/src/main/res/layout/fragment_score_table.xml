@@ -6,12 +6,18 @@
     tools:context=".ScoreTableFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@mipmap/trophy"/>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="124dp"
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
     </android.support.v7.widget.RecyclerView>
+
 
 </FrameLayout>

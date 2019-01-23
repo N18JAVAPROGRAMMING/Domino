@@ -71,9 +71,9 @@ public class ColoredNumbers {
 
         ColorMatrix matrix = new ColorMatrix(
                 new float[]{
-                        0, 0, 0, 0, 255,
                         0, 0, 0, 0, 248,
                         0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 49,
                         0, 0, 0, 1, 0
                 }
         );

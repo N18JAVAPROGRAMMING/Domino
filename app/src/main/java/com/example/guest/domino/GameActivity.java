@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -63,7 +64,33 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //Диалог
+
+        final DialogFragment backDialog = ExitGameDialog.newInstance();
+        ((ExitGameDialog) backDialog).setListener(new ExitGameDialog.OnCallBackListener() {
+            @Override
+            public void onExit() {
+                manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
+                    @Override
+                    public void disconnect(List<Room> list) {
+
+                    }
+
+                    @Override
+                    public void error() {
+
+                    }
+                });
+
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                backDialog.dismiss();
+            }
+        });
+        backDialog.show(getSupportFragmentManager(), "Игра окончена");
+
     }
 
     @Override
@@ -236,6 +263,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void EndGame(){
+        DialogFragment endGameDialog = EndGameDialogFragment.newInstance(fragmentScore);
+        ((EndGameDialogFragment) endGameDialog).setOnExitListener(new EndGameDialogFragment.OnExitListener() {
+            @Override
+            public void OnExit() {
+                finish();
+            }
+        });
+        endGameDialog.show(getSupportFragmentManager(), "Игра окончена");
 
     }
 
@@ -273,6 +308,8 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 
     public void GoBack(){

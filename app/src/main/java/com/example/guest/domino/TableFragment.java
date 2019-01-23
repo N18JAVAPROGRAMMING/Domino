@@ -221,8 +221,8 @@ public class TableFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        List<Integer> d=model.dominoes;
-                        List<Integer> t=  model.task_status;
+                        List<Integer> d = model.dominoes;
+                        List<Integer> t = model.task_status;
                         HashMap<Integer,Integer> map =  new HashMap<Integer, Integer>();
 
                         for (int k=0; k<d.size(); k++){
