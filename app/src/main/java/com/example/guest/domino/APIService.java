@@ -3,6 +3,7 @@ package com.example.guest.domino;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,7 +43,9 @@ public interface APIService {
     Call<List<Room>> getAllRooms(@Query("token") String token);
 
     @GET("token/check")
-    Call<Token> checkToken(@Query("token") Token token);
+    Call<Status> checkToken(@Query("token") String token);
+
+
 
 
 /*    @POST("peer/signup")
@@ -59,9 +62,17 @@ public interface APIService {
     @POST("peer/login")
     Call<Token> logIn(@Body User user);
 
+    @GET("peer/score")
+    Call<ModelScore> getGlobalScore(@Query("token") String token, @Query("username")String username);
+
+
+
+
 
     @GET("room/status")
     Call<Room> roomStatus(@Query("token") String token,@Query("room_id") String room_id);
+
+
 
   /*  @POST()
     Call<Room.RoomStatus> peerConnect(@Query("room_id")String room_id, @Query("peer_name")String username);
@@ -82,11 +93,46 @@ public interface APIService {
 
 
 
-    @GET("game/domino")
-    Call<Task> getTask(@Query("token")String token,@Query("task_id")String id);
+    @POST("game/domino")
+    Call<Task> getTask(@Body ModelGetTask model);
 
     @GET("game/task")
     Call<CaptureModel> statusTasks(@Query("token") String token,@Query("room_id") String id);
+
+    @POST("game/score")
+    Call<Void> setScore(@Body ModelPostTask mode);
+
+    @GET("game/over")
+    Status gameOver(@Query("token")String toke, @Query("room_id")String room_id );
+
+
+
+
+
+
+
+    public class ModelScore{
+        int score;
+    }
+
+
+    public class Status{
+        String status;
+    }
+
+
+
+    public class ModelPostTask{
+        int amt;
+        String token;
+        int task_id;
+
+        public ModelPostTask(int amt, String token, int task_id) {
+            this.amt = amt;
+            this.token = token;
+            this.task_id = task_id;
+        }
+    }
 
 
 
@@ -101,6 +147,16 @@ public interface APIService {
     class CaptureModel{
         List<Integer> dominoes;
         List<Integer> task_status;
+    }
+
+    class ModelGetTask{
+        String token;
+        String task_id;
+
+        public ModelGetTask(String token, String task_id) {
+            this.token = token;
+            this.task_id = task_id;
+        }
     }
 
 

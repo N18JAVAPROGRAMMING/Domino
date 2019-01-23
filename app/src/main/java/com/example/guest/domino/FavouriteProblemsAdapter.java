@@ -1,12 +1,15 @@
 package com.example.guest.domino;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,7 +43,11 @@ public class FavouriteProblemsAdapter extends RecyclerView.Adapter<FavouriteProb
     @Override
     public void onBindViewHolder(@NonNull final CustomHolder customHolder, int i) {
         final int id = data.get(i).getId();
-        customHolder.setProblemName(data.get(i).getCond().substring(0, 20) + "...");
+        Task task = data.get(i);
+
+
+
+        customHolder.setProblemName(data.get(i).getCond());
         customHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,15 +65,25 @@ public class FavouriteProblemsAdapter extends RecyclerView.Adapter<FavouriteProb
 
         private TextView problemName;
         CardView cardView;
+        TextView answer;
+        TextView solution;
+
 
         public CustomHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.card_problem);
             problemName = itemView.findViewById(R.id.problem_name);
+
+
         }
 
         public void setProblemName(String s) {
-            problemName.setText(s);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                problemName.setText(Html.fromHtml(s, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                problemName.setText(Html.fromHtml(s));
+            }
+            //problemName.setText(s);
         }
     }
 

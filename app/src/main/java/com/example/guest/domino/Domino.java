@@ -12,6 +12,8 @@ public class Domino {
 
    private int status = FREE_MODE;
 
+
+   public int id;
    public int task_id;
    public int attempt=0;
 
@@ -54,6 +56,7 @@ public class Domino {
 
    public void setTask(Task task) {
       this.task = task;
+      task.id=task_id;
    }
 
    public int getUp() {

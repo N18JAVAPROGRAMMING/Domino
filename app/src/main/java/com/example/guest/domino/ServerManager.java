@@ -28,6 +28,8 @@ public class ServerManager {
     OnGetDependencies dependencies;
 
 
+
+
     Context context;
     /*private static ServerManager manager;*/
 
@@ -36,6 +38,34 @@ public class ServerManager {
           manager= new ServerManager();
       return manager;
   }*/
+
+    public interface GlobalScoreGetter{
+        void ok(int score);
+        void fail();
+    }
+
+    public void getGlobalScore(String username, final GlobalScoreGetter listener){
+        Call<APIService.ModelScore> call = service.getGlobalScore(
+           APIService.Token.getToken(context),username);
+        call.enqueue(new Callback<APIService.ModelScore>() {
+            @Override
+            public void onResponse(Call<APIService.ModelScore> call, Response<APIService.ModelScore> response) {
+                if (response.body()==null){
+                    listener.fail();
+                }else{
+                listener.ok(response.body().score);}
+
+            }
+
+            @Override
+            public void onFailure(Call<APIService.ModelScore> call, Throwable t) {
+                 listener.fail();
+            }
+        });
+    }
+
+
+
 
     public interface OnCreateRoomListener{
         void create(Room room);
@@ -115,23 +145,26 @@ public class ServerManager {
     }
 
 
-    public void CheckToken(OnCheckTokenListener checkTokenListener, Context context) {
+    public void CheckToken(final OnCheckTokenListener checkTokenListener, Context context) {
         listenerToken = checkTokenListener;
-        Call<List<Room>> call = service.getAllRooms(APIService.Token.getToken(context));
-        call.enqueue(new Callback<List<Room>>() {
+        Call<APIService.Status> call = service.checkToken(APIService.Token.getToken(context));
+        call.enqueue(new Callback<APIService.Status>() {
             @Override
-            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
-                if (response.body() == null) {
-                    listenerToken.error();
-                } else {
-                    listenerToken.ok();
+            public void onResponse(Call<APIService.Status> call, Response<APIService.Status> response) {
+                if (response.body()==null){
+                    checkTokenListener.error();
+                    return;
                 }
-
+                if (response.body().status.equals("success")){
+                    checkTokenListener.ok();
+                } else {
+                    checkTokenListener.error();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Room>> call, Throwable t) {
-                listenerToken.error();
+            public void onFailure(Call<APIService.Status> call, Throwable t) {
+                checkTokenListener.error();
             }
         });
 
@@ -151,8 +184,8 @@ public class ServerManager {
 
     public void getTask(int id, final OnCallBackListenerTask listener) {
 
-
-        Call<Task> call = service.getTask(APIService.Token.getToken(context),String.valueOf(id));
+           APIService.ModelGetTask model=  new APIService.ModelGetTask(APIService.Token.getToken(context),String.valueOf(id));
+        Call<Task> call = service.getTask(model);
 
         call.enqueue(new Callback<Task>() {
             @Override
@@ -299,6 +332,26 @@ public class ServerManager {
     }
 
 
+    public void setScore(int add, int task_id){
+        APIService.ModelPostTask model =  new APIService.ModelPostTask(add,
+                APIService.Token.getToken(context),task_id);
+
+        Call call = service.setScore(model);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
     public static class BackgroundThread extends Thread {
 
         private Retrofit retrofit;
@@ -308,6 +361,7 @@ public class ServerManager {
 
         UpdateRoomListListener updateRoomListListener;
         OnLoadRoomInformation loadRoomInformation;
+        DominoStatusCheckListener dominoListener;
 
         interface OnLoadRoomInformation {
             void ok(Room room);
@@ -324,6 +378,7 @@ public class ServerManager {
         public static final int UPDATE_ROOMLIST = 0;
         public static final int UPDATE_SCORE = 1;
         public static final int UPDATE_ROOMINFO = 2;
+        public static final int UPDATE_TASKS=3;
 
         int delay;
         int room_id;
@@ -357,6 +412,11 @@ public class ServerManager {
 
         @Override
         public void run() {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             while (runflag) {
                 switch (mode) {
                     case UPDATE_ROOMLIST:
@@ -367,10 +427,13 @@ public class ServerManager {
                     case UPDATE_ROOMINFO:
                         onUpdateRoomInfo();
                         break;
+                    case UPDATE_TASKS:
+                        onUpdateDomino();
+                        break;
                 }
 
                 try {
-                    Thread.sleep(delay);
+                    Thread.sleep(delay/2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -426,6 +489,36 @@ public class ServerManager {
 
 
 
+        }
+
+        public interface DominoStatusCheckListener{
+            void onUpdate(APIService.CaptureModel model);
+            void  fail();
+        }
+
+        public void setOnDominoListener(int room_id, final DominoStatusCheckListener listener){
+            this.room_id=room_id;
+            dominoListener=listener;
+        }
+
+        public void onUpdateDomino(){
+            Call<APIService.CaptureModel> call = service.statusTasks(APIService.Token.getToken(context),
+                    String.valueOf(room_id));
+            call.enqueue(new Callback<APIService.CaptureModel>() {
+                @Override
+                public void onResponse(Call<APIService.CaptureModel> call, Response<APIService.CaptureModel> response) {
+                    if (response.body()==null){
+                        dominoListener.fail();
+                    } else {
+                        dominoListener.onUpdate(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<APIService.CaptureModel> call, Throwable t) {
+                       dominoListener.fail();
+                }
+            });
         }
 
         public void setRunFlag(boolean value) {
