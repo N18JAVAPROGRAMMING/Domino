@@ -362,6 +362,7 @@ public class ServerManager {
         UpdateRoomListListener updateRoomListListener;
         OnLoadRoomInformation loadRoomInformation;
         DominoStatusCheckListener dominoListener;
+        GetterUsersScore scoreListener;
 
         interface OnLoadRoomInformation {
             void ok(Room room);
@@ -379,6 +380,7 @@ public class ServerManager {
         public static final int UPDATE_SCORE = 1;
         public static final int UPDATE_ROOMINFO = 2;
         public static final int UPDATE_TASKS=3;
+
 
         int delay;
         int room_id;
@@ -439,6 +441,41 @@ public class ServerManager {
                 }
             }
         }
+
+
+
+        public interface GetterUsersScore{
+            void ok(APIService.ModelUserData model);
+            void error();
+        }
+
+        public void setGetterUsersScore(int room_id,GetterUsersScore l ){
+            this.room_id=room_id;
+            scoreListener =l;
+
+        }
+
+        public void updateUsersScore(){
+            Call<APIService.ModelUserData> call=  service.getUsersScoreData(
+                    APIService.Token.getToken(context),String.valueOf(room_id));
+            call.enqueue(new Callback<APIService.ModelUserData>() {
+                @Override
+                public void onResponse(Call<APIService.ModelUserData> call, Response<APIService.ModelUserData> response) {
+                    if (response.body()==null){
+                        scoreListener.error();
+                    } else {
+                        scoreListener.ok(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<APIService.ModelUserData> call, Throwable t) {
+                          scoreListener.error();
+                }
+            });
+
+        }
+
 
         public void OnUpdateRoomList() {
 

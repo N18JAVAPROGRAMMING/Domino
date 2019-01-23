@@ -12,6 +12,9 @@ public class User {
     public String name;
     public int score;
     int img;
+   public int localScore;
+   public int countOk;
+   public int countError;
 
     private static int[] res= {R.mipmap.u_1,R.mipmap.u_2,R.mipmap.u_3,R.mipmap.u_4,R.mipmap.u_5,R.mipmap.u_6};
 
