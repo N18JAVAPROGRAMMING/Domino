@@ -68,19 +68,47 @@ public class PageWithTwoDominos extends Fragment  {
         switch (domino1.getStatus()){
             case Domino.FREE_MODE:
                 button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink_button));
-                textView1.setText("Начать решать");
+                textView1.setText("Начать\nрешать");
                 break;
             case Domino.RESERVED:
                 button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
-                textView1.setText("Решается игроком");
+                textView1.setText("Решается\nигроком");
                 break;
             case Domino.SOLVING_MODE:
                 button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
-                textView1.setText("Решается вами");
+                textView1.setText("Решается\nвами");
                 break;
             case Domino.WASTED_MODE:
-                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.solved));
-                textView1.setText("Решена");
+                if(domino1.attempt < 2) {
+                    button1.setCardBackgroundColor(getResources().getColorStateList(R.color.solved));
+                    textView1.setText("Задача\nрешена");
+                }else{
+                    button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
+                    textView1.setText("Нет\nпопыток");
+                }
+                break;
+        }
+        switch (domino2.getStatus()){
+            case Domino.FREE_MODE:
+                button2.setCardBackgroundColor(getResources().getColorStateList(R.color.pink_button));
+                textView2.setText("Начать\nрешать");
+                break;
+            case Domino.RESERVED:
+                button2.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
+                textView2.setText("Решается\nигроком");
+                break;
+            case Domino.SOLVING_MODE:
+                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
+                textView2.setText("Решается\nвами");
+                break;
+            case Domino.WASTED_MODE:
+                if(domino1.attempt < 2) {
+                    button2.setCardBackgroundColor(getResources().getColorStateList(R.color.solved));
+                    textView2.setText("Задача\nрешена");
+                }else{
+                    button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
+                    textView2.setText("Нет\nпопыток");
+                }
                 break;
         }
     }
@@ -123,14 +151,16 @@ public class PageWithTwoDominos extends Fragment  {
         textView1 = button1.findViewById(R.id.text_button_1);
         textView2 = button2.findViewById(R.id.text_button_2);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        if(domino1.getStatus() == Domino.FREE_MODE)
+            button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(domino1);
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        if(domino2.getStatus() == Domino.FREE_MODE)
+            button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(domino2);

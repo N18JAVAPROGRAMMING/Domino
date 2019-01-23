@@ -171,13 +171,13 @@ public class GameActivity extends AppCompatActivity {
                         fragmentTable.setStatus(domino.id, Domino.FREE_MODE);
                         Snackbar.make(view,"Осталась 1 попытка"+add,Snackbar.LENGTH_SHORT).show();
                     }
+                    domino.attempt++;
                 }
 
                 score+=add;
                 Log.d("dominotask","score add "+add );
                 Log.d("dominotask","score add "+score );
                 fragmentTable.setScore(String.valueOf(score));
-                domino.attempt++;
                 if (domino.attempt==2){
                     fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
                 }
