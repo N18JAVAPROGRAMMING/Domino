@@ -103,7 +103,21 @@ public interface APIService {
     Call<Void> setScore(@Body ModelPostTask mode);
 
     @GET("game/over")
-    Status gameOver(@Query("token")String toke, @Query("room_id")String room_id );
+    Call<Status> gameOver(@Query("token")String toke, @Query("room_id")String room_id );
+
+    @GET("users/info")
+    Call<ModelUserData> getUsersScoreData(@Query("token") String token,@Query("room_id")String room_id);
+
+
+
+
+
+    public class ModelUserData{
+
+        ArrayList<int[]> score_data;
+        ArrayList<String> users_data;
+
+    }
 
 
 
