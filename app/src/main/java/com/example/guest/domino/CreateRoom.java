@@ -23,7 +23,7 @@ import android.widget.TextView;
 public class CreateRoom extends Fragment {
 
     private EditText editName;
-    private EditText editSescription;
+    private EditText editDescription;
     private SeekBar seekBar;
     private TextView numberOfPlayers;
     static OnCreateRoomListener onCreateRoomListener;
@@ -63,11 +63,12 @@ public class CreateRoom extends Fragment {
         View view  =inflater.inflate(R.layout.fragment_create_room, container, false);
 
         editName = view.findViewById(R.id.edit_name);
-        editSescription = view.findViewById(R.id.edit_description);
+        editDescription = view.findViewById(R.id.edit_description);
         seekBar = view.findViewById(R.id.players_number);
         seekBar.setMax(4);
-        numberOfPlayers.setText("3");
+
         numberOfPlayers = view.findViewById(R.id.count);
+        numberOfPlayers.setText("3");
         createButton = view.findViewById(R.id.next);
         setCreateRoomListener();
         manager =  new ServerManager(getContext());
@@ -98,13 +99,23 @@ public class CreateRoom extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (editName.length()>15){
+                    Snackbar.make(v,"Максимальная длинна название турнира 15 символов",Snackbar.LENGTH_SHORT).show();
+                   return;
+                }
+                if(editDescription.length()>200){
+                    Snackbar.make(v,"Слишком длинное описание",Snackbar.LENGTH_SHORT).show();
+               return;
+                }
+
                 if (editName.getText().toString().length()>0){
                     Room r = new Room();
                     r.setName(editName.getText().toString());
                     r.setCapacity(seekBar.getProgress()+2);
                     boolean mode=false;
                     r.setPrivacyMode(mode);
-                    Snackbar.make(v,"Заявка на турнир принята",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v,"Заявка на турнир принята",Snackbar.LENGTH_SHORT).show();
                     manager.createRoom(r.room_name, r.capacity, new ServerManager.OnCreateRoomListener() {
                         @Override
                         public void create(Room room) {
@@ -115,7 +126,7 @@ public class CreateRoom extends Fragment {
 
 
                 } else {
-                    Snackbar.make(v,"Не введено имя турнира",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v,"Не введено имя турнира",Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

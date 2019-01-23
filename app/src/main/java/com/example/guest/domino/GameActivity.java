@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ public class GameActivity extends AppCompatActivity {
     private TableFragment fragmentTable;
     private ProblemsFragment fragmentProblems;
     private ScoreTableFragment fragmentScore;
+
+    TableFragment.GameTime gameTime;
 
 
     EndThread thread;
@@ -113,14 +116,17 @@ public class GameActivity extends AppCompatActivity {
                     if (domino.getTask()!=null){
                         fragmentTable.setStatus(domino.id, Domino.SOLVING_MODE);
                         fragmentProblems.addDomino(domino);
+                        count++;
                     } else {
-                    manager.getTask(domino.task_id, new ServerManager.OnCallBackListenerTask() {
+
+                    manager.getTask(room_id,domino.task_id, new ServerManager.OnCallBackListenerTask() {
                         @Override
                         public void onCallBack(Task task) {
                             domino.setTask(task);
                             fragmentTable.setStatus(domino.id, Domino.SOLVING_MODE);
 
                             fragmentProblems.addDomino(domino);
+                            count++;
                         }
 
                         @Override
@@ -134,6 +140,7 @@ public class GameActivity extends AppCompatActivity {
                           });
                         }
                     });}
+
                     //внутри onCallBack();
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentProblems).commit();
@@ -150,12 +157,14 @@ public class GameActivity extends AppCompatActivity {
         fragmentProblems.setOnAnswerListener(new ProblemsFragment.onGetAnswer() {
             @Override
             public void answer(String answer,Domino domino) {
-                // отправляем запрос на начисление баллов
+                count--;
+
                 int add=0;
                 if (domino.getTask().getAns().equals(answer)){
                     Log.d("dominotask","true");
                     if (domino.attempt==0){
                         add+=domino.getUp()+domino.getDown();
+                        if(add==0)add=10;
                     } else {
                         add+=Math.max(domino.getUp(),domino.getDown());
                     }
@@ -163,30 +172,40 @@ public class GameActivity extends AppCompatActivity {
                     fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
                 }  else {
                     Log.d("dominotask","true");
+                    if (domino.getUp()+domino.getDown()==0){
+                        fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
+                        Snackbar.make(view,"Неверный ответ ",Snackbar.LENGTH_SHORT).show();
+                    }  else {
                     if (domino.attempt==1){
                         add-=Math.min(domino.getUp(),domino.getDown());
                         fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
                         Snackbar.make(view,"Неверный ответ "+add,Snackbar.LENGTH_SHORT).show();
                     } else {
                         fragmentTable.setStatus(domino.id, Domino.FREE_MODE);
+                        add=MyApplication.FIRST_ATTEMPT;
                         Snackbar.make(view,"Осталась 1 попытка"+add,Snackbar.LENGTH_SHORT).show();
+                    }
+
                     }
                     domino.attempt++;
                 }
+                if (add!=MyApplication.FIRST_ATTEMPT) score+=add;
 
-                score+=add;
                 Log.d("dominotask","score add "+add );
                 Log.d("dominotask","score add "+score );
                 fragmentTable.setScore(String.valueOf(score));
                 if (domino.attempt==2){
                     fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
                 }
-                manager.setScore(add,domino.task_id);
+
+                manager.setScore(room_id,add,domino.task_id);
 
 
               //начисление add
+                fragmentTable.update();
                  fragmentProblems.removeDomino(domino);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
+
 
             }
         });
@@ -199,6 +218,25 @@ public class GameActivity extends AppCompatActivity {
         currentroom.room_name=getIntent().getStringExtra(MyApplication.ROOM_NAME);
         fragmentTable.setName(currentroom.room_name);
 
+            gameTime=new TableFragment.GameTime(fragmentTable.getTextTime(),30,this);
+            gameTime.start();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        manager.peerDisconnect(room_id, new ServerManager.onPeerDisonnectListener() {
+            @Override
+            public void disconnect(List<Room> list) {
+
+            }
+
+            @Override
+            public void error() {
+
+            }
+        });
+        super.onDestroy();
     }
 
     public void getDependencies(){
@@ -215,7 +253,9 @@ public class GameActivity extends AppCompatActivity {
                     add.task_id=dependencies.tasks.get(i);
                     result.add(add);
                 }
+
                 fragmentTable.UpdateDominoList(result);
+                fragmentTable.update();
                 thread= new EndThread(result.size());
                 thread.start();
             }
@@ -278,6 +318,9 @@ public class GameActivity extends AppCompatActivity {
     public void GoBack(){
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+        Chronometer chronometer;
+       // chronometer.setFormat();
+
     }
 
 }

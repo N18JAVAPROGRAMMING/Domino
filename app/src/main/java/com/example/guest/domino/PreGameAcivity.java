@@ -26,6 +26,7 @@ public class PreGameAcivity extends AppCompatActivity {
     ServerManager.BackgroundThread thread;
     Room current_room;
     View leave;
+    int capacity;
     ProgressBar progressBar;
     boolean startGame=false;
     boolean press=false;
@@ -45,6 +46,9 @@ public class PreGameAcivity extends AppCompatActivity {
         title = findViewById(R.id.name_room);
         LoadInformation();
         thread.start();
+         current_room=new Room();
+         current_room.id=String.valueOf(room_id);
+         current_room.capacity=Integer.valueOf(getIntent().getIntExtra(MyApplication.CURRENT_ROOM_CAPACITY,5));
 
 
 
@@ -52,6 +56,8 @@ public class PreGameAcivity extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.user_list);
         progressBar=findViewById(R.id.progress);
+        progressBar.setMax(current_room.capacity);
+
 
         leave = findViewById(R.id.exit);
         leave.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +85,7 @@ public class PreGameAcivity extends AppCompatActivity {
       /*  for (int i=0; i<5; i++){
             users.add(User.generateUser());
         }*/
-        adapter=  new UserAdapter(users);
+        adapter=  new UserAdapter(users,true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
@@ -107,7 +113,7 @@ public class PreGameAcivity extends AppCompatActivity {
             users.add(user);
         }
 
-        progressBar.setProgress(users.size());
+       // progressBar.setProgress(users.size());
 
         adapter.setData(users);
         adapter.notifyDataSetChanged();
@@ -125,6 +131,7 @@ public class PreGameAcivity extends AppCompatActivity {
                     public void run() {
                        if(current_room==null){
                            progressBar.setMax(r.capacity);
+                           progressBar.setProgress(current_room.peer_count);
                        }
                         current_room=r;
 

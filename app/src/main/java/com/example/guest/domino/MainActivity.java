@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                                      Intent intent =  new Intent(getApplicationContext(),PreGameAcivity.class);
                                      Log.d("listener","topregame");
                                      intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
+                                     intent.putExtra(MyApplication.CURRENT_ROOM_CAPACITY,Integer.valueOf(r.capacity));
                                      startActivity(intent);
                                      press=0;}
                              }

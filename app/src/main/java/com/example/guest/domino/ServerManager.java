@@ -182,9 +182,9 @@ public class ServerManager {
         void error(String masg);
     }
 
-    public void getTask(int id, final OnCallBackListenerTask listener) {
+    public void getTask(int room_id,int id, final OnCallBackListenerTask listener) {
 
-           APIService.ModelGetTask model=  new APIService.ModelGetTask(APIService.Token.getToken(context),String.valueOf(id));
+           APIService.ModelGetTask model=  new APIService.ModelGetTask(APIService.Token.getToken(context),String.valueOf(id), room_id);
         Call<Task> call = service.getTask(model);
 
         call.enqueue(new Callback<Task>() {
@@ -332,9 +332,9 @@ public class ServerManager {
     }
 
 
-    public void setScore(int add, int task_id){
+    public void setScore(int room_id,int add, int task_id){
         APIService.ModelPostTask model =  new APIService.ModelPostTask(add,
-                APIService.Token.getToken(context),task_id);
+                APIService.Token.getToken(context),task_id,room_id);
 
         Call call = service.setScore(model);
         call.enqueue(new Callback() {
@@ -425,6 +425,7 @@ public class ServerManager {
                         OnUpdateRoomList();
                         break;
                     case UPDATE_SCORE:
+                        updateUsersScore();
                         break;
                     case UPDATE_ROOMINFO:
                         onUpdateRoomInfo();
@@ -462,6 +463,7 @@ public class ServerManager {
                 @Override
                 public void onResponse(Call<APIService.ModelUserData> call, Response<APIService.ModelUserData> response) {
                     if (response.body()==null){
+                        Log.d("scorelog","null");
                         scoreListener.error();
                     } else {
                         scoreListener.ok(response.body());

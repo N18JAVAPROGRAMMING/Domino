@@ -6,7 +6,7 @@ public class Room {
 
     public String room_name;
    public  String id;
-   int img;
+   int img=0;
     public int on_start;
     public int capacity;
    public  int Complexity;
@@ -26,7 +26,7 @@ public class Room {
        long hash = 0;
        long q = 257, p = 1000000013;
        for(int i = 0; i < room_name.length(); i++){
-           hash = (hash * q + (long)id.charAt(i)) % p;
+           hash = (hash * q + (long)room_name.charAt(i)) % p;
        }
        img = (int)hash % 5;
    }

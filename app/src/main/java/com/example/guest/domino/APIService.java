@@ -140,11 +140,13 @@ public interface APIService {
         int amt;
         String token;
         int task_id;
+        int room_id;
 
-        public ModelPostTask(int amt, String token, int task_id) {
+        public ModelPostTask(int amt, String token, int task_id, int room_id) {
             this.amt = amt;
             this.token = token;
             this.task_id = task_id;
+            this.room_id=room_id;
         }
     }
 
@@ -166,10 +168,12 @@ public interface APIService {
     class ModelGetTask{
         String token;
         String task_id;
+        int room_id;
 
-        public ModelGetTask(String token, String task_id) {
+        public ModelGetTask(String token, String task_id, int room_id) {
             this.token = token;
             this.task_id = task_id;
+            this.room_id=room_id;
         }
     }
 

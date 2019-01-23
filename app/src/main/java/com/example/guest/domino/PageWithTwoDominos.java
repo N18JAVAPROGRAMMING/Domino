@@ -63,8 +63,14 @@ public class PageWithTwoDominos extends Fragment  {
                 img22.setImageBitmap(ColoredNumbers.getInstance().numberPink(getContext(), domino2.getDown()));
     }
 
+    public void update(){
+        setButtons();
+        setColors();
+        notifyAll();
+    }
+
     @SuppressLint("ResourceAsColor")
-    public void setButtons(){
+    private void setButtons(){
         switch (domino1.getStatus()){
             case Domino.FREE_MODE:
                 button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink_button));
@@ -98,15 +104,15 @@ public class PageWithTwoDominos extends Fragment  {
                 textView2.setText("Решается\nигроком");
                 break;
             case Domino.SOLVING_MODE:
-                button1.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
+                button2.setCardBackgroundColor(getResources().getColorStateList(R.color.reserved));
                 textView2.setText("Решается\nвами");
                 break;
             case Domino.WASTED_MODE:
-                if(domino1.attempt < 2) {
+                if(domino2.attempt < 2) {
                     button2.setCardBackgroundColor(getResources().getColorStateList(R.color.solved));
                     textView2.setText("Задача\nрешена");
                 }else{
-                    button1.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
+                    button2.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
                     textView2.setText("Нет\nпопыток");
                 }
                 break;
