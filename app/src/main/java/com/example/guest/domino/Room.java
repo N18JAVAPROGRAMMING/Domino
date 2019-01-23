@@ -25,7 +25,7 @@ public class Room {
    public void generateImg(){
        long hash = 0;
        long q = 257, p = 1000000013;
-       for(int i = 0; i < id.length(); i++){
+       for(int i = 0; i < room_name.length(); i++){
            hash = (hash * q + (long)id.charAt(i)) % p;
        }
        img = (int)hash % 5;

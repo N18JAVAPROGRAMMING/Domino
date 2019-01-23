@@ -85,7 +85,7 @@ public class GameActivity extends AppCompatActivity {
 
         fragmentTable = TableFragment.newInstance(dominoes,room_id);
         fragmentProblems = ProblemsFragment.newInstance();
-        fragmentScore = ScoreTableFragment.newInstance();
+        fragmentScore = ScoreTableFragment.newInstance(Integer.valueOf(currentroom.id));
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
 
         fragmentTable.setDominoOnClickListener(new TableFragment.DominoOnClickListener() {
