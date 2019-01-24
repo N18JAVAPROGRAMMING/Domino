@@ -103,8 +103,12 @@ public class PageWithProblem extends Fragment {
         });
 
         if(domino.getUp() != 0)
-            numbers1.setImageBitmap(ColoredNumbers.getInstance()
-                    .numberWhite(getContext(), domino.getUp()));
+            if(domino.attempt == 0)
+                numbers1.setImageBitmap(ColoredNumbers.getInstance()
+                        .numberWhite(getContext(), domino.getUp()));
+            else
+                numbers1.setImageBitmap(ColoredNumbers.getInstance()
+                        .numberPink(getContext(), domino.getUp()));
 
         if(domino.getDown() != 0)
             numbers2.setImageBitmap(ColoredNumbers.getInstance()
