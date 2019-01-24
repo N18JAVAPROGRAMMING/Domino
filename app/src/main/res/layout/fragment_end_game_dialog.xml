@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="400dp"
+    android:layout_height="650dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".EndGameDialogFragment"
+    android:layout_gravity="center"
     android:background="@android:color/transparent">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.CardView
         style="@style/AppTheme.Background"
         app:cardElevation="20dp"
+        app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

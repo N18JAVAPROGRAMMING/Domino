@@ -22,6 +22,9 @@ import android.widget.TextView;
  */
 public class CreateRoom extends Fragment {
 
+    public final static int CLASSIC_TYPE = 0;
+    public final static int FAST_TYPE = 1;
+
     private EditText editName;
     private EditText editDescription;
     private SeekBar seekBar;
@@ -29,6 +32,10 @@ public class CreateRoom extends Fragment {
     static OnCreateRoomListener onCreateRoomListener;
     CardView createButton;
     ServerManager manager ;
+    private int currentType;
+
+    private CardView classicButton;
+    private CardView fastButton;
 
 
    public interface  OnCreateRoomListener{
@@ -41,6 +48,18 @@ public class CreateRoom extends Fragment {
 
     public void setOnCreateRoomListener(OnCreateRoomListener listener){
         onCreateRoomListener=listener;
+    }
+
+    public void setButtons(){
+       switch(currentType){
+           case CLASSIC_TYPE:
+               classicButton.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
+               fastButton.setCardBackgroundColor(getResources().getColorStateList(R.color.grey));
+               break;
+           case FAST_TYPE:
+               classicButton.setCardBackgroundColor(getResources().getColorStateList(R.color.grey));
+               fastButton.setCardBackgroundColor(getResources().getColorStateList(R.color.pink));
+       }
     }
 
 
@@ -61,6 +80,27 @@ public class CreateRoom extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  =inflater.inflate(R.layout.fragment_create_room, container, false);
+
+        classicButton = view.findViewById(R.id.classic);
+        fastButton = view.findViewById(R.id.fast);
+
+        setButtons();
+
+        classicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentType = CLASSIC_TYPE;
+                setButtons();
+            }
+        });
+
+        fastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentType = FAST_TYPE;
+                setButtons();
+            }
+        });
 
         editName = view.findViewById(R.id.edit_name);
         editDescription = view.findViewById(R.id.edit_description);
