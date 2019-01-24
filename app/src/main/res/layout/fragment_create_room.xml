@@ -142,7 +142,6 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/classic"
-        style="@style/AppTheme.PinkButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -166,7 +165,6 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/fast"
-        style="@style/AppTheme.GreyButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
