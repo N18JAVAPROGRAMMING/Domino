@@ -34,5 +34,7 @@
     <string name="show_solution">Показать решение</string>
     <string name="exit_">Выйти</string>
     <string name="game_over">Игра окончена</string>
+    <string name="rules_title">Правила игры</string>
+    <string name="rules"></string>
     <string name="do_you_wanna_exit">Вы уверены, что хотите выйти?</string>
 </resources>

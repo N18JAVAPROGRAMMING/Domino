@@ -51,6 +51,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
         Room room = rooms.get(i);
         customHolder.name.setText(room.getName());
         customHolder.ratio.setText(room.peer_count +"/"+room.capacity);
+        rooms.get(i).generateImg();
         customHolder.roomImage.setImageResource(room.getImageLink());
         double p = ((double)room.peer_count /room.capacity)*100;
     }

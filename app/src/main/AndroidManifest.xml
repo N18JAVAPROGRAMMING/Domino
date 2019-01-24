@@ -15,15 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".InActivity"></activity>
+        <activity android:name=".InActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".GameActivity"
             android:label="@string/title_activity_game" />
         <activity android:name=".PreGameAcivity" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -32,7 +38,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FavouriteActivity"></activity>
+        <activity android:name=".FavouriteActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

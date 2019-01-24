@@ -18,6 +18,8 @@ public class MyApplication extends Application {
     public static final String MAIN_USER_SCORE="USER_SCORE";
     public static final String CURRENT_ROOM="CURRENT_ROOM";
     public static final String ROOM_NAME="ROOM_NAME";
+    public static final String CURRENT_ROOM_CAPACITY="CAPCITY";
+    public static final int FIRST_ATTEMPT=100;
 
     static SocketThread socketThread;
     static User user;
