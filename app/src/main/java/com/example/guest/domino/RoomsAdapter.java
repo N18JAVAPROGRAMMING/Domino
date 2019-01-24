@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder> {
@@ -32,6 +33,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.CustomHolder
     }
 
     public void setRoomList(List<Room> rooms){
+        Collections.reverse(rooms);
         this.rooms=rooms;
     }
 

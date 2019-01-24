@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                      Log.d("listener","topregame");
                                      intent.putExtra(MyApplication.CURRENT_ROOM,Integer.valueOf(r.id));
                                      intent.putExtra(MyApplication.CURRENT_ROOM_CAPACITY,Integer.valueOf(r.capacity));
+                                     Log.d("roomlog","capacity"+r.capacity);
                                      startActivity(intent);
                                      press=0;}
                              }

@@ -64,7 +64,7 @@ public class RoomsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rooms, container, false);
         recyclerView=v.findViewById(R.id.list);
 
-        thread =  new ServerManager.BackgroundThread(getContext(), ServerManager.BackgroundThread.UPDATE_ROOMLIST,2000);
+        thread =  new ServerManager.BackgroundThread(getContext(), ServerManager.BackgroundThread.UPDATE_ROOMLIST,1000);
 
         setOnUpdate();
         thread.start();

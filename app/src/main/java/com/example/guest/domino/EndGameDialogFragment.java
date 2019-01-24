@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 public class EndGameDialogFragment extends DialogFragment {
 
     private CardView exitButton;
-    private Fragment fragmentScore;
+    private ScoreTableFragment fragmentScore;
 
     private OnExitListener listener;
 
@@ -35,7 +35,7 @@ public class EndGameDialogFragment extends DialogFragment {
     }
 
 
-    public static EndGameDialogFragment newInstance(Fragment fragmentScore) {
+    public static EndGameDialogFragment newInstance(ScoreTableFragment fragmentScore) {
         
         Bundle args = new Bundle();
         
@@ -51,6 +51,9 @@ public class EndGameDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_end_game_dialog, container, false);
         getChildFragmentManager().beginTransaction().replace(R.id.score_frame, fragmentScore).commit();
+        getFragmentManager().beginTransaction().replace(R.id.score_frame, fragmentScore).commit();
+
+        exitButton = view.findViewById(R.id.exit);
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +65,7 @@ public class EndGameDialogFragment extends DialogFragment {
         return view;
     }
 
-    public void setFragmentScore(Fragment fragmentScore) {
+    public void setFragmentScore(ScoreTableFragment fragmentScore) {
         this.fragmentScore = fragmentScore;
     }
 }

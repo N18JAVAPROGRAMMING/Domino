@@ -52,15 +52,17 @@ public class ScoreTableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_score_table, container, false);
         table = view.findViewById(R.id.table);
 
+/*
 
         for (int i=0; i<20; i++) {
 
             list.add(User.generateUser());
         }
+*/
 
         manager=  new ServerManager(getActivity().getApplicationContext());
         thread=  new ServerManager.BackgroundThread(getContext(),
-                ServerManager.BackgroundThread.UPDATE_SCORE,2000);
+                ServerManager.BackgroundThread.UPDATE_SCORE,800);
 
 
         table.setLayoutFrozen(true);
@@ -112,8 +114,8 @@ public class ScoreTableFragment extends Fragment {
                      try {
                          user.name = model.users_data.get(i);
                          user.localScore = model.score_data.get(i)[0];
-                         user.countOk = model.score_data.get(i)[1];
-                         user.countError = model.score_data.get(i)[2];
+                         user.countOk = model.score_data.get(i)[2];
+                         user.countError = model.score_data.get(i)[1];
                          Log.d("scorelog", user.name + " " + user.score);
                          users.add(user);
                      } catch (Exception e){

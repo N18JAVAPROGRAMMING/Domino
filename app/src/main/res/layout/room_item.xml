@@ -41,6 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/description_room"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

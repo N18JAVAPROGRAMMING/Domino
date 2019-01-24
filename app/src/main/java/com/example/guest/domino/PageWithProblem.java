@@ -89,6 +89,7 @@ public class PageWithProblem extends Fragment {
         favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Snackbar.make(v,"Задача добавлена в сохраненные",Snackbar.LENGTH_SHORT).show();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

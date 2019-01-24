@@ -109,7 +109,10 @@ public class ServerManager {
         call.enqueue(new Callback<Room>() {
             @Override
             public void onResponse(Call<Room> call, Response<Room> response) {
-                listener.create(response.body());
+                if (response.body()!=null){
+                listener.create(response.body());} else {
+
+                }
             }
 
             @Override
@@ -414,12 +417,14 @@ public class ServerManager {
 
         @Override
         public void run() {
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             while (runflag) {
+                try {
+                    Thread.sleep(delay);
+                    Log.d("thread","sleep");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 switch (mode) {
                     case UPDATE_ROOMLIST:
                         OnUpdateRoomList();
@@ -435,11 +440,7 @@ public class ServerManager {
                         break;
                 }
 
-                try {
-                    Thread.sleep(delay/2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
             }
         }
 

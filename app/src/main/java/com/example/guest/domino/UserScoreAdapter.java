@@ -31,9 +31,9 @@ public class UserScoreAdapter extends RecyclerView.Adapter<UserScoreAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setName(data.get(position).name);
         holder.setScore(data.get(position).localScore);
-        holder.solvedTasks.setText(data.get(position).countOk);
-        holder.failedTasks.setText(data.get(position).countError);
-        holder.place.setText(position + 1);
+        holder.solvedTasks.setText(String.valueOf(data.get(position).countOk));
+        holder.failedTasks.setText(String.valueOf(data.get(position).countError));
+        holder.place.setText(String.valueOf(position + 1));
     }
 
     @Override

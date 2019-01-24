@@ -29,9 +29,9 @@ public class GameActivity extends AppCompatActivity {
     private ProblemsFragment fragmentProblems;
     private ScoreTableFragment fragmentScore;
 
-    TableFragment.GameTime gameTime;
+    GameTime gameTime;
 
-
+   boolean start=false;
     EndThread thread;
     ServerManager manager;
     User mainUser;
@@ -113,7 +113,20 @@ public class GameActivity extends AppCompatActivity {
             dominoes.add(Domino.generateDomino());
         }*/
 
-        fragmentTable = TableFragment.newInstance(dominoes,room_id);
+        fragmentTable = TableFragment.newInstance(dominoes, room_id, new TableFragment.StartTimeListener() {
+            @Override
+            public void start(TextView textView) {
+
+                if (!start) {
+                    start=true;
+                    gameTime = new GameTime(textView, 5, fragmentTable);
+                    gameTime.start();
+                } else {
+
+                }
+                gameTime.setTextView(textView);
+            }
+        });
         fragmentProblems = ProblemsFragment.newInstance();
         fragmentScore = ScoreTableFragment.newInstance(Integer.valueOf(currentroom.id));
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragmentTable).commit();
@@ -210,16 +223,17 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         fragmentTable.setStatus(domino.id, Domino.FREE_MODE);
                         add=MyApplication.FIRST_ATTEMPT;
-                        Snackbar.make(view,"Осталась 1 попытка"+add,Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view,"Осталась 1 попытка",Snackbar.LENGTH_SHORT).show();
                     }
 
                     }
                     domino.attempt++;
                 }
-                if (add!=MyApplication.FIRST_ATTEMPT) score+=add;
+                if (add!=MyApplication.FIRST_ATTEMPT){
+                    score+=add;
+                }
 
-                Log.d("dominotask","score add "+add );
-                Log.d("dominotask","score add "+score );
+
                 fragmentTable.setScore(String.valueOf(score));
                 if (domino.attempt==2){
                     fragmentTable.setStatus(domino.id, Domino.WASTED_MODE);
@@ -245,8 +259,7 @@ public class GameActivity extends AppCompatActivity {
         currentroom.room_name=getIntent().getStringExtra(MyApplication.ROOM_NAME);
         fragmentTable.setName(currentroom.room_name);
 
-            gameTime=new TableFragment.GameTime(fragmentTable.getTextTime(),30,this);
-            gameTime.start();
+
 
     }
 
@@ -283,8 +296,7 @@ public class GameActivity extends AppCompatActivity {
 
                 fragmentTable.UpdateDominoList(result);
                 fragmentTable.update();
-                thread= new EndThread(result.size());
-                thread.start();
+
             }
 
             @Override
@@ -303,11 +315,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void EndGame(){
-        DialogFragment endGameDialog = EndGameDialogFragment.newInstance(fragmentScore);
+        ScoreTableFragment scoreTableFragment = ScoreTableFragment.newInstance(room_id);
+
+        DialogFragment endGameDialog = EndGameDialogFragment.newInstance(scoreTableFragment);
+
         ((EndGameDialogFragment) endGameDialog).setOnExitListener(new EndGameDialogFragment.OnExitListener() {
             @Override
             public void OnExit() {
                 finish();
+                Intent intent =  new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
         endGameDialog.show(getSupportFragmentManager(), "Игра окончена");
@@ -349,6 +366,67 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+
+
+     class GameTime extends Thread{
+
+        long time;
+        TextView indicator;
+        long target;
+        long worktime=0;
+        boolean flag=false;
+        Fragment f;
+
+        public GameTime(TextView indicator, int minutes,Fragment f){
+            this.indicator=indicator;
+            target=minutes*60*1000;
+            this.f=f;
+        }
+
+        public synchronized void setTextView(TextView textView){
+            indicator=textView;
+        }
+
+
+        @Override
+        public synchronized void start() {
+            flag=true;
+            super.start();
+        }
+
+        public synchronized void setRunFlag(boolean value){
+            flag=value;
+        }
+
+        @Override
+        public void run() {
+            while(worktime<target && flag){
+                if (System.currentTimeMillis()-time>1000){
+                    worktime+=1000;
+                    time=System.currentTimeMillis();
+
+                    if (f.getActivity()!=null){
+                        f.getActivity().runOnUiThread(new Runnable() {
+                            final long t=(target-worktime)/1000;
+                            @Override
+                            public void run() {
+                                if(indicator!=null){
+                                    String s1=String.valueOf(((int)t/60)+":");
+                                    String s2=String.valueOf(t%60);
+                                    String s3="";
+                                    String res="";
+                                    if (s2.length()==1){
+                                      s3="0";
+                                    }
+                                    res=s1+s3+s2;
+                                    indicator.setText(res);}
+                            }
+                        });}
+
+                }}
+             EndGame();
+        }
+    }
 
 
 

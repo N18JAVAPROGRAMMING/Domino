@@ -2,17 +2,21 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:drawable="@color/splash"/>
+
 
 
     <item>
         <inset
-            android:inset="500dp">
+            android:inset="1000dp">
         <bitmap
-            android:tint="#ffff"
+
             android:gravity="center"
 
-            android:src="@drawable/domino"/>
+            android:src="@drawable/pre_small"/>
         </inset>
     </item>
+
 
 </layer-list>

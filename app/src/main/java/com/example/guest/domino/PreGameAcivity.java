@@ -56,7 +56,9 @@ public class PreGameAcivity extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.user_list);
         progressBar=findViewById(R.id.progress);
+
         progressBar.setMax(current_room.capacity);
+        progressBar.setProgress(1);
 
 
         leave = findViewById(R.id.exit);
@@ -107,16 +109,18 @@ public class PreGameAcivity extends AppCompatActivity {
 
     public void UpdateAdapter(){
         ArrayList<User> users =  new ArrayList<User>();
-        for (String s:current_room.peer_list){
-            User user =  new User();
-            user.name=s;
-            users.add(user);
+        if (current_room!=null) {
+            for (String s : current_room.peer_list) {
+                User user = new User();
+                user.name = s;
+                users.add(user);
+            }
+
+            // progressBar.setProgress(users.size());
+
+            adapter.setData(users);
+            adapter.notifyDataSetChanged();
         }
-
-       // progressBar.setProgress(users.size());
-
-        adapter.setData(users);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -130,8 +134,9 @@ public class PreGameAcivity extends AppCompatActivity {
                     @Override
                     public void run() {
                        if(current_room==null){
-                           progressBar.setMax(r.capacity);
-                           progressBar.setProgress(current_room.peer_count);
+                          // progressBar.setMax(r.capacity);
+
+                           Log.d("roomlog","perr_count "+current_room.room_name);
                        }
                         current_room=r;
 
@@ -178,7 +183,7 @@ public class PreGameAcivity extends AppCompatActivity {
 
     public void LoadInformation(){
         thread=  new ServerManager.BackgroundThread(getApplicationContext(),
-                ServerManager.BackgroundThread.UPDATE_ROOMINFO,2000);
+                ServerManager.BackgroundThread.UPDATE_ROOMINFO,1000);
         thread.setLoadRoomInformation(room_id, new ServerManager.BackgroundThread.OnLoadRoomInformation() {
             @Override
             public void ok(Room room) {
@@ -188,9 +193,13 @@ public class PreGameAcivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         UpdateAdapter();
+                        if (progressBar!=null)
+                        progressBar.setProgress(users.size());
                         title.setText(current_room.getName());
-                        if (current_room.on_start==1){
+                        if (current_room.on_start==1 && !startGame){
+
                             thread.setRunFlag(false);
                             startGame=true;
                             startRoom();

@@ -78,7 +78,7 @@
                 android:textSize="24sp"/>
 
             <TextView
-                android:textColor="#00FF00"
+                android:textColor="@color/solved"
                 android:text="+0"
                 android:id="@+id/solved_problems"
                 android:layout_marginEnd="8dp"

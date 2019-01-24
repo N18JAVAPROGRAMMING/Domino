@@ -1,6 +1,7 @@
 package com.example.guest.domino;
 
 
+import android.animation.TimeAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -43,8 +44,17 @@ public class TableFragment extends Fragment {
     TextView nameView;
     String score="";
     TextView chronometer;
-    GameTime gameTime;
 
+
+    StartTimeListener l;
+
+    public interface StartTimeListener{
+        void start(TextView textView);
+    }
+
+    public void setTimeListener(StartTimeListener listener){
+        l=listener;
+    }
 
     public void setScore(String score){
         this.score=score;
@@ -221,13 +231,14 @@ public class TableFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public static TableFragment newInstance(ArrayList<Domino> dominoes, int room_id) {
+    public static TableFragment newInstance(ArrayList<Domino> dominoes, int room_id, StartTimeListener l) {
 
         Bundle args = new Bundle();
         TableFragment fragment = new TableFragment();
         fragment.setDominoId(room_id);
         fragment.setArguments(args);
         fragment.setDominoes(dominoes);
+        fragment.setTimeListener(l);
         return fragment;
     }
 
@@ -252,8 +263,8 @@ public class TableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_table, container, false);
         scoreView=view.findViewById(R.id.score);
         scoreView.setText(score);
-       chronometer=view.findViewById(R.id.time);
-
+        chronometer=view.findViewById(R.id.time);
+        l.start(chronometer);
 
         nameView=view.findViewById(R.id.name_room);
         viewPager = view.findViewById(R.id.pager);
@@ -336,53 +347,7 @@ public class TableFragment extends Fragment {
     }
 
 
-    static class GameTime extends Thread{
 
-         long time;
-         TextView indicator;
-         long target;
-         long worktime=0;
-         boolean flag=false;
-         Activity activity;
-
-         public GameTime(TextView indicator, int minutes,Activity activity){
-             this.activity=activity;
-             this.indicator=indicator;
-             target=minutes*60*1000;
-         }
-
-
-        @Override
-        public synchronized void start() {
-             flag=true;
-            super.start();
-        }
-
-        public synchronized void setRunFlag(boolean value){
-             flag=value;
-        }
-
-        @Override
-        public void run() {
-             while(worktime<target && flag){
-            if (System.currentTimeMillis()-time>1000){
-                 worktime+=1000;
-                 time=System.currentTimeMillis();
-
-                 if (activity!=null){
-                 activity.runOnUiThread(new Runnable() {
-                     final long t=(target-worktime)/1000;
-                     @Override
-                     public void run() {
-                         if(indicator!=null){
-                       indicator.setText(String.valueOf(((int)t/60)+":"+t%60));}
-                     }
-                 });}
-
-            }}
-
-        }
-    }
 
 
 
