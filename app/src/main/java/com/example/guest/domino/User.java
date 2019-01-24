@@ -31,7 +31,7 @@ public class User {
 
     public void generateImg(){
         long hash = 0;
-        long q = 257, p = 1000000013;
+        long q = 1000000011, p = 1000000013;
         for(int i = 0; i < name.length(); i++){
             hash = (hash * q + (long)name.charAt(i)) % p;
         }

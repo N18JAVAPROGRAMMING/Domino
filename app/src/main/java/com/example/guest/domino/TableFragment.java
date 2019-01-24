@@ -89,7 +89,8 @@ public class TableFragment extends Fragment {
                 if (domino.getStatus()!=Domino.SOLVING_MODE && domino.getStatus()!=Domino.WASTED_MODE){
 
                 domino.setStatus(changes.get(domino.id));
-                changed = true;}
+                changed = true;
+                }
 
             }
         }

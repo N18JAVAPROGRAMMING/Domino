@@ -317,9 +317,9 @@ public class GameActivity extends AppCompatActivity {
     public void EndGame(){
         ScoreTableFragment scoreTableFragment = ScoreTableFragment.newInstance(room_id);
 
-        DialogFragment endGameDialog = EndGameDialogFragment.newInstance(scoreTableFragment);
-
-        ((EndGameDialogFragment) endGameDialog).setOnExitListener(new EndGameDialogFragment.OnExitListener() {
+        EndGameDialogFragment endGameDialog = EndGameDialogFragment.newInstance(scoreTableFragment);
+         Log.d("scorelog","room_id");
+        (endGameDialog).setOnExitListener(new EndGameDialogFragment.OnExitListener() {
             @Override
             public void OnExit() {
                 finish();

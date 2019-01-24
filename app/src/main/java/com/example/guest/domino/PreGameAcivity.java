@@ -1,6 +1,8 @@
 package com.example.guest.domino;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,7 +60,7 @@ public class PreGameAcivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progress);
 
         progressBar.setMax(current_room.capacity);
-        progressBar.setProgress(1);
+        progressBar.setProgress(0);
 
 
         leave = findViewById(R.id.exit);
@@ -191,12 +193,14 @@ public class PreGameAcivity extends AppCompatActivity {
                 current_room=room;
                 final List<String> users=current_room.peer_list;
                 runOnUiThread(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void run() {
 
                         UpdateAdapter();
-                        if (progressBar!=null)
-                        progressBar.setProgress(users.size());
+                        if (progressBar!=null) {
+                            progressBar.setProgress(users.size(),true);
+                        }
                         title.setText(current_room.getName());
                         if (current_room.on_start==1 && !startGame){
 

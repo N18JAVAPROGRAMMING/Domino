@@ -112,10 +112,11 @@ public class ScoreTableFragment extends Fragment {
                 for (int i=0; i<model.score_data.size(); i++){
                     User user =  new User();
                      try {
+
                          user.name = model.users_data.get(i);
                          user.localScore = model.score_data.get(i)[0];
-                         user.countOk = model.score_data.get(i)[2];
-                         user.countError = model.score_data.get(i)[1];
+                         user.countOk = model.score_data.get(i)[1];
+                         user.countError = model.score_data.get(i)[2];
                          Log.d("scorelog", user.name + " " + user.score);
                          users.add(user);
                      } catch (Exception e){
@@ -129,7 +130,9 @@ public class ScoreTableFragment extends Fragment {
                     public void run() {
                         UpdateUsers(users);
                     }
-                });}
+                });} else {
+                    Log.d("scorelog","getActivity()-null");
+                }
             }
 
             @Override
